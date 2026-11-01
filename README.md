@@ -1,87 +1,314 @@
-# Planora AI — Event Planning Platform & Backend Architecture
+<div align="center">
 
-Planora AI is an event planning platform designed to turn complex, high-stress event organization—weddings, birthdays, corporate meetups, and community gatherings—into an intuitive visual workflow powered by artificial intelligence.
+```text
+██████╗ ██╗      █████╗ ███╗   ██╗ ██████╗ ██████╗  █████╗
+██╔══██╗██║     ██╔══██╗████╗  ██║██╔═══██╗██╔══██╗██╔══██╗
+██████╔╝██║     ███████║██╔██╗ ██║██║   ██║██████╔╝███████║
+██╔═══╝ ██║     ██╔══██║██║╚██╗██║██║   ██║██╔══██╗██╔══██║
+██║     ███████╗██║  ██║██║ ╚████║╚██████╔╝██║  ██║██║  ██║
+╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
 
----
-
-## Phase 1: Secure Backend & Authentication Foundation
-
-Phase 1 establishes the production-grade authentication, database schema, server routing, and cross-user data security model for Planora AI.
-
-### Core Features Implemented in Phase 1:
-1. **Firebase Authentication Integration**: Email/Password registration, Login, Google OAuth popup support, auth persistence, and client token management (`src/lib/firebase.ts`, `src/context/AuthContext.tsx`).
-2. **Server-Side Token Verification Middleware**: `server/middleware/authMiddleware.ts` extracts `Authorization: Bearer <token>` headers and validates Firebase ID Tokens using `firebase-admin/auth`.
-3. **Database Architecture & Version-Controlled Migrations**: `migrations/001_initial_schema.sql` defines 10 core tables (`users`, `events`, `event_tasks`, `event_budgets`, `event_guests`, `themes`, `vendors`, `platform_reviews`, `ai_usage_logs`, `google_calendar_connections`) with indexes and Row Level Security (RLS) policies.
-4. **User Profile Sync & IDOR Protection**: `/api/auth/sync` and `/api/users/profile` ensure every authenticated user's private data is strictly isolated (`owner_id = verified_uid`).
-5. **Automated Security & Unit Test Suite**: `tests/auth.test.ts` validates unauthenticated token rejections, expired token handling, profile sync, IDOR protection, mass assignment guards, and secret isolation.
-
----
-
-## Setup & Prerequisites
-
-### 1. Prerequisites
-- **Node.js**: v18.0+ or v20.0+
-- **NPM**: v9.0+
-
-### 2. Environment Configuration
-Copy `.env.example` to `.env` and fill in your project credentials:
-```bash
-cp .env.example .env
+             A I - P O W E R E D   E V E N T   P L A N N E R
 ```
 
-#### Required Keys:
-* `GEMINI_API_KEY`: Google AI Studio Gemini API Key.
-* `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`: Firebase Web Client config.
-* `FIREBASE_SERVICE_ACCOUNT_JSON`: Firebase Admin SDK service account key string.
-* `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`: Supabase project connection keys.
+# Planora AI
 
-### 3. Database Migration Execution
-Apply the SQL migration script to your Supabase PostgreSQL instance:
-1. Log in to your [Supabase Dashboard](https://app.supabase.com).
-2. Open the **SQL Editor** tab.
-3. Paste the contents of `migrations/001_initial_schema.sql` and click **Run**.
+### Plan Smarter. Celebrate Better.
+
+An AI-powered event planning platform designed to bring event management, budgeting, task organization, and vendor discovery into one place.
+
+[Live Demo](https://planora-ai-beta.vercel.app/) · [Report a Bug](../../issues) · [Request a Feature](../../issues)
+
+</div>
 
 ---
 
-## Running the Application
+## About the Project
 
-### Start Development Server
-Runs Express API gateway with Vite frontend middleware on port 3000:
+Planning an event often means juggling budgets, guest lists, vendors, schedules, and countless small tasks.
+
+**Planora AI** aims to make this process simpler by combining event management tools with generative AI in one workspace.
+
+Whether you're organizing a wedding, birthday, or community gathering, Planora provides tools to organize your plans and get AI-assisted recommendations.
+
+The project combines modern web technologies with AI integration to explore how intelligent assistants can make everyday planning easier.
+
+## Features
+
+### AI Event Copilot
+
+Get AI-assisted ideas, event planning suggestions, budget guidance, and recommendations based on your requirements using Google Gemini.
+
+### Event Management
+
+Create and organize events, manage event details, and keep your planning information in one place.
+
+### Budget Planner
+
+Organize your event budget, record expenses, and track spending against your planned budget.
+
+### Task & Timeline Management
+
+Break event preparation into manageable tasks and organize important deadlines.
+
+### Vendor Discovery
+
+Explore vendor options using Google Places integration where configured, and manage your own saved vendor information.
+
+### Personalized User Profiles
+
+Support individual user profiles and personalized workspaces with Firebase Authentication.
+
+### Database Integration
+
+Use Supabase PostgreSQL for persistent application data, with user ownership controls implemented through the application's backend and database configuration.
+
+### Responsive Interface
+
+A carefully designed interface featuring a warm cream-and-brown palette, modern typography, and a responsive layout.
+
+---
+
+## Tech Stack
+
+| Technology              | Purpose                               |
+| ----------------------- | ------------------------------------- |
+| React                   | User interface                        |
+| TypeScript              | Type-safe development                 |
+| Vite                    | Development server and build tooling  |
+| Tailwind CSS            | Styling                               |
+| Lucide React            | Icons                                 |
+| Node.js                 | Backend runtime                       |
+| Express.js              | REST API                              |
+| Firebase Authentication | User authentication                   |
+| Firebase Admin SDK      | Server-side identity verification     |
+| Supabase PostgreSQL     | Relational database                   |
+| Google Gemini           | Generative AI                         |
+| Google Maps / Places    | Map and vendor discovery integrations |
+| Vercel                  | Frontend deployment                   |
+
+*Integrations require the appropriate credentials and deployment configuration. Refer to the current source code for the exact implementation.*
+
+---
+
+## Architecture
+
+```text
+                    ┌─────────────────────────┐
+                    │        USER             │
+                    │   Web Browser / Mobile   │
+                    └────────────┬────────────┘
+                                 │
+                                 ▼
+                    ┌─────────────────────────┐
+                    │      PLANORA AI         │
+                    │   React + TypeScript    │
+                    │       Vite + UI         │
+                    └────────────┬────────────┘
+                                 │
+                                 ▼
+                    ┌─────────────────────────┐
+                    │      BACKEND API        │
+                    │    Node.js + Express    │
+                    │ Authentication & Logic │
+                    └────────┬────────┬───────┘
+                             │        │
+                  ┌──────────┘        └───────────┐
+                  ▼                               ▼
+       ┌────────────────────┐          ┌────────────────────┐
+       │ Firebase Auth      │          │ Supabase           │
+       │ Identity & Tokens  │          │ PostgreSQL         │
+       └────────────────────┘          └────────────────────┘
+                             │
+                             ▼
+                    ┌────────────────────┐
+                    │ Google Gemini API  │
+                    │ AI Planning Help   │
+                    └────────────────────┘
+```
+
+The production backend must be deployed and connected to the frontend for API-dependent functionality to work. Verify the current deployment configuration before relying on the live demo.
+
+---
+
+## Getting Started
+
+Follow these steps to run the project locally.
+
+### Prerequisites
+
+Install the following:
+
+* Node.js (an LTS release)
+* npm
+* Git
+* A Firebase project for authentication
+* A Supabase project for database functionality
+* A Google Gemini API key for AI features
+
+Google Maps, Places, and Calendar credentials are required only if you use the corresponding integrations.
+
+### 1. Clone the Repository
+
+```bash
+git clone YOUR_REPOSITORY_URL
+cd YOUR_PROJECT_DIRECTORY
+```
+
+Replace the placeholders with your actual Git repository URL and project directory.
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure Environment Variables
+
+Create a `.env` file using the project's `.env.example` as a reference.
+
+For example, your configuration may contain:
+
+```env
+# Firebase client configuration
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_APP_ID=
+
+# Backend API URL
+VITE_API_BASE_URL=
+
+# Server-side configuration
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+GEMINI_API_KEY=
+```
+
+**Important:**
+
+* Use the exact variable names expected by your current source code.
+* Do not commit `.env` files containing secrets.
+* Never expose the Supabase service-role key, Firebase Admin credentials, Gemini API key, or OAuth client secrets in frontend code.
+* Variables prefixed with `VITE_` can be exposed to the browser. Store only appropriate public configuration in them.
+* Configure server-side variables in the backend hosting environment.
+
+### 4. Configure Supabase
+
+1. Create or open your Supabase project.
+2. Inspect the database migrations provided in the repository.
+3. Apply the required migrations in the correct order.
+4. Verify table relationships, access permissions, and Row Level Security policies.
+5. Configure the backend with the appropriate database credentials.
+
+Do not create duplicate tables if the existing schema already provides the required functionality.
+
+### 5. Run the Development Server
+
 ```bash
 npm run dev
 ```
 
-### Run Tests
-Executes the automated unit and security test suite:
-```bash
-npm test
-```
+If the backend runs as a separate service, open another terminal and use the backend's configured development command.
 
-### Build for Production
-Compiles TypeScript and bundles Vite production assets:
+Check `package.json` for the actual available scripts.
+
+### 6. Build for Production
+
 ```bash
 npm run build
 ```
 
----
-
-## Security Audit Verification
-
-The security test suite (`npm test`) verifies the following assertions:
-* [x] **Unauthenticated Access Denial**: Requests missing Bearer tokens return `401 Unauthorized`.
-* [x] **Invalid Token Rejection**: Malformed or forged tokens return `401 Unauthorized`.
-* [x] **Profile Retrieval**: Authenticated users fetch their own verified profile.
-* [x] **Cross-User Data Isolation (IDOR)**: User A cannot read, modify, or delete User B's events or tasks.
-* [x] **Mass Assignment Guard**: System identifiers (`firebase_uid`, `subscription_tier`) cannot be overwritten via request body.
-* [x] **Secret Isolation**: Service role and private keys are never exposed in public `VITE_` variables.
+Run the project's configured tests and type checks before deploying.
 
 ---
 
-## Roadmap & Next Phases
+## Security & Data Privacy
 
-* **Phase 1 (COMPLETED)**: Secure Backend Foundation, Firebase Auth, Supabase DB Schema, Auth Middleware, Profile Sync, Security Tests.
-* **Phase 2**: Full CRUD Event & Task Persistence (Events, Budgets, Timelines, Guests).
-* **Phase 3**: Gemini AI Server Proxy, Token Usage Accounting & Quota Enforcement.
-* **Phase 4**: Google Calendar OAuth 2.0 Two-Way Event Sync.
-* **Phase 5**: Google Places API (New) Vendor Discovery & Location Search.
-* **Phase 6**: Authenticated Ratings & Bayesian Vendor Ranking.
+Security is an important part of an application that handles personal event information.
+
+Planora AI should follow these principles:
+
+* Authenticate users before allowing access to private resources.
+* Verify identity tokens on the server.
+* Associate private records with their authenticated owner.
+* Validate incoming requests.
+* Prevent unauthorized access to other users' events, expenses, tasks, and profile information.
+* Keep server-side credentials out of frontend bundles.
+* Configure Supabase permissions and Row Level Security appropriately.
+* Avoid sending unnecessary personal information to external AI services.
+
+Security depends on the actual backend implementation and deployment configuration. Review and test these controls before using real user data in production.
+
+---
+
+## Project Goals
+
+Planora AI is being developed around a few core ideas:
+
+* Make event planning more organized.
+* Use AI to assist with repetitive planning decisions.
+* Keep important event information in one workspace.
+* Provide a clean and accessible user experience.
+* Explore an open-source approach to AI-powered event management.
+
+---
+
+## Roadmap
+
+Potential improvements include:
+
+* [ ] Improve AI conversation quality and contextual memory.
+* [ ] Expand event-specific recommendations.
+* [ ] Complete and verify production authentication and database flows.
+* [ ] Improve budget analytics and expense reporting.
+* [ ] Verify live Google Maps and Places functionality.
+* [ ] Complete profile editing and onboarding.
+* [ ] Improve automated tests and security verification.
+* [ ] Publish contribution guidelines and open-source licensing.
+
+Roadmap items should be updated as features are implemented and verified.
+
+---
+
+## Contributing
+
+Contributions, bug reports, and feature suggestions are welcome.
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes.
+4. Run the available tests and build checks.
+5. Submit a pull request describing your changes.
+
+Please avoid committing secrets, personal user data, or production credentials.
+
+Before contributing, check the repository's license and contribution guidelines.
+
+---
+
+## Open Source
+
+Planora AI is intended to be developed as an open-source project.
+
+**Before publishing the repository as officially open source, add a `LICENSE` file** containing the license you have selected. A public GitHub repository without a license does not automatically grant everyone permission to reuse, modify, or distribute its code.
+
+---
+
+## Project Links
+
+* **Live Demo:** https://planora-ai-beta.vercel.app/
+* **Repository:** Add your GitHub repository URL here.
+* **Issues:** Use your repository's Issues tab to report bugs and suggest improvements.
+
+---
+
+<div align="center">
+
+### Plan Smarter. Celebrate Better.
+
+Built with curiosity, code, and a little help from AI.
+
+**Planora AI**
+
+</div>
