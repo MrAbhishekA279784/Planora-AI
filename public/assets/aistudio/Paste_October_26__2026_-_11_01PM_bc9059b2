@@ -1,0 +1,1185 @@
+# PLANORA AI — ULTRA-DETAILED MASTER IMPLEMENTATION PROMPT
+
+## YOUR ROLE
+
+Act as a senior full-stack engineer, UI/UX implementation specialist, frontend architect, backend engineer, AI integration specialist, accessibility expert, security engineer, and QA engineer.
+
+Your mission is to transform the provided `design.md` and all attached reference images into a complete, responsive, production-quality web application named **Planora AI**.
+
+You are not being asked to create a new design.
+
+You are being asked to faithfully implement the designs that have already been decided.
+
+The supplied images show the intended appearance of the application. The `design.md` file specifies the detailed design, screens, requirements, interactions, and implementation expectations.
+
+**Your primary objective is to reproduce the supplied designs as accurately as possible while ensuring that every implemented feature works correctly.**
+
+Do not stop after creating a visually attractive homepage. Implement the complete application, including all specified desktop and mobile screens, user flows, shared components, interactions, and supporting functionality.
+
+---
+
+# PHASE 1 — READ AND UNDERSTAND EVERYTHING FIRST
+
+Before writing or changing any code, inspect the complete working environment.
+
+### 1. Read the specification
+
+Read the entire `design.md` file, from beginning to end.
+
+Do not read only the introduction or the first few sections.
+
+Extract and understand:
+
+* Every design requirement.
+* Every screen specification.
+* Every visible component.
+* Every layout rule.
+* Every colour and typography requirement.
+* Every button, navigation item, and interaction.
+* All desktop and mobile requirements.
+* All sample content and displayed data.
+* Every functional requirement.
+* Every technical requirement.
+* Every testing and validation requirement.
+
+If `design.md` references other files or images, locate and inspect those files as well.
+
+### 2. Inspect every reference image
+
+Open and visually inspect every attached image.
+
+Do not assume that one screenshot represents the complete application.
+
+Identify each image by its actual content, not just its filename.
+
+Group the references into the relevant screens, such as:
+
+1. Home / Main Dashboard.
+2. My Events.
+3. Event Studio.
+4. Vendors Marketplace.
+5. Vendor Details.
+6. AI Event Copilot.
+7. Budget Planner.
+8. Event Timeline.
+9. Create New Event.
+10. User Profile and Navigation Menu.
+
+Use the actual available images to determine the complete screen list. Do not omit any screen specified in `design.md` or shown in the reference collection.
+
+For every screen, examine:
+
+* Overall composition.
+* Header height and navigation.
+* Content width and margins.
+* Section arrangement.
+* Card dimensions and proportions.
+* Image placement and cropping.
+* Typography and font hierarchy.
+* Colours and visual contrast.
+* Buttons and their sizes.
+* Border radii and shadows.
+* Spacing between components.
+* Icons and labels.
+* Information density.
+* Responsive behaviour.
+* Floating AI assistant placement.
+
+Use the provided images as the visual reference. Do not substitute your own design preferences for the specified design.
+
+### 3. Inspect the existing codebase
+
+Before making changes, identify:
+
+* Current framework and language.
+* Existing application entry points.
+* Existing routes and screens.
+* Installed dependencies.
+* Current component architecture.
+* Existing styling system.
+* Existing backend and APIs.
+* Current database or persistence layer.
+* Existing authentication, if any.
+* Environment variables and integrations.
+* Current application build and test commands.
+* Existing assets and reusable components.
+
+If an application already exists, preserve its working architecture and functionality wherever practical.
+
+Do not unnecessarily replace the existing stack or rewrite working functionality.
+
+If the project is empty, choose a suitable stack based on the requirements in `design.md`.
+
+Do not ask me questions that can be resolved by inspecting the supplied specification, images, and repository.
+
+Make sensible implementation decisions where necessary and document any important assumptions.
+
+---
+
+# PHASE 2 — SOURCE-OF-TRUTH RULES
+
+Follow this priority order whenever requirements appear inconsistent.
+
+**Priority 1: Explicit decisions already made for Planora AI**
+
+The latest design decisions in this conversation must be respected.
+
+These include:
+
+* The overall interface uses a sophisticated cream and beige background.
+* The visual identity is warm, elegant, modern, and premium.
+* Desktop navigation is positioned at the top.
+* The desktop interface does not need a duplicate left sidebar for the same primary navigation.
+* The AI assistant is accessed through a floating button.
+* The redundant AI Copilot entry must not reappear in the desktop top navigation when the floating assistant provides that access.
+* The floating assistant must never obstruct cards, buttons, important content, or other interactive elements.
+* The interface must remain clean and properly spaced.
+
+**Priority 2: The complete `design.md` specification**
+
+Follow its screen definitions, component requirements, content, technical constraints, and implementation instructions.
+
+**Priority 3: The supplied reference images**
+
+Use the screenshots to reproduce the exact visual appearance of individual screens.
+
+If a historical screenshot contains something that conflicts with a later explicit design decision, preserve the intended design while following the latest decision.
+
+Do not use an inconsistency as an excuse to omit an entire screen or feature.
+
+---
+
+# PHASE 3 — EXACT VISUAL IMPLEMENTATION
+
+## 3.1 Global Design Identity
+
+The application name is:
+
+**Planora AI**
+
+The tagline is:
+
+**Plan Smarter. Celebrate Better.**
+
+The product helps users plan weddings, birthdays, and community events using AI-assisted planning, budgeting, timelines, vendor discovery, and personalized ideas.
+
+Reproduce the supplied visual identity faithfully.
+
+### Colour palette
+
+Use the colour values specified in `design.md` wherever available.
+
+The intended visual direction includes:
+
+* Warm cream backgrounds.
+* Pale beige surfaces.
+* White or near-white cards.
+* Dark brown primary buttons.
+* Terracotta and burnt-orange accents.
+* Muted gold highlights.
+* Soft peach selected states.
+* Near-black headings.
+* Muted grey secondary text.
+* Carefully restrained green, orange, and blue status colours.
+
+Do not replace this palette with a generic purple SaaS theme, a dark dashboard, or a saturated multicolour interface.
+
+The cream background must remain consistent across the application.
+
+### Typography
+
+Use the font families specified in `design.md`.
+
+Preserve the contrast between elegant serif headlines and clean sans-serif interface text wherever shown in the reference images.
+
+Maintain the intended hierarchy between:
+
+* Page titles.
+* Section headings.
+* Card titles.
+* Body text.
+* Supporting labels.
+* Metadata.
+* Buttons.
+
+Do not arbitrarily enlarge, shrink, or replace typography.
+
+### Cards and surfaces
+
+Reproduce the intended use of:
+
+* Rounded corners.
+* Subtle borders.
+* Soft shadows.
+* Appropriate internal padding.
+* Consistent gaps.
+* Clean image crops.
+* Clearly separated content sections.
+
+Do not add excessive shadows, glassmorphism, strong gradients, neon glows, or decorative elements that are not present in the supplied designs.
+
+### Images and visual assets
+
+Use the supplied reference assets and other available project assets appropriately.
+
+Where a reference shows a wedding, birthday, venue, decoration, catering setup, or event photograph, use the matching supplied image when available.
+
+Preserve the intended image aspect ratio, crop, and position.
+
+Do not replace actual event imagery with emoji, randomly generated gradients, generic placeholders, or unrelated stock images.
+
+**Important:** The screenshots are visual references, not finished application pages. Reconstruct their interfaces using real components and layouts. Do not simply place a screenshot over the page as a background image.
+
+---
+
+# PHASE 4 — IMPLEMENT THE COMPLETE APPLICATION
+
+Implement all screens present in the reference images and all screens required by `design.md`.
+
+The following sections explain the expected application structure. Use the specification and reference images for the precise implementation of each individual screen.
+
+## 4.1 Home / Main Dashboard
+
+Recreate the complete homepage.
+
+Include all applicable sections shown in the reference:
+
+* Planora AI branding.
+* Desktop top navigation.
+* Search and notification controls.
+* User profile.
+* Main hero content.
+* Event-type promotional carousel.
+* Create Your Event action.
+* Planning feature cards.
+* Ongoing event preview.
+* Event mood inspiration gallery.
+* AI planning entry point.
+* Floating AI assistant.
+
+Preserve the reference image's composition, image placement, headline hierarchy, card arrangement, and section spacing.
+
+The hero section should communicate that Planora AI helps users organize memorable weddings, birthdays, and community events.
+
+The event carousel should not be reduced to a static text block if the reference indicates an interactive carousel.
+
+Implement navigation or carousel interactions where appropriate.
+
+## 4.2 My Events
+
+Implement the complete event-management screen.
+
+Include:
+
+* My Events heading.
+* Supporting subtitle.
+* Create New Event button.
+* Total Events statistic.
+* Upcoming Events statistic.
+* In Planning statistic.
+* Completed statistic.
+* Event search.
+* Status filter.
+* Event cards.
+* Event status indicators.
+* Event dates.
+* Locations.
+* Guest counts.
+* Completion indicators.
+* View Details actions.
+* Edit actions.
+* Share actions.
+* Additional event actions.
+* Upcoming Events panel.
+* Calendar View.
+* Recent Activity panel.
+
+The event cards must display their relevant photographs, event names, and metadata in the proportions shown in the supplied reference.
+
+Use the exact sample values and visible labels specified for this screen in the relevant reference image and `design.md`.
+
+The search must search the displayed event data.
+
+The filter must actually filter the events.
+
+The statistics must be calculated from the underlying event data rather than being unrelated decorative numbers.
+
+The calendar must navigate between months and represent the applicable dates correctly.
+
+The user must be able to create or edit an event through the appropriate workflow.
+
+Do not leave the visible controls non-functional.
+
+## 4.3 Event Studio
+
+Recreate the complete Event Studio interface.
+
+Include all sections shown in the reference, including:
+
+* Event Studio heading and description.
+* Wedding, Birthday, and Community Event selectors.
+* Event category navigation.
+* Theme gallery.
+* Decorations.
+* Menu Ideas.
+* Activities.
+* Invitations.
+* Outfits.
+* Music & Entertainment.
+* Theme search and filters.
+* Popular theme cards.
+* Theme Details.
+* Selected theme preview.
+* Budget estimate.
+* Guest capacity information.
+* Colour palette.
+* Theme Elements.
+* Customization actions.
+* Quick Inspiration.
+* Similar Themes.
+* AI Theme Generator.
+
+When the user changes the selected event type, adapt the available themes and recommendations to that event category.
+
+Selecting a theme must update the selected-theme information.
+
+Saving a theme must result in a meaningful saved state.
+
+The AI Theme Generator must accept a user description and generate structured theme suggestions using the available AI integration or an honestly labelled fallback mode.
+
+Do not build only the theme gallery and omit the detail panels.
+
+## 4.4 Vendors Marketplace
+
+Recreate the vendor discovery and comparison experience.
+
+Include the visible features specified by the reference:
+
+* Find the Perfect Vendors hero.
+* Supporting promotional badges.
+* Event photography.
+* Vendor categories.
+* All Vendors.
+* Venue.
+* Catering.
+* Decoration.
+* Photography.
+* Entertainment.
+* Makeup & Styling.
+* Invitations.
+* Additional categories.
+* Filter panel.
+* Location selection.
+* Vendor category filters.
+* Budget range.
+* Rating filters.
+* Availability filter.
+* Search field.
+* Sorting.
+* Vendor cards.
+* Ratings and review counts.
+* Locations and distances.
+* Price ranges.
+* Vendor category labels.
+* Favourite controls.
+* Vendor Details actions.
+* Vendor comparison.
+* Nearby Vendors map panel.
+* AI Vendor Assistant.
+* Floating AI assistant.
+
+Use consistent spacing and preserve the reference's visual hierarchy.
+
+The vendor category filters, search, sorting, and budget filters must affect the displayed results.
+
+The comparison panel must display selected vendors and allow users to remove selections.
+
+The vendor assistant must use the active event context if available.
+
+Never invent real vendor verification, current availability, distances, market prices, or review counts and present them as independently verified facts.
+
+Use available real integrations where configured. Otherwise, clearly label example vendors and demonstration data appropriately.
+
+The nearby map must not misrepresent a schematic illustration as an actual live map or verified location service.
+
+## 4.5 Vendor Details
+
+Implement the dedicated vendor-details screen shown in the mobile reference.
+
+Include the applicable:
+
+* Large vendor image.
+* Image gallery navigation.
+* Vendor name.
+* Rating and review count.
+* Verification indicator where supported.
+* Location.
+* Price range.
+* Vendor category.
+* Overview tab.
+* Photos tab.
+* Reviews tab.
+* Packages tab.
+* About section.
+* Amenities or service highlights.
+* Gallery.
+* Enquire Now action.
+* Chat action.
+* Back navigation.
+* Floating AI assistant.
+
+The tabs should display their respective content.
+
+Enquire Now should open a meaningful enquiry flow.
+
+Chat should provide a functional vendor-contact interface or an explicitly labelled demo workflow.
+
+Do not leave tabs and actions as decorative elements.
+
+## 4.6 AI Event Copilot
+
+Implement the AI planning experience as a dedicated functional capability.
+
+The AI assistant should help with:
+
+* Event creation.
+* Budget planning.
+* Theme suggestions.
+* Vendor recommendations.
+* Event timeline generation.
+* Task management.
+* Guest planning.
+* Event changes.
+* Personalized ideas.
+* Event-risk explanations.
+* Planning alternatives.
+
+Provide suggested actions such as:
+
+* Suggest a Budget Plan.
+* Find Themes.
+* Compare Vendors.
+* Create Timeline.
+* Plan a Birthday.
+* Help Me Choose a Venue.
+
+The assistant should maintain the active event context where appropriate.
+
+For example, if a user is planning a beach wedding for 300 guests with a total budget of ₹8 lakh, the assistant should use those requirements in its recommendations.
+
+It should not discard the previous event context whenever a new message is sent.
+
+### Genuine AI integration
+
+Use the AI service and model specified in `design.md` and the existing project configuration.
+
+If an API integration already exists, inspect and preserve it where appropriate.
+
+Keep API secrets on the server side.
+
+Validate generated responses before using them in the interface.
+
+If the API is unavailable or credentials are missing, provide a clearly identified demo or fallback mode rather than claiming that a real AI request succeeded.
+
+Do not hardcode generated text and falsely represent it as a live AI response.
+
+## 4.7 Budget Planner
+
+Implement the dedicated budget planning screen.
+
+Include:
+
+* Total event budget.
+* Category allocation.
+* Venue.
+* Catering.
+* Decoration.
+* Photography.
+* Entertainment.
+* Makeup & Styling, where applicable.
+* Other expenses.
+* Budget allocation chart.
+* Used and remaining budget.
+* Category percentages.
+* AI suggestions.
+* Cost-saving recommendations.
+* Expense updates.
+* Budget recalculation.
+
+Budget totals and percentages must be calculated using deterministic logic.
+
+For example, increasing the catering budget should update the relevant category and the overall totals immediately.
+
+Validate numeric inputs.
+
+Handle empty values, negative values, zero budgets, and amounts exceeding the target budget without producing invalid calculations.
+
+Distinguish planned estimates from actual expenses.
+
+## 4.8 Event Timeline
+
+Implement the full event timeline screen.
+
+Include:
+
+* Event summary.
+* Event date.
+* Completion percentage.
+* Timeline.
+* Tasks.
+* Budget tab.
+* Guests tab.
+* Task statuses.
+* Deadlines.
+* Completed tasks.
+* In-progress tasks.
+* Pending tasks.
+* Upcoming milestones.
+* Task creation and editing.
+* Task dependency information where required.
+
+Task statuses must reflect actual stored task data.
+
+Allow users to create, update, and complete tasks through the relevant UI.
+
+Where dependencies exist, validate them and avoid producing impossible scheduling relationships.
+
+## 4.9 Create New Event
+
+Implement the complete multi-step event creation workflow shown in the mobile reference.
+
+Use the exact stages and fields specified in `design.md`.
+
+The workflow should include the relevant:
+
+* Event type.
+* Event name.
+* Event date.
+* Location.
+* Expected guests.
+* Preferences.
+* Budget.
+* Review.
+* Final creation action.
+
+Provide clear progress indicators.
+
+Validate mandatory fields.
+
+Allow the user to move between steps without losing previously entered information.
+
+Show field-level validation errors.
+
+Do not create an event when required information is invalid.
+
+On successful completion, persist the event and make it available in My Events.
+
+## 4.10 User Profile and Navigation Menu
+
+Implement the profile area and relevant menu shown in the reference.
+
+Include the specified user identity and subscription information, along with applicable navigation and account actions.
+
+Support:
+
+* Profile view.
+* Settings.
+* Help and support.
+* Subscription or upgrade information.
+* Log out, where authentication is implemented.
+
+Menu items must navigate correctly.
+
+Do not implement a fake authentication experience that suggests actual account security when none exists.
+
+---
+
+# PHASE 5 — FLOATING AI ASSISTANT: A CRITICAL REQUIREMENT
+
+The floating Planora AI assistant is a core part of the interface.
+
+Its positioning must be implemented carefully across all supported screen sizes.
+
+### Desktop behaviour
+
+Use a small circular AI button in the bottom-right area of the viewport, matching the supplied visual reference.
+
+The assistant must remain visually separate from the page's content.
+
+Maintain appropriate spacing from the viewport edges.
+
+The floating control must not cover:
+
+* Event card buttons.
+* Vendor card actions.
+* Calendar dates.
+* Recent Activity content.
+* Important form controls.
+* Footer actions.
+* Other floating UI.
+* Any other primary interactive element.
+
+The AI assistant must not create unwanted horizontal scrolling.
+
+Do not position it directly on top of an important button merely because fixed positioning makes the implementation easier.
+
+Where necessary, reserve sufficient space for the assistant or adjust the content layout and responsive positioning.
+
+### Click behaviour
+
+Clicking the floating button should open a clean AI chat panel.
+
+The panel should:
+
+* Open without changing the current page.
+* Close through a clearly visible control.
+* Support sending messages.
+* Display conversation history for the active session.
+* Preserve readable text and appropriate spacing.
+* Remain within the viewport.
+* Avoid covering essential controls.
+* Support keyboard interaction.
+* Adapt to smaller screens.
+
+On smaller devices, the chat may open as a carefully designed sheet or full-screen panel when that produces a better experience.
+
+Use the supplied mobile reference and `design.md` for the intended appearance.
+
+### Navigation rule
+
+The floating AI assistant is the primary global entry point to the assistant.
+
+Do not add a redundant AI Copilot item to the desktop top navigation if doing so contradicts the agreed design.
+
+Retain any screen-specific AI functionality explicitly specified in `design.md`.
+
+On mobile, implement the navigation structure that best matches the supplied mobile reference while maintaining the agreed floating assistant behaviour and avoiding duplicate, confusing entry points.
+
+**This requirement must be verified on the Home, My Events, Event Studio, and Vendors screens.**
+
+---
+
+# PHASE 6 — MOBILE RESPONSIVENESS
+
+The supplied mobile reference is a major source of truth.
+
+Do not simply shrink the desktop layout until it fits a phone.
+
+Implement a deliberately responsive mobile experience.
+
+Use the mobile reference images to guide the intended screen composition.
+
+### Mobile requirements
+
+* Proper mobile header.
+* Suitable logo sizing.
+* Readable typography.
+* Appropriate touch target sizes.
+* Correct spacing.
+* Mobile-specific card arrangements.
+* Responsive image crops.
+* No unintended horizontal overflow.
+* Functional bottom navigation where shown.
+* Carefully positioned floating AI assistant.
+* Readable forms.
+* Mobile-friendly dropdowns.
+* Responsive budget charts.
+* Appropriate event timeline layout.
+* Usable vendor filters.
+* Mobile-friendly vendor cards.
+* A well-designed profile menu.
+* Correct safe-area handling where applicable.
+
+Test at viewport widths of approximately:
+
+* 320px.
+* 375px.
+* 390px.
+* 430px.
+
+Also test the desktop layout at:
+
+* 1024px.
+* 1280px.
+* 1440px.
+* 1920px.
+
+Use fluid layouts and responsive breakpoints.
+
+Do not force a fixed desktop canvas onto mobile.
+
+Do not remove important functionality just to make a page fit.
+
+If a complex component needs a mobile-specific composition, implement that composition while keeping the same design identity.
+
+---
+
+# PHASE 7 — FUNCTIONAL REQUIREMENTS
+
+Every visible interactive element must have an intentional behaviour.
+
+This includes:
+
+* Navigation links.
+* Create buttons.
+* Search fields.
+* Filters.
+* Dropdowns.
+* Event cards.
+* Edit buttons.
+* Share actions.
+* Favourite buttons.
+* Calendar navigation.
+* Tabs.
+* Modals.
+* Dialogs.
+* Form submissions.
+* AI message controls.
+* Vendor comparison.
+* Theme selection.
+* Save actions.
+* Profile menu actions.
+* Timeline task controls.
+
+Do not leave obvious controls that do nothing.
+
+Do not use `href="#"` as a substitute for implementing real navigation.
+
+Do not show success messages when the underlying operation has failed.
+
+Provide appropriate:
+
+* Loading states.
+* Empty states.
+* Success feedback.
+* Error feedback.
+* Form validation.
+* Retry actions where applicable.
+* Disabled states when an operation genuinely cannot be performed.
+
+Use a consistent approach to state management and persistence.
+
+If a database is available, use it for persisted data.
+
+If the existing project uses local storage or another suitable persistence mechanism, preserve that architecture when appropriate.
+
+If the application has no backend, implement a clear and maintainable data layer appropriate to the existing stack.
+
+Do not discard user changes unnecessarily when moving between screens.
+
+---
+
+# PHASE 8 — CODE QUALITY AND ARCHITECTURE
+
+Build a maintainable application rather than a collection of disconnected screens.
+
+### Component architecture
+
+Create reusable components for repeated patterns, such as:
+
+* Application header.
+* Navigation.
+* Buttons.
+* Inputs.
+* Event cards.
+* Vendor cards.
+* Theme cards.
+* Status badges.
+* Statistic cards.
+* Modal dialogs.
+* Calendar controls.
+* Floating AI button.
+* Chat panel.
+* Loading indicators.
+* Form validation messages.
+
+Do not duplicate large sections of markup when they can reasonably be shared.
+
+At the same time, do not force unrelated screens into one enormous component.
+
+Use clear component boundaries and meaningful names.
+
+### Styling
+
+Use the project's existing styling solution where suitable.
+
+Maintain consistent design tokens for:
+
+* Colours.
+* Typography.
+* Spacing.
+* Radii.
+* Shadows.
+* Button heights.
+* Input heights.
+* Responsive breakpoints.
+
+Avoid repeated arbitrary values when a shared design token would improve consistency.
+
+Avoid broad CSS selectors that unintentionally affect unrelated screens.
+
+Keep screen-specific styling properly scoped.
+
+### Type safety
+
+If using TypeScript:
+
+* Prefer strict typing.
+* Avoid unnecessary `any`.
+* Validate external and AI-generated data.
+* Handle errors explicitly.
+* Define clear types for events, tasks, themes, vendors, budgets, and AI messages.
+
+Do not sacrifice type safety merely to make the project compile.
+
+### Error handling
+
+Handle API failures, invalid user input, missing configuration, and unexpected responses gracefully.
+
+Keep sensitive technical details out of user-facing error messages.
+
+Do not expose secrets in frontend code.
+
+---
+
+# PHASE 9 — DATA AND AI BEHAVIOUR
+
+The application must distinguish between real information, estimates, and demonstration content.
+
+### Demo data
+
+Use the precise visible sample content where required to reproduce the reference images.
+
+For populated demonstration screens, keep the data internally consistent.
+
+For example:
+
+* Event counts should match the events represented by the selected dataset.
+* Budget percentages should agree with their monetary values.
+* Completion indicators should match the underlying task state.
+* Filters should use the same categories shown in the displayed cards.
+
+Use representative sample records where needed to make the interface explorable.
+
+Clearly identify sample vendors or demonstration records when they are not actual verified listings.
+
+### AI-generated content
+
+When a real AI service is configured:
+
+* Use server-side API requests.
+* Apply request validation.
+* Use structured outputs where appropriate.
+* Validate outputs against the expected schema.
+* Provide bounded timeouts and retries.
+* Protect API credentials.
+* Handle rate limits and API failures.
+* Keep user-facing failure messages understandable.
+
+Use deterministic application logic for calculations that should be exact, such as:
+
+* Budget totals.
+* Percentages.
+* Remaining funds.
+* Task completion statistics.
+* Date calculations.
+
+Use AI for natural-language understanding, personalized recommendations, planning suggestions, and explanations.
+
+Do not rely on the language model for arithmetic that can be calculated directly.
+
+---
+
+# PHASE 10 — ACCESSIBILITY AND SECURITY
+
+### Accessibility
+
+Implement the following where applicable:
+
+* Semantic HTML.
+* Labels associated with form inputs.
+* Keyboard navigation.
+* Visible focus indicators.
+* Accessible button names.
+* Appropriate heading hierarchy.
+* Sufficient text contrast.
+* Accessible modal behaviour.
+* Escape-to-close for suitable dialogs.
+* Focus management.
+* Screen-reader-friendly status information.
+* Useful descriptions for meaningful images.
+
+Do not rely on colour alone to communicate event status.
+
+### Security
+
+* Keep API keys server-side.
+* Validate API inputs.
+* Enforce authorization on protected operations.
+* Restrict AI request sizes and frequencies appropriately.
+* Treat user-generated and AI-generated text as untrusted content.
+* Avoid inserting untrusted HTML directly into the DOM.
+* Avoid exposing secrets or internal errors.
+* Protect persisted user-specific data according to the application's authentication model.
+
+Do not claim that the application has authentication, authorization, or production-grade security controls unless those controls are genuinely implemented.
+
+---
+
+# PHASE 11 — VISUAL QA AND REFERENCE MATCHING
+
+Visual verification is mandatory.
+
+Do not declare completion simply because the development server starts successfully.
+
+### Screenshot comparison process
+
+For each implemented screen:
+
+1. Open the corresponding reference image.
+2. Open the implemented screen at the appropriate viewport.
+3. Capture a screenshot.
+4. Compare the reference and implementation.
+5. Identify mismatches.
+6. Correct them.
+7. Repeat the comparison.
+
+Check:
+
+* Overall proportions.
+* Header alignment.
+* Main content positioning.
+* Card widths and heights.
+* Image dimensions and crops.
+* Typography.
+* Spacing.
+* Button dimensions.
+* Border radii.
+* Shadow intensity.
+* Content density.
+* Responsive layout.
+* Floating assistant placement.
+
+Prioritize large structural mismatches before fine visual details.
+
+Do not simply compare the homepage and assume the rest of the application will match.
+
+Every provided screen must be checked.
+
+### Strict acceptance criteria
+
+The implementation should:
+
+* Follow the supplied design specification.
+* Match the visual references as closely as practical.
+* Preserve the cream-and-beige identity.
+* Include all specified screens.
+* Include all important visible sections.
+* Use the appropriate supplied imagery.
+* Maintain consistent global navigation.
+* Keep the floating AI assistant clear of important content.
+* Work at the specified desktop and mobile widths.
+* Have functional navigation and primary user flows.
+* Pass available automated checks.
+
+Do not intentionally introduce redesigns or extra elements that change the reference composition.
+
+---
+
+# PHASE 12 — TESTING AND VERIFICATION
+
+Use the available test infrastructure in the repository.
+
+Implement and run relevant tests for:
+
+### Unit tests
+
+Test:
+
+* Budget calculations.
+* Percentage calculations.
+* Input validation.
+* Date calculations.
+* Task state updates.
+* Filtering and sorting.
+* Event statistics.
+
+### Integration tests
+
+Test:
+
+* Event creation.
+* Event updates.
+* Data persistence.
+* AI request validation.
+* Vendor search and filtering.
+* Budget updates.
+* Task updates.
+
+### End-to-end tests
+
+Test representative complete workflows:
+
+**Workflow A: Create an event**
+
+Open the application → Create New Event → Enter event details → Select preferences → Enter budget → Review → Create → Confirm that the event appears in My Events.
+
+**Workflow B: Update an event**
+
+Open My Events → Select an event → Edit details → Save → Verify that the changes persist.
+
+**Workflow C: Plan a theme**
+
+Open Event Studio → Select event category → Choose a theme → Review theme details → Save the selection → Confirm the saved state.
+
+**Workflow D: Discover vendors**
+
+Open Vendors → Search → Apply category and budget filters → Open vendor details → Select vendors for comparison → Review comparison.
+
+**Workflow E: Use the AI assistant**
+
+Open the floating assistant → Submit a planning request → Display the response or honest fallback → Continue the conversation → Confirm that the panel behaves correctly on desktop and mobile.
+
+**Workflow F: Budget and timeline**
+
+Open an event → Change a budget value → Verify the calculation → Update a task → Confirm that completion information updates correctly.
+
+Also test empty states, invalid forms, failed requests, missing configuration, and other relevant edge cases.
+
+Run all applicable commands for:
+
+* Type checking.
+* Linting.
+* Unit tests.
+* Integration tests.
+* Production build.
+* End-to-end tests, where supported.
+
+Fix the failures you identify.
+
+Never claim that a command passed unless you actually ran it and verified the result.
+
+---
+
+# PHASE 13 — IMPLEMENTATION WORKFLOW
+
+Work through the project in the following order.
+
+### Step 1: Audit
+
+Read all files and inspect the existing codebase.
+
+### Step 2: Create an implementation checklist
+
+Map every required screen and component to its specification and reference image.
+
+### Step 3: Establish the design system
+
+Implement shared typography, colours, spacing, buttons, form controls, card patterns, and navigation.
+
+### Step 4: Build the global application shell
+
+Implement the header, responsive navigation, profile controls, and floating AI entry point.
+
+### Step 5: Implement all required screens
+
+Complete Home, My Events, Event Studio, Vendors, Vendor Details, AI Copilot, Budget Planner, Event Timeline, Create New Event, and Profile according to the available specifications.
+
+### Step 6: Connect the screens
+
+Ensure navigation, event context, shared data, and common actions behave consistently.
+
+### Step 7: Implement the functional logic
+
+Build working forms, filters, calculations, saved states, AI integration, and persistence.
+
+### Step 8: Implement responsive layouts
+
+Reproduce the intended mobile experience rather than merely shrinking desktop pages.
+
+### Step 9: Test and compare
+
+Run tests, inspect screenshots, identify mismatches, and correct them.
+
+### Step 10: Final audit
+
+Check the requirements against the actual implementation before reporting completion.
+
+If you encounter an implementation issue, investigate and solve it rather than skipping the affected feature.
+
+Do not stop after completing only the first few screens.
+
+---
+
+# PHASE 14 — NON-NEGOTIABLE RULES
+
+1. Do not ignore any supplied reference image.
+2. Do not ignore any part of `design.md`.
+3. Do not redesign the application independently.
+4. Do not replace the cream theme with another colour scheme.
+5. Do not replace the supplied visual references with generic templates.
+6. Do not put screenshots in place of functional UI components.
+7. Do not create dead buttons or decorative-only controls.
+8. Do not create non-functional forms.
+9. Do not omit required mobile screens.
+10. Do not omit lower sections of a page simply because the first viewport looks complete.
+11. Do not make the floating AI assistant cover essential content.
+12. Do not add the redundant desktop AI Copilot navigation item when it conflicts with the agreed floating-assistant design.
+13. Do not change the visible sample content unnecessarily.
+14. Do not generate fake claims about live AI, real vendors, or verified market data.
+15. Do not expose API secrets.
+16. Do not introduce unrelated features that compromise visual fidelity.
+17. Do not delete existing functionality without a justified reason.
+18. Do not claim tests passed unless they were executed.
+19. Do not report a screen as complete when it is only partially implemented.
+20. Do not stop when the first development build succeeds.
+
+If a requirement cannot be implemented because of a missing service, credential, dependency, or external integration, explain the limitation and implement the best honest fallback that preserves the intended user experience.
+
+---
+
+# PHASE 15 — FINAL DELIVERY REPORT
+
+After implementation, provide a concise but accurate completion report containing:
+
+1. Screens implemented.
+2. Features implemented.
+3. Important architectural decisions.
+4. AI integrations completed.
+5. Data persistence implemented.
+6. Responsive layouts completed.
+7. Automated tests executed and their actual results.
+8. Build and lint results.
+9. Any remaining limitations.
+10. Steps needed to run the application locally.
+11. Required environment variables and setup instructions.
+
+Distinguish completed functionality from any remaining demo-only behaviour.
+
+Do not describe a planned feature as implemented unless it genuinely works.
+
+---
+
+# FINAL MISSION
+
+You now have:
+
+* The complete `design.md` specification.
+* All supplied desktop reference images.
+* All supplied mobile reference images.
+* The established Planora AI design identity.
+* The agreed navigation and floating AI assistant behaviour.
+
+Use these materials to build the complete application.
+
+**Read the specification. Inspect every image. Audit the codebase. Implement the application. Connect the functionality. Test the workflows. Compare the screenshots. Fix the mismatches.**
+
+Do not stop at an attractive prototype.
+
+Do not provide only a plan, a checklist, or sample code.
+
+Make the actual changes in the working project.
+
+Your objective is a complete, responsive, visually faithful, functional implementation of Planora AI that follows the supplied references and specification as closely as possible.
+
+BEGIN BY INSPECTING THE REPOSITORY AND READING `design.md` IN FULL.

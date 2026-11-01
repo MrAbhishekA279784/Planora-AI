@@ -1,0 +1,1095 @@
+# PLANORA AI — INDEPENDENT BRUTAL TECHNICAL AUDIT
+
+## Objective: Determine the REAL Score of the Project Across All Six Evaluation Parameters
+
+Act as a completely independent principal software architect, senior security auditor, performance engineer, QA lead, accessibility specialist, and competitive coding evaluator.
+
+Your responsibility is to evaluate the actual Planora AI application as strictly as possible.
+
+The project is being evaluated on six parameters:
+
+1. Code Quality
+2. Security
+3. Efficiency
+4. Testing
+5. Accessibility
+6. Problem Statement Alignment
+
+Each parameter is evaluated out of 100.
+
+I previously asked for improvements targeting 100/100 in every category. However, I now want an independent, brutally honest verification of the actual results.
+
+**DO NOT ASSUME THAT THE PROJECT DESERVES 100/100 JUST BECAUSE PREVIOUS IMPLEMENTATION TASKS WERE COMPLETED.**
+
+Your job is to discover what is genuinely working, what is partially implemented, what is broken, what is insecure, and what is only claimed to be implemented.
+
+Your loyalty is to technical accuracy, not to the project's reputation or the developer's expectations.
+
+---
+
+# PHASE 1 — INDEPENDENT AUDIT RULES
+
+These rules are mandatory.
+
+### Rule 1: No Automatic 100/100
+
+Do not assign 100/100 simply because:
+
+* The build succeeds.
+* All existing tests pass.
+* The TypeScript compiler reports zero errors.
+* The project has many features.
+* The UI looks professional.
+* The backend uses Firebase and Supabase.
+* The application integrates Gemini.
+* A previous AI audit reported high scores.
+* An implementation report claims everything is complete.
+
+A working build proves only that the application can compile.
+
+Passing existing tests proves only that the tested scenarios passed.
+
+Neither establishes production quality.
+
+### Rule 2: Inspect Actual Implementation
+
+Verify every important claim directly from:
+
+* Source code.
+* Backend routes.
+* Controllers.
+* Services.
+* Middleware.
+* Database migrations.
+* SQL policies.
+* Frontend components.
+* API requests and responses.
+* Automated tests.
+* Actual application behavior.
+
+Never award points based only on documentation.
+
+### Rule 3: No Self-Grading Bias
+
+Do not reuse your previous scorecard as the final result.
+
+Perform a fresh evaluation from the current repository state.
+
+Do not defend earlier implementation decisions when evidence shows they are incorrect.
+
+### Rule 4: Read-Only Audit First
+
+During the initial evaluation:
+
+* Do not modify source code.
+* Do not remove tests.
+* Do not weaken validation.
+* Do not change scoring criteria.
+* Do not modify application behavior to hide defects.
+* Do not replace failing tests with mocked success.
+* Do not manipulate metrics.
+
+First establish the actual condition of the project.
+
+Provide findings and a remediation plan before making any changes.
+
+### Rule 5: Evidence Is Mandatory
+
+Every significant finding must include:
+
+* File path.
+* Relevant function, component, endpoint, or SQL policy.
+* Line numbers where available.
+* How you tested it.
+* Actual observed result.
+* Why it affects the score.
+* Recommended correction.
+
+For example:
+
+`server/config/sessionToken.ts`
+
+Finding: Production startup accepts a fallback signing secret.
+
+Evidence: Identify the exact implementation and test whether the production configuration rejects a missing secret.
+
+Do not invent file paths, line numbers, execution results, or database behavior.
+
+### Rule 6: Separate Verified and Unverified Claims
+
+Classify every important conclusion as:
+
+* VERIFIED IN SOURCE CODE
+* VERIFIED BY EXECUTED TEST
+* VERIFIED AGAINST LIVE SERVICE
+* PARTIALLY VERIFIED
+* NOT VERIFIED
+* FAILED
+
+Do not describe a mocked integration test as a successful live integration.
+
+---
+
+# PHASE 2 — ESTABLISH THE ACTUAL BASELINE
+
+Before scoring anything, inspect the complete repository.
+
+Inspect:
+
+* Frontend architecture.
+* Backend architecture.
+* Firebase Authentication.
+* Firebase Admin SDK.
+* Supabase PostgreSQL.
+* RLS policies.
+* Database migrations.
+* Express routes.
+* Controllers and services.
+* Gemini integration.
+* Google Maps.
+* Google Places.
+* Google Calendar.
+* Profile management.
+* Onboarding.
+* Events.
+* Tasks.
+* Budgets.
+* Expenses.
+* Guests.
+* Vendors.
+* Reviews.
+* Notifications.
+* AI conversation storage.
+* Environment variables.
+* Automated tests.
+
+Inspect the package scripts.
+
+Run the actual available commands for:
+
+* Production build.
+* TypeScript checks.
+* ESLint.
+* Unit tests.
+* Backend integration tests.
+* Frontend component tests.
+* E2E tests.
+* Coverage.
+* Bundle analysis.
+
+Record the exact command and its output.
+
+If a command fails, report the failure.
+
+If an API key or external service is unavailable, do not pretend to have tested that integration.
+
+---
+
+# PHASE 3 — CODE QUALITY AUDIT (100 MARKS)
+
+Evaluate the actual code quality, not its appearance.
+
+## 3.1 Architecture and Modularity — 20 Marks
+
+Inspect:
+
+* Component responsibilities.
+* Module boundaries.
+* Separation of concerns.
+* Dependency direction.
+* Reusable business logic.
+* Frontend/backend separation.
+* Service and repository architecture.
+
+Investigate the previously identified large components:
+
+* `LandingPageView.tsx`
+* `App.tsx`
+* `ProfileView.tsx`
+
+Check whether they have actually been modularized or still contain excessive unrelated responsibilities.
+
+Do not deduct marks merely because a file is long. Evaluate maintainability and coupling.
+
+## 3.2 TypeScript and Type Safety — 15 Marks
+
+Check:
+
+* `any` usage.
+* Unsafe type assertions.
+* Implicit typing.
+* Null handling.
+* External API response types.
+* Backend/frontend contract consistency.
+* Type suppression.
+* Validation of unknown input.
+
+Try to identify defects that the TypeScript compiler does not detect.
+
+## 3.3 Maintainability — 15 Marks
+
+Inspect:
+
+* Duplicate code.
+* Function complexity.
+* Naming consistency.
+* Error handling.
+* Separation of business logic.
+* Code readability.
+* Dead code.
+* Unused dependencies.
+* Unnecessary abstractions.
+
+## 3.4 API and Backend Architecture — 15 Marks
+
+Check:
+
+* Route organization.
+* Controller/service responsibilities.
+* Input validation.
+* Response consistency.
+* Error propagation.
+* Database access abstraction.
+* Reusability.
+
+## 3.5 Reliability and Failure Handling — 15 Marks
+
+Test:
+
+* Invalid requests.
+* Missing fields.
+* Database errors.
+* API errors.
+* Concurrent operations.
+* Null values.
+* Empty results.
+* Invalid data.
+* Unexpected server responses.
+
+Check whether failures are handled correctly or merely hidden.
+
+## 3.6 Documentation and Configuration — 10 Marks
+
+Inspect:
+
+* `.env.example`.
+* Setup instructions.
+* Migration documentation.
+* API contracts.
+* Configuration validation.
+* README accuracy.
+
+## 3.7 Regression Risk — 10 Marks
+
+Determine whether the architecture makes changes risky or likely to break existing features.
+
+### Output
+
+Give a score out of 100 with evidence for every deduction.
+
+---
+
+# PHASE 4 — SECURITY AUDIT (100 MARKS)
+
+Treat this as an adversarial security review.
+
+Assume an attacker is actively trying to access another user's information.
+
+## 4.1 Authentication — 20 Marks
+
+Inspect the complete Firebase authentication flow.
+
+Verify:
+
+* Firebase ID token signature.
+* Token expiration.
+* Revocation handling where applicable.
+* UID extraction.
+* Email verification requirements where appropriate.
+* Backend token validation.
+* Account switching.
+* Logout.
+* Session expiration.
+
+Inspect the custom HMAC session-token implementation if it still exists.
+
+Test:
+
+* Missing token.
+* Malformed token.
+* Forged token.
+* Modified payload.
+* Modified signature.
+* Expired token.
+* Unsigned token.
+* Wrong signing key.
+* Missing production secret.
+* Expired session.
+* Replayed token where applicable.
+
+If a custom session token is accepted without trustworthy cryptographic verification, treat it as a serious finding.
+
+## 4.2 Secrets and Configuration — 15 Marks
+
+Inspect:
+
+* `SESSION_SECRET`.
+* Firebase Admin credentials.
+* Supabase Service Role key.
+* Gemini API key.
+* Google OAuth secrets.
+* Refresh tokens.
+* Frontend environment variables.
+* Build artifacts.
+
+Verify that secrets do not leak into:
+
+* Client bundles.
+* Source maps.
+* Public API responses.
+* Logs.
+* Git history.
+* Error messages.
+
+Do not print secret values in your report.
+
+## 4.3 Supabase RLS and Database Authorization — 20 Marks
+
+Inspect actual SQL policies and backend database clients.
+
+IMPORTANT:
+
+If the backend uses `SUPABASE_SERVICE_ROLE_KEY`, understand that this bypasses PostgreSQL RLS.
+
+Do not award full credit merely because RLS is enabled in the Supabase Dashboard.
+
+Determine exactly how authorization is enforced for every server-side database operation.
+
+Inspect:
+
+* User ownership.
+* Event ownership.
+* Task ownership.
+* Budget ownership.
+* Expense ownership.
+* Guest ownership.
+* Vendor ownership.
+* Review ownership.
+* AI conversation ownership.
+* Profile ownership.
+
+Look for missing ownership filters, incorrect joins, and authorization gaps.
+
+Test direct requests against another user's records.
+
+## 4.4 IDOR and Access Control — 15 Marks
+
+Attempt:
+
+* Reading another user's event.
+* Modifying another user's event.
+* Deleting another user's task.
+* Reading another user's budget.
+* Changing another user's review.
+* Accessing another user's profile.
+* Reading another user's AI history.
+* Accessing another user's vendor records.
+
+Modify IDs and request parameters directly.
+
+Do not rely only on frontend checks.
+
+## 4.5 API Security — 10 Marks
+
+Check:
+
+* Rate limiting.
+* Input validation.
+* Request size limits.
+* CORS.
+* Security headers.
+* SQL injection risks.
+* XSS risks.
+* CSRF risks where relevant.
+* Safe error responses.
+
+## 4.6 AI Security — 10 Marks
+
+Test:
+
+* Prompt injection.
+* Unauthorized tool execution.
+* Cross-user context leakage.
+* Sensitive information exposure.
+* Attempts to make the AI ignore authorization.
+* Attempts to create or modify records without required confirmation.
+
+## 4.7 Storage and External Integrations — 10 Marks
+
+Inspect:
+
+* Avatar upload authorization.
+* Storage policies.
+* Google OAuth token storage.
+* Refresh-token encryption.
+* Calendar access.
+* Vendor API access.
+* External API key restrictions.
+
+### Mandatory Security Rule
+
+Any confirmed critical or high-severity vulnerability must substantially reduce the score.
+
+Do not award 100/100 while a critical or high-severity issue remains unresolved.
+
+---
+
+# PHASE 5 — EFFICIENCY AND PERFORMANCE AUDIT (100 MARKS)
+
+Do not assume the application is efficient because it feels fast on one machine.
+
+Measure it.
+
+## 5.1 Frontend Performance — 20 Marks
+
+Inspect:
+
+* Initial bundle size.
+* JavaScript chunk sizes.
+* Route-level code splitting.
+* Lazy loading.
+* Image optimization.
+* Font loading.
+* Unused dependencies.
+* Duplicate libraries.
+
+Check whether large modules load unnecessarily on the initial route.
+
+## 5.2 Rendering Efficiency — 15 Marks
+
+Inspect:
+
+* React re-renders.
+* Expensive calculations.
+* Large lists.
+* State duplication.
+* Unnecessary effects.
+* Event listeners.
+* Memory leaks.
+* Realtime subscription cleanup.
+
+Do not award points simply for using `useMemo` or `React.memo`.
+
+Check whether they solve actual measured problems.
+
+## 5.3 Database Efficiency — 20 Marks
+
+Inspect:
+
+* Missing indexes.
+* Query execution plans if available.
+* N+1 queries.
+* Full-table queries.
+* Pagination.
+* Sorting.
+* Filtering.
+* Aggregations.
+* Repeated requests.
+* Connection handling.
+
+Check whether indexes match actual query patterns.
+
+Do not claim a query is fast without measuring it.
+
+## 5.4 API Performance — 15 Marks
+
+Measure where possible:
+
+* Response latency.
+* Payload sizes.
+* Concurrent request behavior.
+* Error handling under load.
+* Timeout handling.
+* Retry behavior.
+
+## 5.5 AI Efficiency — 15 Marks
+
+Inspect:
+
+* Prompt size.
+* Context retrieval.
+* Conversation history growth.
+* Token limits.
+* Output limits.
+* Repeated context.
+* Database queries per AI request.
+* Usage accounting.
+* Rate limits.
+
+Verify that AI requests retrieve only the information they actually need.
+
+## 5.6 Memory and Scalability — 15 Marks
+
+Inspect:
+
+* In-memory fallback database.
+* Memory growth.
+* Large arrays.
+* Unbounded histories.
+* File uploads.
+* Concurrent operations.
+* Pagination.
+* Background work.
+
+Simulate realistic workloads where safe and feasible.
+
+### Required Measurements
+
+Report:
+
+* Production bundle size.
+* Largest JavaScript chunk.
+* Lighthouse results if available.
+* Core Web Vitals where measurable.
+* Database query timings.
+* API response timings.
+* AI request latency.
+* Memory usage under test load.
+
+Provide exact testing conditions.
+
+---
+
+# PHASE 6 — TESTING AUDIT (100 MARKS)
+
+Do not reward a project merely for having many tests.
+
+Evaluate whether the tests detect real defects.
+
+## 6.1 Unit Testing — 15 Marks
+
+Review coverage and assertion quality.
+
+Check:
+
+* Happy paths.
+* Edge cases.
+* Invalid inputs.
+* Failure states.
+* Business calculations.
+* Security utilities.
+
+## 6.2 Backend Integration Testing — 20 Marks
+
+Verify that tests exercise actual routes, authorization, database operations, and response behavior.
+
+Distinguish real database tests from mocks.
+
+## 6.3 Frontend Component Testing — 15 Marks
+
+Check whether the following have genuine behavioral tests:
+
+* Signup.
+* Login.
+* Onboarding.
+* Profile.
+* Event creation.
+* Dashboard.
+* Budget Planner.
+* Vendor section.
+* AI Copilot.
+* Reviews.
+* Modals and navigation.
+
+A render-only assertion is not enough for complex interactive components.
+
+## 6.4 End-to-End Testing — 20 Marks
+
+Verify real user journeys using Playwright or an equivalent tool.
+
+Test:
+
+**Journey A: New User**
+
+* Sign up.
+* Complete onboarding.
+* Create profile.
+* Enter dashboard.
+* Create event.
+* Refresh.
+* Verify persistence.
+
+**Journey B: Existing User**
+
+* Log in.
+* Load profile.
+* View saved events.
+* Modify records.
+* Verify persistence.
+
+**Journey C: Isolation**
+
+* User A creates records.
+* User B logs in.
+* User B must not see or modify User A's data.
+
+**Journey D: AI**
+
+* Different prompts produce relevant responses.
+* Follow-up messages retain context.
+* User data is correctly scoped.
+* Errors are handled honestly.
+* Approved actions persist.
+
+**Journey E: Vendors**
+
+* Search real results.
+* Use actual map coordinates.
+* Save vendors.
+* Refresh.
+* Verify persistence.
+
+**Journey F: Reviews**
+
+* Submit rating.
+* Verify storage.
+* Verify average calculation.
+* Test unauthorized modification.
+
+## 6.5 Security Testing — 15 Marks
+
+Review test coverage for:
+
+* Forged tokens.
+* Expired tokens.
+* IDOR.
+* Unauthorized updates.
+* Unauthorized deletion.
+* Invalid request bodies.
+* Privileged API access.
+* Cross-user isolation.
+
+## 6.6 Test Quality and Mutation Testing — 15 Marks
+
+Where practical, use mutation testing or deliberately introduce controlled defects in an isolated test environment.
+
+Check whether tests fail when:
+
+* An ownership check is removed.
+* A validation rule is removed.
+* A calculation is changed.
+* A required field is ignored.
+* An API error is swallowed.
+* A response is replaced with a hardcoded value.
+
+If the tests continue passing despite an important defect, their quality is insufficient.
+
+Never deliberately weaken the production application.
+
+### Required Testing Report
+
+Provide:
+
+* Total tests discovered.
+* Total tests executed.
+* Passed.
+* Failed.
+* Skipped.
+* Statement coverage.
+* Branch coverage.
+* Function coverage.
+* Line coverage.
+* Mutation results, if available.
+* Mocked versus live integration tests.
+
+Do not invent coverage metrics.
+
+---
+
+# PHASE 7 — ACCESSIBILITY AUDIT (100 MARKS)
+
+Evaluate against WCAG 2.2 Level AA as the target.
+
+## 7.1 Automated Accessibility Testing — 20 Marks
+
+Run axe or an equivalent accessibility checker.
+
+Inspect all major routes and interactive states.
+
+Report:
+
+* Critical violations.
+* Serious violations.
+* Moderate violations.
+* Minor violations.
+
+Do not claim the entire application is accessible merely because one page passes.
+
+## 7.2 Keyboard Accessibility — 20 Marks
+
+Manually test:
+
+* Navigation.
+* Dropdown menus.
+* Dialogs.
+* Forms.
+* AI Copilot.
+* Vendor search.
+* Rating selection.
+* Onboarding.
+* Profile editing.
+
+Test:
+
+* Tab.
+* Shift + Tab.
+* Enter.
+* Space.
+* Escape.
+* Arrow keys where applicable.
+
+## 7.3 Focus Management — 15 Marks
+
+Inspect:
+
+* Modal focus trapping.
+* Focus restoration.
+* Visible focus.
+* Dialog open and close.
+* Focus behavior after navigation.
+* Validation errors.
+
+Specifically recheck the previously identified custom modal focus-management weaknesses.
+
+## 7.4 Screen Reader Support — 15 Marks
+
+Inspect:
+
+* Semantic HTML.
+* ARIA labels.
+* Heading hierarchy.
+* Form labels.
+* Error announcements.
+* Dynamic content.
+* Image alternatives.
+* Button names.
+
+## 7.5 Forms and Interactive Controls — 15 Marks
+
+Check:
+
+* Accessible labels.
+* Error messages.
+* Required field identification.
+* Input instructions.
+* Validation announcements.
+* Keyboard operation.
+* Touch target size.
+
+## 7.6 Visual Accessibility and Responsive Design — 15 Marks
+
+Inspect:
+
+* Text contrast.
+* Muted text contrast.
+* Focus indicators.
+* Color-only information.
+* Zoom up to 200%.
+* Reflow at narrow viewports.
+* Text resizing.
+* Responsive controls.
+
+Preserve the existing visual identity wherever possible while correcting accessibility defects.
+
+---
+
+# PHASE 8 — PROBLEM STATEMENT ALIGNMENT (100 MARKS)
+
+Do not award 100 marks simply because the application contains many features.
+
+First inspect the actual challenge problem statement, project description, and intended user requirements.
+
+If the original problem statement is unavailable, explicitly disclose that limitation.
+
+Evaluate:
+
+## 8.1 Core Problem Coverage — 25 Marks
+
+Does Planora actually help users organize:
+
+* Weddings.
+* Birthdays.
+* Community events.
+* Other celebrations.
+
+Does the application solve a meaningful planning problem?
+
+## 8.2 End-to-End Workflow — 25 Marks
+
+Can a real user complete the full process?
+
+* Create an event.
+* Set a budget.
+* Add tasks.
+* Manage guests.
+* Discover vendors.
+* Save selected vendors.
+* Get AI planning assistance.
+* Synchronize calendar data where configured.
+
+## 8.3 AI Value — 20 Marks
+
+Does the AI genuinely improve the workflow?
+
+Check:
+
+* Contextual answers.
+* Personalized planning.
+* Relevant recommendations.
+* Actual user-data integration.
+* Secure actions.
+* Useful follow-up questions.
+
+A basic Gemini chat window is not enough to justify full marks.
+
+## 8.4 Data Integrity — 15 Marks
+
+Check:
+
+* No fake user records.
+* No fake events.
+* No fabricated financial information.
+* No false vendor details.
+* No invented reviews.
+* Correct user ownership.
+* Persistent records.
+
+## 8.5 Usability and Completeness — 15 Marks
+
+Does the application make sense to a first-time user?
+
+Is the navigation logical?
+
+Are empty states helpful?
+
+Are features genuinely implemented rather than decorative?
+
+---
+
+# PHASE 9 — SPECIFIC PREVIOUS FINDINGS THAT MUST BE RECHECKED
+
+Earlier audits identified the following weaknesses.
+
+Do not assume these have been fixed.
+
+Verify each one from scratch.
+
+### Finding 1: SESSION_SECRET fallback
+
+Previously identified in:
+
+`server/config/sessionToken.ts`
+
+Verify whether:
+
+* Production refuses to start without a secure secret.
+* No hardcoded production fallback remains.
+* Weak secrets are rejected.
+
+### Finding 2: Supabase Service Role bypass
+
+Previously identified in server-side database access.
+
+Verify:
+
+* Which requests bypass RLS.
+* Whether ownership is enforced consistently.
+* Whether user-scoped RLS can be used safely.
+* Whether any privileged endpoint has an authorization gap.
+
+### Finding 3: Large frontend components
+
+Previously identified:
+
+* `LandingPageView.tsx`
+* `App.tsx`
+* `ProfileView.tsx`
+
+Verify actual modularity, maintainability, and route-level code splitting.
+
+### Finding 4: Missing frontend tests
+
+Verify whether component tests now exist and actually exercise user behavior.
+
+### Finding 5: Missing E2E tests
+
+Verify whether full browser flows are tested.
+
+### Finding 6: Accessibility defects
+
+Verify:
+
+* Modal focus trapping.
+* ARIA live regions.
+* Screen-reader announcements.
+* Keyboard interaction.
+* Contrast.
+
+If an issue is already fixed, provide evidence proving the fix.
+
+---
+
+# PHASE 10 — STRICT SCORING SYSTEM
+
+Use the following rubric consistently.
+
+| Score Range | Evaluation                                                                                                                     |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| 0–39        | Critical failures or major missing functionality                                                                               |
+| 40–59       | Weak implementation with major gaps                                                                                            |
+| 60–74       | Functional but significant quality problems                                                                                    |
+| 75–84       | Good implementation with noticeable weaknesses                                                                                 |
+| 85–89       | Strong implementation with important improvements remaining                                                                    |
+| 90–94       | Excellent implementation with limited weaknesses                                                                               |
+| 95–97       | Exceptional implementation with only minor verified gaps                                                                       |
+| 98–99       | Near-perfect implementation with extremely small residual limitations                                                          |
+| 100         | Every relevant requirement is satisfied, thoroughly verified, and supported by strong evidence, with no material known defects |
+
+### Mandatory Score Restrictions
+
+Apply these restrictions:
+
+* Critical unresolved security vulnerability: Security cannot receive 100.
+* High-severity unresolved security vulnerability: Security cannot receive 100.
+* Missing real E2E coverage for critical workflows: Testing cannot receive 100.
+* Major keyboard accessibility defect: Accessibility cannot receive 100.
+* Unmeasured major performance claims: Efficiency cannot receive 100.
+* Broken core user journey: Problem Statement Alignment cannot receive 100.
+* Unmaintainable or severely coupled code: Code Quality cannot receive 100.
+* Important tests that do not detect controlled defects: Testing must lose marks.
+
+Do not use these restrictions mechanically if the underlying defect does not actually exist. Verify first.
+
+## Score Calculation
+
+Calculate the simple average of the six parameter scores:
+
+Overall Score = (Code Quality + Security + Efficiency + Testing + Accessibility + Problem Statement Alignment) / 6
+
+Clearly identify this as your internal estimated score, not the competition's confirmed scoring formula.
+
+---
+
+# PHASE 11 — FINAL REPORT FORMAT
+
+Provide the result in this exact structure.
+
+## A. Executive Verdict
+
+Explain the actual condition of the application in plain language.
+
+Be direct.
+
+Do not hide serious problems behind positive wording.
+
+## B. Honest Scorecard
+
+| Parameter                   | Score / 100 | Evidence | Main Weakness |
+| --------------------------- | ----------: | -------- | ------------- |
+| Code Quality                |             |          |               |
+| Security                    |             |          |               |
+| Efficiency                  |             |          |               |
+| Testing                     |             |          |               |
+| Accessibility               |             |          |               |
+| Problem Statement Alignment |             |          |               |
+
+## C. Overall Estimated Score
+
+Give the arithmetic average.
+
+Explain its limitations.
+
+## D. Critical Findings
+
+List every Critical and High severity issue.
+
+Include file paths, evidence, test reproduction steps, and impact.
+
+## E. Medium and Low Findings
+
+List other improvements in priority order.
+
+## F. Test Results
+
+Include actual commands, output, pass/fail counts, and unavailable tests.
+
+## G. Security Attack Results
+
+Document actual attack scenarios and results.
+
+Never claim an attack was blocked unless you executed the test.
+
+## H. Performance Results
+
+Provide measurements, test conditions, and unavailable metrics.
+
+## I. Accessibility Results
+
+Report automated and manual verification.
+
+## J. Problem Statement Alignment
+
+Explain what percentage of the intended user workflow is genuinely implemented and verified.
+
+Do not confuse the number of features with completeness.
+
+## K. Top 10 Improvements
+
+Rank the most important corrections by:
+
+* Security impact.
+* User impact.
+* Evaluation impact.
+* Implementation risk.
+* Expected engineering benefit.
+
+## L. Final Recommendation
+
+Choose one:
+
+* NOT READY — Critical issues remain.
+* FIX BEFORE SUBMISSION — Important issues remain.
+* SUBMISSION READY — No known critical or high-severity defects, with residual limitations documented.
+* EXCEPTIONAL — Thoroughly verified, with exceptionally strong evidence across all six parameters.
+
+Do not select EXCEPTIONAL just to encourage the developer.
+
+---
+
+# FINAL INSTRUCTION
+
+I do not want a positive review.
+
+I do not want automatic 100/100 scores.
+
+I do not want generic praise.
+
+I do not want a score based on the number of features.
+
+I do not want a report that repeats previous claims.
+
+I want an independent, adversarial, evidence-based evaluation.
+
+**Try to break Planora AI. Try to access unauthorized data. Try invalid API requests. Try malformed inputs. Test the actual user journeys. Measure performance. Test keyboard and screen-reader behavior. Inspect database policies. Verify the authentication implementation.**
+
+If something fails, report it.
+
+If something cannot be tested, disclose it.
+
+If the project deserves 70, give it 70.
+
+If it deserves 90, give it 90.
+
+Give 100 only when the implementation genuinely earns it.
+
+**Your final score must reflect the quality of the actual software, not the score the developer hopes to receive.**

@@ -1,0 +1,1369 @@
+# PLANORA AI — ELITE ENGINEERING OPTIMIZATION
+
+## Objective: Achieve the Highest Technically Justifiable Score Across All Six Evaluation Parameters
+
+Act as a principal software architect, senior full-stack engineer, application security specialist, performance engineer, QA automation engineer, and WCAG accessibility expert.
+
+Your mission is to upgrade the existing Planora AI project to the highest possible engineering standard.
+
+The project is participating in a competitive AI-evaluated coding challenge.
+
+The evaluator assesses six parameters:
+
+1. Code Quality
+2. Security
+3. Efficiency
+4. Testing
+5. Accessibility
+6. Problem Statement Alignment
+
+**TARGET: 100/100 IN EACH PARAMETER.**
+
+This is an engineering target, not permission to manipulate evaluation results.
+
+Do not artificially inflate scores, hide weaknesses, fabricate test results, add meaningless tests, or modify code just to make an evaluator believe the project is better.
+
+Improve the actual software until every parameter meets the strongest technically defensible standard.
+
+Your responsibility is to inspect the repository, identify weaknesses, implement improvements, run tests, verify the application, and provide measurable evidence.
+
+**IMPORTANT: DO NOT STOP AFTER PRODUCING AN AUDIT OR IMPROVEMENT PLAN. IMPLEMENT THE REQUIRED FIXES IN THE ACTUAL PROJECT.**
+
+---
+
+# PHASE 0 — PROJECT INSPECTION AND BASELINE
+
+Before modifying anything, perform a comprehensive inspection.
+
+## 0.1 Inspect the Repository
+
+Inspect:
+
+* `src/`
+* `src/components/`
+* `src/context/`
+* `src/data/`
+* `src/types/`
+* `src/utils/`
+* `server/`
+* `server/routes/`
+* `server/controllers/`
+* `server/services/`
+* `server/middleware/`
+* `server/config/`
+* `tests/`
+* Existing Supabase migrations.
+* SQL files.
+* Configuration files.
+* Build scripts.
+* Environment variable examples.
+* Existing deployment configuration.
+
+Identify:
+
+* Frontend architecture.
+* Backend architecture.
+* Authentication architecture.
+* Database access patterns.
+* External API integrations.
+* AI request pipeline.
+* User data ownership.
+* Error-handling strategy.
+* Test infrastructure.
+* Accessibility implementation.
+* Performance bottlenecks.
+
+Do not trust documentation or previous audit claims without checking the actual source code.
+
+## 0.2 Establish a Baseline
+
+Run all available commands before making changes.
+
+Inspect and record:
+
+* Production build.
+* TypeScript compilation.
+* ESLint.
+* Existing automated tests.
+* Existing test coverage.
+* Frontend bundle size.
+* Largest JavaScript chunks.
+* API response timings where measurable.
+* Existing Lighthouse performance metrics.
+* Accessibility audit results.
+* Security-related test results.
+
+Save the baseline results so improvements can be compared against the original application.
+
+Do not invent measurements.
+
+If a metric cannot be measured in the current environment, mark it as unavailable.
+
+## 0.3 Preserve Existing Functionality
+
+Do not break or remove working functionality.
+
+Planora must retain:
+
+* Firebase Authentication.
+* User onboarding.
+* Profile management.
+* User-specific workspaces.
+* Event management.
+* Task management.
+* Budget Planner.
+* Guest management.
+* Vendor discovery.
+* Google Maps.
+* Google Places.
+* Google Calendar.
+* Gemini AI Copilot.
+* Reviews and ratings.
+* Supabase database integration.
+
+Preserve the existing visual identity and UI.
+
+Do not reintroduce subscription-plan promotion UI or the removed 3D Story Experience option.
+
+---
+
+# PHASE 1 — CODE QUALITY: TARGET 100/100
+
+The audit identified several large frontend components:
+
+* `LandingPageView.tsx` — approximately 1,570 lines.
+* `App.tsx` — approximately 570 lines.
+* `ProfileView.tsx` — approximately 580 lines.
+
+The existing backend architecture already has separate route, controller, service, and middleware directories.
+
+Improve the architecture without unnecessarily rewriting working code.
+
+## 1.1 Modularize Large Components
+
+Refactor large components into focused, reusable modules.
+
+For example:
+
+Landing page:
+
+* `SceneHero.tsx`
+* `SceneThemes.tsx`
+* `SceneFeatures.tsx`
+* `SceneReviews.tsx`
+* `SceneTestimonials.tsx`, only if real testimonials are supported.
+* `LandingPageView.tsx` as the composition component.
+
+Profile:
+
+* `ProfileHeader.tsx`
+* `ProfileDetails.tsx`
+* `ProfileEditForm.tsx`
+* `ProfileAvatarUpload.tsx`
+* `ProfilePreferences.tsx`
+
+Application shell:
+
+* Separate route configuration.
+* Navigation components.
+* Shared layout components.
+* Authentication boundary.
+* Loading and error boundaries.
+
+These names are architectural suggestions. Adapt them to the actual codebase.
+
+Requirements:
+
+* Each component should have one clear responsibility.
+* Avoid unnecessary prop drilling.
+* Use appropriate context or state management.
+* Keep reusable business logic outside presentation components.
+* Avoid excessive abstraction and overengineering.
+* Do not split files merely to reduce line counts.
+
+## 1.2 Improve TypeScript Quality
+
+Inspect the entire project for:
+
+* `any` types.
+* Unsafe type assertions.
+* Unvalidated API response types.
+* Incorrect nullable handling.
+* Implicit types.
+* Duplicated interfaces.
+* Inconsistent naming.
+* Unnecessary type suppression.
+
+Requirements:
+
+* Use strict types for API contracts.
+* Define reusable domain models.
+* Validate external API responses.
+* Handle null and undefined values explicitly.
+* Use discriminated unions for application states where appropriate.
+* Keep frontend and backend contracts consistent.
+* Avoid suppressing TypeScript errors without a justified explanation.
+
+Enable the strongest practical TypeScript settings without breaking legitimate existing integrations.
+
+## 1.3 Improve Code Reusability
+
+Identify repeated logic across:
+
+* Authentication.
+* API requests.
+* Validation.
+* Error handling.
+* Date and currency formatting.
+* Database operations.
+* User ownership checks.
+* AI message processing.
+* Loading and empty states.
+
+Create reusable utilities and services where genuinely beneficial.
+
+Do not introduce unnecessary dependencies.
+
+## 1.4 Improve Error Handling
+
+Implement consistent error handling across frontend and backend.
+
+Handle:
+
+* Network failures.
+* API timeouts.
+* Invalid requests.
+* Unauthorized access.
+* Forbidden access.
+* Missing database records.
+* External API failures.
+* Gemini errors.
+* Google OAuth errors.
+* Supabase failures.
+* File upload failures.
+
+Use consistent error response structures.
+
+Never expose stack traces, secrets, SQL details, or internal implementation information to public clients.
+
+## 1.5 Code Quality Acceptance Criteria
+
+* No avoidable TypeScript errors.
+* No unexplained lint errors.
+* No broken imports.
+* No unused production code.
+* No duplicate business logic where it can reasonably be shared.
+* Clear module responsibilities.
+* Consistent API contracts.
+* Maintainable folder structure.
+* No unnecessary architectural complexity.
+
+Provide a before-and-after architecture summary.
+
+---
+
+# PHASE 2 — SECURITY: TARGET 100/100
+
+Security is one of the most important evaluation categories.
+
+The existing audit reports:
+
+* HMAC-SHA256 session-token signing.
+* Constant-time signature comparison.
+* IDOR ownership checks.
+* Firebase Admin verification.
+* Supabase Service Role usage.
+
+However, it also identifies two important risks:
+
+1. A fallback `SESSION_SECRET` value.
+2. Application-layer ownership checks being the main defense when Service Role access bypasses RLS.
+
+You must address these carefully.
+
+## 2.1 Mandatory Production SESSION_SECRET Protection
+
+Inspect:
+
+* `server/config/sessionToken.ts`
+* `server/config/firebaseAdmin.ts`
+* `server.ts`
+* Authentication middleware.
+* Deployment configuration.
+
+Remove any insecure default secret fallback from production.
+
+Requirements:
+
+* In production, missing `SESSION_SECRET` must prevent the server from starting.
+* Reject empty or weak secrets.
+* Never use a hardcoded fallback secret in production.
+* Never log the secret.
+* Keep development configuration separate.
+* Document secure secret generation and rotation.
+* Verify token expiration.
+* Reject malformed signatures.
+* Reject modified payloads.
+* Reject unsigned tokens.
+* Reject expired tokens.
+* Protect against replay where appropriate.
+
+Use cryptographically secure random secret generation.
+
+Do not introduce authentication bypasses for convenience.
+
+## 2.2 Review the Custom HMAC Session System
+
+Inspect the existing custom session token implementation:
+
+`planora_v1.<payload>.<signature>`
+
+Verify:
+
+* The token is cryptographically signed.
+* Its signature is validated by the backend.
+* The payload cannot be modified without invalidating the signature.
+* Expiration is enforced.
+* The signing key is securely stored.
+* Comparison uses constant-time comparison where appropriate.
+* Token identity is derived only from verified claims.
+* Unauthenticated users cannot generate trusted tokens.
+* Tokens cannot be forged simply by changing a UID or email.
+* Production and preview configurations cannot silently weaken security.
+
+Do not treat an unsigned Firebase-error fallback as authenticated identity.
+
+If the custom session system is retained, document precisely how trusted token issuance occurs.
+
+Do not replace secure existing authentication with a weaker mechanism.
+
+## 2.3 Firebase Authentication Hardening
+
+Verify:
+
+* Firebase ID tokens are validated using the trusted Firebase Admin SDK.
+* Expiration is checked.
+* Invalid signatures are rejected.
+* Revoked tokens are handled according to the security policy.
+* UID is obtained only from verified identity.
+* Email and display name are not trusted from arbitrary client payloads.
+* Account creation and synchronization cannot create duplicate users.
+* Logout invalidates appropriate frontend state.
+
+Test unauthorized-domain handling.
+
+A Firebase authorization failure must not automatically create a privileged or trusted production session.
+
+Development preview support must be explicitly configured and isolated.
+
+## 2.4 Fix Supabase Service Role and RLS Architecture
+
+This is a critical task.
+
+The audit states that the backend uses `SUPABASE_SERVICE_ROLE_KEY`, which bypasses database RLS.
+
+Inspect every Supabase client initialization and every database operation.
+
+Determine:
+
+* Which code uses the Service Role key.
+* Which operations require elevated database privileges.
+* Which queries use `.eq('owner_id', userId)`.
+* Whether ownership is validated before inserts, updates, reads, and deletes.
+* Whether any endpoint can accidentally access unowned records.
+* Whether nested relationships are protected.
+
+Implement a secure database authorization strategy.
+
+Evaluate the project's supported Firebase-to-Supabase authentication integration.
+
+Where a properly configured user-scoped JWT integration is possible, use authenticated per-request Supabase clients so database-level RLS applies.
+
+Do not blindly call `supabase.auth.setSession()` with a Firebase token unless the relevant Supabase third-party authentication integration is correctly configured and verified.
+
+If user-scoped RLS cannot safely be used for a particular operation:
+
+* Retain the minimum necessary privileged server-side operation.
+* Centralize authorization.
+* Enforce ownership in the data access layer.
+* Validate resource ownership before every mutation.
+* Restrict which functions can access privileged clients.
+* Add security tests for every protected path.
+* Never expose privileged credentials to frontend code.
+
+Do not weaken RLS policies to make queries work.
+
+## 2.5 Database Ownership and IDOR Protection
+
+Inspect all relevant entities:
+
+* Users.
+* Profiles.
+* Events.
+* Tasks.
+* Budgets.
+* Expenses.
+* Guests.
+* Vendors.
+* Reviews.
+* AI conversations.
+* AI usage records.
+* Calendar integrations.
+
+For every protected operation:
+
+1. Verify authentication.
+2. Derive identity from verified credentials.
+3. Load or identify the target resource.
+4. Validate ownership.
+5. Perform the requested operation.
+6. Return only authorized information.
+
+Test attempts to:
+
+* Change event IDs.
+* Change task IDs.
+* Change budget IDs.
+* Change expense IDs.
+* Change guest IDs.
+* Change vendor IDs.
+* Change review IDs.
+* Request another user's profile.
+* Access another user's AI conversation.
+* Modify another user's records through direct API requests.
+
+Every unauthorized attempt must fail safely.
+
+## 2.6 Input Validation and API Security
+
+Use appropriate schema validation for:
+
+* Request bodies.
+* Route parameters.
+* Query parameters.
+* File uploads.
+* AI action payloads.
+* User profile updates.
+* Event and budget data.
+* Vendor and review submissions.
+
+Inspect and implement where appropriate:
+
+* Rate limiting.
+* Request-size limits.
+* CORS restrictions.
+* Secure HTTP headers.
+* Safe error messages.
+* Injection protection.
+* CSRF protection for cookie-based authentication flows, if present.
+* Logging that excludes credentials and sensitive information.
+
+Never trust frontend validation alone.
+
+## 2.7 AI Security
+
+Protect the AI system against:
+
+* Prompt injection.
+* Unauthorized database access.
+* Cross-user context leakage.
+* Unapproved data mutations.
+* Tool invocation abuse.
+* Excessive token consumption.
+* Sensitive information disclosure.
+
+AI-generated actions must pass through normal backend authorization.
+
+Never allow the model itself to define the authenticated user's identity or bypass permissions.
+
+## 2.8 Security Acceptance Criteria
+
+* No production fallback secrets.
+* No exposed service-role key.
+* No forgeable session tokens.
+* No unverified identities.
+* No cross-user data access.
+* No missing ownership checks.
+* Properly enforced authorization.
+* Secure input validation.
+* AI context isolation.
+* Security tests covering negative cases.
+* Documented remaining risks.
+
+Do not label security 100/100 if any critical or high-severity finding remains.
+
+---
+
+# PHASE 3 — EFFICIENCY AND PERFORMANCE: TARGET 100/100
+
+The audit identifies:
+
+* Large monolithic frontend components.
+* No route-level React code splitting.
+* Potential inefficient in-memory array scans.
+* Opportunities to improve loading and query performance.
+
+Optimize actual bottlenecks instead of applying random performance techniques.
+
+## 3.1 Implement React Code Splitting
+
+Use `React.lazy()` and `Suspense` where appropriate.
+
+Lazy-load:
+
+* Large application routes.
+* Vendor discovery pages.
+* Event Studio.
+* Profile pages.
+* Budget Planner.
+* AI-heavy views.
+* Large comparison dialogs.
+* Nonessential landing-page sections.
+
+Keep initial application loading lightweight.
+
+Provide meaningful loading fallbacks consistent with Planora's design.
+
+Do not lazy-load every tiny component.
+
+## 3.2 Optimize Bundle Size
+
+Inspect:
+
+* Production bundle.
+* Dependency sizes.
+* Duplicate dependencies.
+* Unused imports.
+* Heavy icon imports.
+* Large image assets.
+* Map SDK loading.
+* AI-specific frontend libraries.
+
+Requirements:
+
+* Remove unused dependencies only after confirming they are unnecessary.
+* Use appropriate tree-shaking.
+* Avoid importing entire libraries when smaller imports are available.
+* Load Google Maps only when required.
+* Avoid loading unnecessary modal and visualization code on initial startup.
+* Optimize assets without visibly degrading image quality.
+
+Record before-and-after bundle sizes.
+
+## 3.3 Database Query Optimization
+
+Inspect every important query.
+
+Identify:
+
+* Missing indexes.
+* Repeated database requests.
+* N+1 queries.
+* Unnecessary full-table reads.
+* Missing pagination.
+* Expensive sorting and filtering.
+* Duplicate context retrieval.
+* Unnecessary JSON processing.
+
+Implement:
+
+* Appropriate indexes.
+* Pagination.
+* Selective field retrieval.
+* Efficient joins.
+* Query deduplication.
+* Suitable database constraints.
+* Query limits.
+* Efficient aggregation.
+
+Do not add indexes without understanding their read/write trade-offs.
+
+## 3.4 Fix In-Memory Fallback Database Inefficiencies
+
+Inspect:
+
+`server/config/supabase.ts`
+
+The audit identified in-memory fallback arrays and linear scans.
+
+Determine whether this fallback is required for development or preview environments.
+
+If retained:
+
+* Keep it isolated from production.
+* Implement clear repository interfaces.
+* Avoid accidentally switching to in-memory storage in production.
+* Prevent data persistence claims when the data exists only in memory.
+* Make its operational limitations explicit.
+
+Do not use an in-memory fallback as a silent replacement for a failed production database.
+
+## 3.5 Optimize AI Requests
+
+Optimize Gemini usage without compromising response quality.
+
+Implement where appropriate:
+
+* Relevant context retrieval.
+* Conversation-history limits.
+* Safe history summarization.
+* Prompt deduplication.
+* Output-token limits.
+* Input validation.
+* Request cancellation.
+* Timeouts.
+* Rate limiting.
+* Token usage accounting.
+
+Do not send the entire user's database to Gemini for every message.
+
+Fetch only relevant authorized context.
+
+Avoid caching private AI responses across different users.
+
+## 3.6 Optimize Rendering
+
+Inspect:
+
+* Unnecessary React re-renders.
+* Expensive calculations.
+* Large list rendering.
+* Duplicate state.
+* Unstable object references.
+* Unnecessary effects.
+* Memory leaks.
+* Event listener cleanup.
+* Realtime subscription cleanup.
+
+Use `React.memo`, `useMemo`, `useCallback`, or virtualization only when measurements justify them.
+
+Do not add optimization hooks everywhere without evidence.
+
+## 3.7 Image and Asset Optimization
+
+Review:
+
+* Landing-page assets.
+* Vendor images.
+* Profile avatars.
+* Event imagery.
+* Icons.
+* Font loading.
+
+Implement where suitable:
+
+* Responsive image sizes.
+* Lazy loading.
+* Modern image formats.
+* Correct image dimensions.
+* Explicit width and height to reduce layout shift.
+* Appropriate caching headers.
+
+Keep visual quality intact.
+
+## 3.8 Performance Measurement
+
+Measure:
+
+* Initial JavaScript bundle.
+* Route-specific bundle sizes.
+* First Contentful Paint.
+* Largest Contentful Paint.
+* Cumulative Layout Shift.
+* Interaction to Next Paint.
+* API response latency.
+* Database query latency.
+* AI response latency.
+
+Use Lighthouse or equivalent tools where the environment permits.
+
+Do not fabricate performance measurements.
+
+Provide before-and-after results.
+
+---
+
+# PHASE 4 — TESTING: TARGET 100/100
+
+The audit reports 23 backend and utility tests passing, but no frontend rendering or browser end-to-end tests.
+
+This is a major opportunity.
+
+Build a comprehensive test system.
+
+## 4.1 Unit Tests
+
+Test:
+
+* Date and currency utilities.
+* Budget calculations.
+* Expense calculations.
+* Task completion calculations.
+* Review calculations.
+* Bayesian rating logic.
+* Data validation.
+* Token generation.
+* Token verification.
+* Token expiration.
+* AI usage accounting.
+* Ownership validation.
+* API response mapping.
+* Error-handling utilities.
+
+Test normal cases, edge cases, invalid inputs, and failure conditions.
+
+## 4.2 Frontend Component Tests
+
+Introduce or configure appropriate tools such as:
+
+* Vitest.
+* React Testing Library.
+* `@testing-library/user-event`.
+* `jest-axe` or an equivalent accessibility testing tool.
+
+Test:
+
+* Signup.
+* Login.
+* Onboarding.
+* Profile editing.
+* Avatar upload.
+* Dashboard.
+* Event creation.
+* Event list.
+* Task management.
+* Budget Planner.
+* Guest management.
+* Vendor section.
+* Vendor search.
+* AI Copilot.
+* Review submission.
+* Navigation menus.
+* Dialogs.
+* Empty states.
+* Error states.
+
+Verify real user interactions, not merely that components render.
+
+## 4.3 Backend Integration Tests
+
+Test every important route.
+
+Include:
+
+* Successful authenticated requests.
+* Missing authentication.
+* Invalid authentication.
+* Expired tokens.
+* Forged tokens.
+* Invalid request bodies.
+* Missing records.
+* Unauthorized resource ownership.
+* Database failures.
+* Duplicate requests.
+* Rate limits.
+* External API failures.
+
+Verify the database state after mutations.
+
+## 4.4 Browser End-to-End Tests
+
+Implement Playwright or an equivalent browser testing framework.
+
+Create complete user journeys.
+
+### Journey A — New User
+
+1. Sign up.
+2. Complete onboarding.
+3. Upload a profile picture.
+4. Save the profile.
+5. Enter the dashboard.
+6. Confirm the workspace is empty.
+7. Create an event.
+8. Refresh the page.
+9. Verify the event persists.
+
+### Journey B — Existing User
+
+1. Log in.
+2. Load the saved profile.
+3. Load existing events.
+4. Edit an event.
+5. Add a task.
+6. Add an expense.
+7. Verify calculations.
+8. Refresh.
+9. Verify persistence.
+
+### Journey C — User Isolation
+
+1. Log in as User A.
+2. Create private records.
+3. Log out.
+4. Log in as User B.
+5. Verify an empty independent workspace.
+6. Attempt unauthorized access to User A's record IDs.
+7. Confirm access is rejected.
+8. Log back in as User A.
+9. Confirm original records remain intact.
+
+### Journey D — AI Copilot
+
+1. Send a greeting.
+2. Ask a planning question.
+3. Provide an event budget.
+4. Ask a follow-up question.
+5. Verify context retention.
+6. Ask for an action.
+7. Verify confirmation behavior.
+8. Verify the actual database update if approved.
+9. Simulate Gemini failure.
+10. Verify honest error handling.
+
+### Journey E — Vendor Discovery
+
+1. Open the Vendor section.
+2. Verify Google Maps initialization when configured.
+3. Search for a real location.
+4. Verify legitimate results.
+5. Select a vendor.
+6. Save it.
+7. Refresh.
+8. Verify persistence.
+9. Test missing API-key handling.
+
+### Journey F — Reviews
+
+1. Open the landing-page rating section.
+2. Select a rating.
+3. Submit feedback.
+4. Verify persistence.
+5. Verify aggregate calculations.
+6. Attempt duplicate or unauthorized actions.
+7. Verify correct access control.
+
+## 4.5 Test Failure Conditions
+
+Test:
+
+* Network offline.
+* API timeout.
+* Database unavailable.
+* Invalid authentication.
+* Missing API keys.
+* Gemini quota exceeded.
+* Google Places quota exceeded.
+* Storage upload failure.
+* Malformed API responses.
+* Empty data.
+* Large data sets.
+
+The application must fail gracefully.
+
+## 4.6 Accessibility Automated Tests
+
+Test with:
+
+* Axe.
+* Keyboard navigation.
+* Screen-reader-friendly semantics.
+* Focus management.
+* Accessible labels.
+* Color contrast.
+
+Run tests on major application routes.
+
+## 4.7 Coverage Targets
+
+Aim for:
+
+* Comprehensive coverage of critical business logic.
+* At least 90% statement coverage for important business-logic modules where practical.
+* Strong branch coverage for authentication, authorization, data persistence, and error handling.
+* Integration coverage for all critical API workflows.
+* E2E coverage for all major user journeys.
+
+Do not chase coverage numbers by writing meaningless assertions.
+
+A test must verify meaningful behavior and must fail when the functionality is broken.
+
+---
+
+# PHASE 5 — ACCESSIBILITY: TARGET 100/100
+
+The existing audit identifies missing:
+
+* `aria-live` support for dynamic AI and filter updates.
+* Focus trapping in custom modal dialogs.
+
+Improve accessibility throughout the application.
+
+Use WCAG 2.2 Level AA as the primary target.
+
+## 5.1 Semantic HTML
+
+Verify that:
+
+* Every page has a clear main landmark.
+* Headers are properly structured.
+* Navigation uses appropriate semantics.
+* Buttons are actual buttons.
+* Links navigate to meaningful destinations.
+* Forms use proper labels.
+* Headings follow a logical hierarchy.
+* Inputs have useful descriptions.
+
+Avoid clickable `div` elements where native interactive elements are appropriate.
+
+## 5.2 Keyboard Accessibility
+
+Every important interaction must work with the keyboard.
+
+Support:
+
+* Tab.
+* Shift + Tab.
+* Enter.
+* Space.
+* Escape.
+* Arrow-key navigation where appropriate.
+
+Ensure:
+
+* Visible focus indicators.
+* Logical focus order.
+* No keyboard traps.
+* Proper handling of modal open/close.
+* Focus restoration after dialogs close.
+
+## 5.3 Modal Focus Trapping
+
+Implement proper focus management for:
+
+* Floating AI launcher.
+* Compare Vendors Modal.
+* Profile dialogs.
+* Confirmation dialogs.
+* Other custom dialogs.
+
+When a modal opens:
+
+* Move focus to an appropriate element.
+* Keep focus within the active modal.
+* Support Escape where appropriate.
+* Prevent interaction with underlying content.
+* Restore focus to the triggering control after closing.
+
+Use an established dialog primitive or reliable focus-management library if appropriate.
+
+Do not create fragile custom focus-trapping code without tests.
+
+## 5.4 ARIA Live Regions
+
+Add accessible announcements for dynamic content.
+
+Examples:
+
+* AI responses.
+* AI streaming updates.
+* Form submission results.
+* Save confirmation.
+* Error messages.
+* Vendor search result counts.
+* Filter changes.
+* Loading states where useful.
+
+Use appropriate live-region politeness and avoid repeatedly announcing entire page content.
+
+## 5.5 Form Accessibility
+
+Verify:
+
+* Every input has an accessible name.
+* Required fields are identified.
+* Validation errors are announced.
+* Error descriptions are associated with inputs.
+* Invalid fields receive appropriate focus.
+* Password fields have accessible labels.
+* Upload controls are keyboard accessible.
+
+## 5.6 Color Contrast
+
+Verify contrast ratios for:
+
+* Body text.
+* Muted labels.
+* Buttons.
+* Disabled states.
+* Links.
+* Form borders.
+* Icons.
+* Status indicators.
+
+Preserve Planora's cream-and-brown design.
+
+Adjust only elements that fail contrast requirements.
+
+## 5.7 Screen Reader Support
+
+Test important flows using available screen-reader tools or automated accessibility inspection.
+
+Ensure:
+
+* Meaningful alt text.
+* Decorative images are ignored appropriately.
+* SVG icons have appropriate accessible treatment.
+* Buttons have descriptive names.
+* Dynamic content changes are announced.
+* Navigation state is communicated.
+
+## 5.8 Accessibility Acceptance Criteria
+
+* All core flows keyboard accessible.
+* No critical axe violations.
+* Proper modal focus management.
+* Useful ARIA live announcements.
+* Accessible form errors.
+* Sufficient contrast.
+* Responsive layouts at different zoom levels.
+* No major screen-reader blockers.
+
+---
+
+# PHASE 6 — PROBLEM STATEMENT ALIGNMENT: TARGET 100/100
+
+Planora AI is designed to make event planning easier through a unified application combining:
+
+* Event creation.
+* Budget planning.
+* Task and timeline management.
+* Guest management.
+* Vendor discovery.
+* Community reviews.
+* AI-assisted event planning.
+* Calendar synchronization.
+
+The application must demonstrate that these capabilities work together as one coherent product.
+
+## 6.1 Complete User Journey
+
+Verify that a user can:
+
+1. Register.
+2. Create a profile.
+3. Create an event.
+4. Add relevant tasks.
+5. Define a budget.
+6. Record expenses.
+7. Add guests.
+8. Discover vendors.
+9. Save selected vendors.
+10. Use AI for personalized planning.
+11. Synchronize calendar data when configured.
+12. Review progress from the dashboard.
+
+No core module should be a disconnected demonstration.
+
+## 6.2 Real Data and Honest UI
+
+Ensure:
+
+* No fake events.
+* No fake users.
+* No fake vendor details.
+* No fabricated ratings.
+* No invented financial records.
+* No random statistics.
+* No mock production API responses.
+* No fake AI success messages.
+
+For empty workspaces, display useful onboarding states.
+
+For unavailable integrations, display honest configuration messages.
+
+## 6.3 AI Integration Depth
+
+The AI Copilot should do more than generate generic text.
+
+Verify:
+
+* Natural conversation.
+* Context retention.
+* Real user-specific context retrieval.
+* Relevant event planning advice.
+* Budget-aware suggestions.
+* Task suggestions.
+* Vendor assistance.
+* Secure action execution.
+* Confirmation before persistent mutations.
+* Honest handling of unavailable information.
+
+The AI should operate as a useful planning assistant within the application rather than a disconnected chatbot.
+
+## 6.4 Feature Integration
+
+Make sure:
+
+* Events connect to tasks.
+* Events connect to budgets and guests.
+* Event locations support vendor discovery.
+* Vendor selections are associated with the correct users and events.
+* AI suggestions use authorized user context.
+* Calendar synchronization uses relevant event records.
+* Dashboard summaries reflect actual saved records.
+
+Do not introduce unnecessary features just to increase the number of modules.
+
+## 6.5 Problem Alignment Acceptance Criteria
+
+A first-time user should be able to understand and use Planora without external instructions.
+
+The application should solve the event-planning workflow end to end.
+
+Every major feature should provide a clear and genuine user benefit.
+
+---
+
+# PHASE 7 — RELIABILITY AND PRODUCTION READINESS
+
+Even though reliability is not a separate evaluation parameter, it directly affects all six categories.
+
+## 7.1 Environment Configuration
+
+Review all environment variables.
+
+Requirements:
+
+* Update `.env.example`.
+* Remove committed secrets.
+* Separate development, test, preview, and production configuration.
+* Validate mandatory variables at server startup.
+* Fail safely when required credentials are missing.
+* Never fall back to fake production services.
+
+## 7.2 Database Reliability
+
+Inspect:
+
+* Connection handling.
+* Query error handling.
+* Transaction boundaries.
+* Concurrent updates.
+* Foreign key constraints.
+* Database migrations.
+* Backup assumptions.
+* Data consistency.
+
+Use transactions for operations that must succeed or fail together.
+
+Prevent duplicate records where uniqueness is required.
+
+## 7.3 External Integrations
+
+Review:
+
+* Gemini.
+* Google Maps.
+* Google Places.
+* Google Calendar.
+* Firebase.
+* Supabase.
+
+Implement appropriate:
+
+* Timeouts.
+* Retry policies with backoff.
+* Rate-limit handling.
+* API error parsing.
+* Secret protection.
+* Graceful degradation.
+
+Do not retry non-idempotent mutations blindly.
+
+Do not silently fabricate external API results.
+
+## 7.4 Observability
+
+Implement or improve:
+
+* Structured server logs.
+* Request IDs.
+* Error tracking.
+* API latency measurement.
+* Database error reporting.
+* Authentication failure monitoring.
+* AI token usage monitoring.
+
+Never log secret values, passwords, tokens, or unnecessarily sensitive user content.
+
+---
+
+# PHASE 8 — FINAL VERIFICATION AND SCORE IMPROVEMENT
+
+After implementation, rerun the entire verification suite.
+
+Compare all results with the baseline.
+
+## 8.1 Required Commands
+
+Inspect the package scripts first.
+
+Run all applicable:
+
+* Production build.
+* TypeScript compilation.
+* Lint.
+* Unit tests.
+* Frontend component tests.
+* Backend integration tests.
+* Browser E2E tests.
+* Security tests.
+* Accessibility tests.
+* Bundle analysis.
+* Performance checks.
+
+Do not assume command names. Inspect `package.json` and execute the actual available scripts.
+
+## 8.2 Regression Testing
+
+Verify that all existing features remain functional.
+
+Specifically test:
+
+* Authentication.
+* Onboarding.
+* Profiles.
+* Events.
+* Tasks.
+* Budgets.
+* Expenses.
+* Guests.
+* Vendors.
+* Maps.
+* Reviews.
+* AI Copilot.
+* Calendar integration.
+* User isolation.
+
+Test both new-user and existing-user experiences.
+
+## 8.3 Final Scorecard
+
+Evaluate the finished project against these six parameters:
+
+| Parameter                   |  Target |
+| --------------------------- | ------: |
+| Code Quality                | 100/100 |
+| Security                    | 100/100 |
+| Efficiency                  | 100/100 |
+| Testing                     | 100/100 |
+| Accessibility               | 100/100 |
+| Problem Statement Alignment | 100/100 |
+
+For each parameter provide:
+
+1. Final score.
+2. Evidence.
+3. Implemented improvements.
+4. Tests supporting the score.
+5. Remaining weaknesses.
+6. Reasons for any points deducted.
+
+If a parameter cannot honestly receive 100, explain why.
+
+Do not manufacture perfect scores.
+
+The external challenge evaluator may use proprietary criteria or different weighting. Do not guarantee that your internal score will match the competition score.
+
+## 8.4 Final Deliverables
+
+Provide:
+
+**A. Architecture**
+
+* Updated architecture diagram.
+* Updated frontend structure.
+* Updated backend structure.
+* Database and authentication architecture.
+
+**B. Code Quality**
+
+* Files refactored.
+* Major duplication removed.
+* TypeScript and lint results.
+* Important architectural improvements.
+
+**C. Security**
+
+* Authentication hardening.
+* SESSION_SECRET protection.
+* RLS and ownership enforcement.
+* IDOR testing.
+* Secret-management verification.
+* Remaining security findings.
+
+**D. Efficiency**
+
+* Before-and-after bundle size.
+* Code-splitting changes.
+* Query optimization.
+* Performance measurements.
+* AI request optimization.
+
+**E. Testing**
+
+* Number of tests.
+* Pass/fail counts.
+* Component coverage.
+* Integration coverage.
+* E2E scenarios.
+* Security test results.
+
+**F. Accessibility**
+
+* WCAG-related improvements.
+* Axe results.
+* Keyboard test results.
+* Focus-management verification.
+* Screen-reader-related improvements.
+
+**G. Problem Statement Alignment**
+
+* Core user workflows tested.
+* End-to-end feature integration.
+* Remaining product gaps.
+
+**H. Modified Files**
+List every important file created, changed, or removed.
+
+**I. Outstanding Issues**
+List anything that remains incomplete, mocked, unverified, or dependent on external configuration.
+
+---
+
+# CRITICAL IMPLEMENTATION RULES
+
+1. Work directly inside the existing repository.
+2. Do not merely produce an audit report.
+3. Do not rebuild the project from scratch.
+4. Do not redesign the existing UI.
+5. Do not remove working features to improve test results.
+6. Do not delete user data.
+7. Do not disable security protections.
+8. Do not expose secrets.
+9. Do not hardcode test results.
+10. Do not write tests that simply assert mocked success without testing real application behavior.
+11. Do not claim live API verification when only mocked responses were used.
+12. Do not make unmeasured performance claims.
+13. Do not introduce unnecessary dependencies.
+14. Do not sacrifice usability for artificial code coverage.
+15. Do not stop after implementing only easy improvements.
+
+For high-risk changes, make incremental modifications and rerun regression tests.
+
+If the task is too large for one uninterrupted implementation, divide the work into sequential phases, but continue implementing the remaining phases rather than reporting an unfinished plan as completion.
+
+**FINAL OBJECTIVE: Transform Planora AI into an exceptionally well-engineered, secure, efficient, thoroughly tested, accessible, and fully functional application that can legitimately justify the highest possible scores across all six evaluation categories.**
+
+The goal is 100/100 everywhere, but evidence and actual software quality must determine the final score—not optimism or fabricated claims.

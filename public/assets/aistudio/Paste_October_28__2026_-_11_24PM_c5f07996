@@ -1,0 +1,1082 @@
+# PLANORA AI — BACKEND ARCHITECTURE & PRODUCTION READINESS RESEARCH
+
+## ROLE
+
+Act as a senior backend architect, Firebase and Supabase specialist, AI infrastructure engineer, Google Calendar OAuth integration expert, Google Maps integration engineer, database security specialist, and SaaS cost optimization consultant.
+
+I have an existing frontend application called **Planora AI**.
+
+Before writing or modifying any code, I want you to thoroughly inspect the existing project, understand its features, and prepare a complete technical implementation plan.
+
+**IMPORTANT: This is a research and architecture planning task. Do not start implementing the backend yet. First answer my questions, research the available integration options, identify risks, and recommend the correct architecture.**
+
+Do not give me generic advice. Your recommendations must be specific to my existing Planora AI application.
+
+---
+
+# 1. UNDERSTAND MY EXISTING APPLICATION
+
+First, inspect:
+
+1. My existing project and source code.
+2. The `design.md` file.
+3. The existing frontend pages and components.
+4. Current event management flows.
+5. The Calendar View.
+6. The Budget Planner.
+7. The Vendor Marketplace.
+8. The profile dropdown and account settings.
+9. The landing page and ratings UI.
+10. Existing AI assistant components.
+11. Any existing backend, APIs, environment variables, and authentication logic.
+
+Identify what is already implemented, what uses mock data, and what requires backend integration.
+
+Do not assume that a feature is connected to a real service simply because it appears in the UI.
+
+Prepare a feature-by-feature audit.
+
+---
+
+# 2. REQUIRED TECHNOLOGY STACK
+
+I want to connect the existing frontend to a proper backend using these technologies:
+
+* Firebase Authentication.
+* Supabase PostgreSQL database.
+* Supabase Row Level Security (RLS).
+* Google Calendar API.
+* Google Maps Platform or an appropriate free/open-source mapping alternative.
+* An AI model API for Planora AI.
+* Secure backend API endpoints or server-side functions.
+
+Evaluate the best way to combine these technologies.
+
+Do not assume that Firebase and Supabase should both manage the same authentication responsibilities.
+
+Compare these options:
+
+### Option A
+
+Firebase Authentication + Supabase PostgreSQL + Supabase RLS.
+
+### Option B
+
+Supabase Authentication + Supabase PostgreSQL + RLS.
+
+### Option C
+
+Firebase Authentication + a separate backend API + Supabase PostgreSQL, with a secure identity-verification mechanism between them.
+
+Recommend the best option for my project and explain why.
+
+My priority is a secure, affordable, maintainable application that I can develop incrementally.
+
+Explain exactly how a user authenticated by Firebase will be identified and authorized when accessing Supabase data.
+
+Investigate supported Firebase JWT verification and the practical requirements for implementing authorization in Supabase.
+
+If Firebase Authentication is used with Supabase, do not assume that enabling RLS alone automatically authenticates Firebase users. Explain the necessary token-verification, identity-mapping, and authorization steps.
+
+Identify any Supabase plan, configuration, or integration limitations that need to be checked.
+
+---
+
+# 3. DATABASE ARCHITECTURE — COMPLETE USER AND EVENT DATA
+
+Design the database for Planora AI using PostgreSQL.
+
+I need to understand exactly what information should be stored and how the tables should be related.
+
+Prepare a database schema proposal with table names, columns, data types, primary keys, foreign keys, indexes, constraints, and ownership rules.
+
+At minimum, evaluate the following tables.
+
+## A. User Profiles
+
+Store:
+
+* Internal user ID.
+* Firebase authentication UID.
+* Name.
+* Email.
+* Profile image URL.
+* Account creation date.
+* Last login.
+* Account status.
+* User preferences.
+* Time zone.
+* Locale.
+* Subscription tier, if implemented.
+
+Do not store passwords in the application database when Firebase Authentication handles credentials.
+
+Explain which fields should come from Firebase and which belong in Supabase.
+
+Do not store unnecessary personal information.
+
+## B. Events
+
+Every event must belong to its owner.
+
+Store:
+
+* Event ID.
+* Owner user ID.
+* Event name.
+* Event type.
+* Description.
+* Start and end dates.
+* Location.
+* Expected guest count.
+* Budget.
+* Selected theme.
+* Event status.
+* Planning completion percentage.
+* Creation and update timestamps.
+
+Explain how the schema will support multiple events for one user.
+
+## C. Event Tasks and Timeline
+
+Store:
+
+* Task ID.
+* Event ID.
+* Task name.
+* Description.
+* Assigned person, where applicable.
+* Deadline.
+* Status.
+* Priority.
+* Completion timestamp.
+
+Explain how timeline tasks will be associated with the correct event and user.
+
+## D. Budget Management
+
+Store:
+
+* Event ID.
+* Total budget.
+* Expense categories.
+* Planned amount.
+* Actual amount.
+* Vendor or expense reference.
+* Payment status, where relevant.
+* Creation and update timestamps.
+
+Explain how to calculate remaining budget and allocated budget without producing inconsistent totals.
+
+## E. Guest Management
+
+Store:
+
+* Event ID.
+* Guest information necessary for planning.
+* Invitation status.
+* RSVP status.
+* Guest count and related details.
+
+Minimize sensitive information and explain which guest information should not be collected unless necessary.
+
+## F. Theme Studio
+
+Store:
+
+* Theme ID.
+* Event ID, where appropriate.
+* Theme name.
+* Selected colour palette.
+* Theme preferences.
+* Decoration preferences.
+* Saved theme configuration.
+
+Explain how to support reusable global themes as well as user-specific saved themes.
+
+## G. Vendors
+
+Store:
+
+* Vendor ID.
+* Vendor name.
+* Vendor category.
+* Location.
+* Latitude and longitude, where available.
+* Price range.
+* Description.
+* Image references.
+* Ratings summary.
+* Verification status.
+* External provider identifiers, where applicable.
+
+Clearly distinguish platform-managed vendor records from Google Places results.
+
+## H. Vendor Comparisons and Enquiries
+
+Store:
+
+* User ID.
+* Event ID, where applicable.
+* Selected vendors.
+* Comparison records.
+* Enquiry status.
+* Timestamps.
+
+Ensure users cannot access another user's private comparisons or enquiries.
+
+## I. AI Usage and Cost Tracking
+
+This is especially important.
+
+I want to know exactly how much AI each user consumes.
+
+Design a dedicated AI usage tracking system.
+
+Evaluate recording:
+
+* Usage record ID.
+* User ID.
+* Event ID, where applicable.
+* Request ID.
+* Feature name.
+* Model/provider.
+* Input token count.
+* Output token count.
+* Cached token count, if available.
+* Model-reported or estimated cost.
+* Currency.
+* Request status.
+* Request timestamp.
+* Latency.
+* Error information.
+* Usage limit information.
+
+Explain how to calculate:
+
+* Daily usage per user.
+* Monthly usage per user.
+* Usage per event.
+* Usage by AI feature.
+* Total platform AI expenditure.
+* Estimated cost per active user.
+
+Do not assume every AI provider returns the same usage metadata.
+
+Explain how to normalize provider-specific usage records.
+
+The frontend must never be trusted to report authoritative token counts or costs.
+
+Explain how the backend should validate and record usage.
+
+Also explain how to prevent duplicate usage records when requests are retried.
+
+## J. Ratings and Reviews
+
+Create a system for user ratings that works across the landing page and authenticated profile-related interfaces.
+
+Determine which entity is being rated:
+
+* Planora AI as a platform.
+* A vendor.
+* An individual event service.
+* Another explicitly defined product feature.
+
+Do not combine platform ratings and vendor ratings into one metric.
+
+Recommend the appropriate tables, relationships, and constraints.
+
+## K. Google Calendar Connections
+
+Design a table or equivalent structure for users' connected Google Calendar accounts.
+
+Store only necessary information, such as:
+
+* User ID.
+* Google account identifier.
+* Connected calendar identifier.
+* Connection status.
+* Required OAuth scope metadata.
+* Token expiry metadata.
+* Encrypted refresh-token reference or securely stored credential.
+* Last successful synchronization.
+* Error state.
+
+Never store Google access or refresh tokens in publicly accessible frontend code or expose them through ordinary client queries.
+
+Explain the correct token encryption, storage, refresh, revocation, and disconnection process.
+
+Do not store more OAuth information than necessary.
+
+---
+
+# 4. SECURITY: USERS MUST NEVER ACCESS OTHER USERS' DATA
+
+This is a mandatory requirement.
+
+Every user's private application data must be isolated from every other user.
+
+A user must not be able to access another user's:
+
+* Events.
+* Event details.
+* Budgets.
+* Guests.
+* Private tasks.
+* AI conversation history.
+* Saved personal themes.
+* Private vendor comparisons.
+* Enquiries.
+* Calendar connection details.
+* AI usage records.
+
+## Guest-user behaviour
+
+A person who visits Planora AI without logging in must only be able to access the public landing page and explicitly approved public resources.
+
+A guest must not be able to access:
+
+* The private dashboard.
+* My Events.
+* Private event details.
+* Budget Planner.
+* Private event timelines.
+* Guest lists.
+* Personal AI history.
+* Private profile information.
+* Other authenticated application features.
+
+Guests must be redirected to the appropriate login or sign-up flow when they attempt to access a protected route.
+
+However, distinguish private application data from explicitly public resources, such as a public landing page or approved public vendor listings.
+
+Do not unnecessarily require authentication to display the public marketing page.
+
+## Required security architecture
+
+Explain how to implement:
+
+1. Firebase authentication verification.
+2. Server-side identity verification.
+3. Secure authorization.
+4. Supabase Row Level Security.
+5. Event ownership policies.
+6. Related-table ownership enforcement.
+7. API request validation.
+8. Rate limiting.
+9. Protection against IDOR vulnerabilities.
+10. Protection against unauthorized database access.
+11. Protection against mass assignment.
+12. Safe error responses.
+13. Audit logging where appropriate.
+
+Do not rely on frontend route guards alone.
+
+Do not rely on hidden buttons or unguessable IDs for security.
+
+Do not trust a client-supplied `user_id` to establish ownership.
+
+The authenticated identity must be derived from a verified credential.
+
+Explain how ownership is enforced for related records, not just the main events table.
+
+### Firebase and Supabase security
+
+Explicitly explain the correct authorization model if Firebase Authentication is combined with Supabase.
+
+Determine whether the application should:
+
+* Use a trusted backend API that verifies Firebase ID tokens before performing database operations.
+* Use a supported JWT integration for Supabase RLS.
+* Or combine these approaches for appropriate use cases.
+
+For every proposed approach, explain how the database verifies the caller's identity.
+
+Never expose:
+
+* Firebase service-account private keys.
+* Supabase service-role keys.
+* Google OAuth client secrets.
+* AI provider API keys.
+* Google refresh tokens.
+
+All privileged operations must run in a trusted server environment.
+
+Explain how secret management and environment configuration should work in local development and production.
+
+---
+
+# 5. GOOGLE CALENDAR — EVERY USER CONNECTS THEIR OWN ACCOUNT
+
+I want each authenticated Planora AI user to connect their own Google account and calendar.
+
+For example:
+
+* User A connects their personal Google account.
+* User B connects a different Google account.
+* User A sees only their own calendar connections and authorized events.
+* User B sees only their own calendar connections and authorized events.
+
+The application must never use one developer's Google account as the shared calendar for all users.
+
+## Required functionality
+
+Evaluate how to implement:
+
+1. Connect Google Calendar.
+2. Choose an appropriate Google calendar.
+3. Create a Planora event.
+4. Add the event to the user's selected Google Calendar.
+5. Update calendar events when appropriate.
+6. Handle event deletion or cancellation.
+7. Synchronize changes safely.
+8. Refresh expired access tokens.
+9. Disconnect a Google account.
+10. Handle revoked permissions.
+11. Prevent duplicate calendar events.
+12. Handle synchronization errors.
+
+Explain the required Google OAuth scopes and why each scope is necessary.
+
+Prefer the narrowest appropriate permissions.
+
+Do not request broad access to a user's entire Google account unless genuinely required.
+
+Research:
+
+* Google OAuth consent-screen requirements.
+* Authorized redirect URIs.
+* Development versus production configuration.
+* OAuth testing-user restrictions.
+* Verification requirements for sensitive or restricted scopes, if applicable.
+* Google Calendar API quotas and relevant limits.
+
+Explain how to store the connection securely and associate it with the correct Planora AI user.
+
+Design a synchronization strategy that handles retries and avoids duplicate events.
+
+Use a stable mapping between a Planora event and its corresponding Google Calendar event.
+
+Do not implement a system that blindly creates a new Google event every time the user clicks Save.
+
+Explain the difference between a one-way sync and two-way synchronization, and recommend which should be implemented first.
+
+Also explain how to display a connected calendar's events in the existing Calendar View without leaking data between users.
+
+---
+
+# 6. REAL MAPS AND NEARBY VENDORS
+
+The existing Nearby Vendors section contains a map-like visual with vendor price markers.
+
+I want to replace any fake map, hardcoded markers, and invented location results with real, appropriately sourced data.
+
+Investigate the most affordable legitimate implementation.
+
+Compare:
+
+### Option A: Google Maps Platform
+
+Evaluate:
+
+* Maps JavaScript API.
+* Google Places API.
+* Place Details.
+* Nearby Search.
+* Geocoding, if needed.
+* Current billing requirements.
+* Available free usage or credits.
+* Quotas and billing limits.
+* API key restrictions.
+* Required attribution.
+
+### Option B: OpenStreetMap-based implementation
+
+Evaluate:
+
+* Leaflet or another suitable map library.
+* OpenStreetMap data.
+* Appropriate geocoding services.
+* Vendor location data from an independent, legitimate source.
+* Tile-provider usage policies.
+* Attribution requirements.
+* Production deployment limitations.
+
+Do not assume that OpenStreetMap's public tile servers or public geocoding services are unlimited, free production APIs.
+
+Explain which components are genuinely free, which require a paid provider, and which have usage restrictions.
+
+If Google Maps Platform has a free allowance or credit, verify its current conditions rather than assuming that unlimited free use is available.
+
+## Vendor data requirements
+
+Nearby Vendors should support:
+
+* Real coordinates.
+* Search by location.
+* Relevant categories.
+* Distance from the selected location.
+* Map markers.
+* Price information where a reliable source exists.
+* Vendor details.
+* Navigation to vendor information.
+* Appropriate loading and error states.
+
+Distinguish between:
+
+1. Google Places business information.
+2. Planora AI's own registered vendors.
+3. Independently verified vendor records.
+4. User-submitted vendor information.
+
+Do not invent ratings, prices, reviews, verification status, or business details.
+
+If Google Places does not supply reliable price estimates for a particular vendor, show an honest unavailable state or obtain pricing from a vendor who has provided it.
+
+Do not silently substitute fabricated prices.
+
+Explain whether Google Maps Platform terms allow the intended storage, caching, display, and reuse of the retrieved data.
+
+Explain how to comply with required attribution and applicable provider restrictions.
+
+Recommend a realistic approach for a student-built project that may start with limited traffic and expand later.
+
+---
+
+# 7. RATINGS AND REVIEWS — REAL DATA, FAIR AGGREGATION
+
+I want users to be able to rate Planora AI through the landing page and the profile-related interface.
+
+The rating should reflect genuine user feedback.
+
+If the application has a platform-wide rating, it must not be confused with the ratings of individual vendors.
+
+## Rating requirements
+
+Design a reliable rating system that supports:
+
+* A rating submission form.
+* A rating scale, such as 1–5 stars.
+* Optional written feedback.
+* Submission timestamps.
+* Moderation status, where appropriate.
+* Aggregated rating summaries.
+* Rating distribution.
+* Review counts.
+* Duplicate-submission prevention.
+* Updating an existing review, if allowed.
+* Abuse prevention.
+
+A user should not be able to submit unlimited ratings to manipulate the platform's score.
+
+Explain whether one rating per authenticated user is appropriate for platform ratings.
+
+For vendor reviews, determine whether additional purchase, enquiry, booking, or other eligibility checks are desirable.
+
+## Rating consistency
+
+The landing page and the relevant profile interface must retrieve the same canonical rating summary from the backend.
+
+If a user submits or updates a review, the aggregate must be recalculated or refreshed reliably.
+
+Do not maintain separate, conflicting rating values in different frontend components.
+
+Explain how to prevent concurrent updates from producing incorrect counts or averages.
+
+## My rating display requirement
+
+I want the interface to communicate the rating and review count honestly.
+
+Do not artificially increase the visible rating simply because only a few people have submitted reviews.
+
+Instead, evaluate:
+
+* Actual average rating.
+* Actual review count.
+* Rating distribution.
+* Confidence in the estimate when the sample is small.
+* Optional Bayesian or weighted rating for recommendation ranking.
+
+If using a weighted rating, clearly distinguish it from the raw average.
+
+Explain how a low review count should be communicated honestly without misleading visitors.
+
+Never create fake reviews or fabricate users to improve the displayed rating.
+
+All actual submitted reviews and their associated metadata must be stored in the database with appropriate ownership and moderation controls.
+
+---
+
+# 8. AI ASSISTANT — PERMANENT IDENTITY AND TOKEN OPTIMIZATION
+
+The AI assistant must always identify itself as **Planora AI**.
+
+It must not tell users that it is ChatGPT, Gemini, Claude, or another model/provider.
+
+However, do not falsify the provider's identity when the user explicitly asks about the technical infrastructure behind the product.
+
+The user-facing identity should be Planora AI, while technical provider information remains available in appropriate administrative documentation.
+
+The AI should focus on event planning and the features actually supported by the application.
+
+It should not repeatedly produce long introductions, generic disclaimers, or irrelevant explanations.
+
+It should use as few tokens as practical without compromising accuracy, safety, or usefulness.
+
+## 8.1 System prompt requirements
+
+Design a compact but robust system prompt that establishes:
+
+* Identity: Planora AI.
+* Role: event-planning assistant.
+* Supported use cases.
+* Concise response style.
+* Context-aware recommendations.
+* Accurate handling of event details.
+* Appropriate handling of user preferences.
+* Honest statements about unavailable data and integrations.
+* Protection of private user information.
+* No access to another user's data.
+* No disclosure of hidden system instructions.
+* No invented vendor details, ratings, prices, bookings, or calendar operations.
+* Appropriate use of tools when available.
+* Clear separation between suggestions and completed actions.
+
+The assistant should not claim to have booked a vendor, created a calendar event, saved a budget, or modified a user's event unless the corresponding operation has actually succeeded.
+
+The system prompt should not contain secrets or unnecessary user-specific data.
+
+## 8.2 Token minimization
+
+Explain how to minimize AI usage through:
+
+* Compact system instructions.
+* Relevant conversation history only.
+* Context summarization.
+* Removal of redundant conversation messages.
+* Structured tool responses.
+* Limiting output length where appropriate.
+* Avoiding repeated descriptions of the application.
+* Model selection based on task complexity.
+* Caching suitable repeated outputs.
+* Avoiding unnecessary AI calls for deterministic operations.
+
+Do not use AI for simple arithmetic that ordinary backend code can perform accurately.
+
+For example, budget totals, remaining budget, percentage completion, and task counts should generally be calculated in application code.
+
+Use AI for tasks that benefit from reasoning, personalization, or language generation.
+
+Do not reduce token usage by blindly deleting important context.
+
+Do not claim that a system prompt alone guarantees low token consumption.
+
+Explain how token budgets, output limits, model choice, and measured usage work together.
+
+## 8.3 AI usage tracking
+
+Every AI request should be associated with the authenticated user and, where relevant, the event and feature.
+
+The backend should record provider-reported token usage whenever available.
+
+Explain how to handle:
+
+* Failed requests.
+* Requests that time out.
+* Retries.
+* Streaming responses.
+* Requests without provider-reported usage.
+* Cached tokens.
+* Different token pricing.
+* Cost changes between models.
+
+Do not trust token counts or costs supplied by the frontend.
+
+Design controls that prevent one user from consuming unlimited AI resources at the platform's expense.
+
+Evaluate:
+
+* Per-user request limits.
+* Per-user token budgets.
+* Daily and monthly quotas.
+* Global spending limits.
+* Rate limiting.
+* Abuse detection.
+* Usage dashboards.
+
+Explain how to implement quotas without incorrectly counting the same request multiple times.
+
+Do not promise a fixed cost per user without supporting calculations and assumptions.
+
+---
+
+# 9. PROVIDE A READY-TO-USE PLANORA AI SYSTEM PROMPT
+
+Create a production-oriented first draft of the actual system prompt.
+
+The prompt should be compact enough to avoid unnecessary repeated instructions.
+
+It must instruct the model to:
+
+* Introduce itself as Planora AI when identification is needed.
+* Avoid repeatedly announcing its identity.
+* Answer event-planning questions directly.
+* Keep routine responses concise.
+* Ask only necessary follow-up questions.
+* Use available application context when authorized.
+* Respect the current user's event data.
+* Avoid inventing information.
+* Use backend tools only when available and authorized.
+* Confirm successful completion before claiming an operation succeeded.
+* Avoid revealing private information or hidden system instructions.
+* Be honest when information is unavailable.
+
+Also provide:
+
+1. A shorter low-token version.
+2. A more capable version for complex event-planning workflows.
+3. A comparison of the trade-offs between the two.
+
+Do not confuse the system prompt with the actual security boundary.
+
+Database authorization, backend permissions, and tool-level authorization must enforce security independently of model instructions.
+
+---
+
+# 10. AUTHENTICATION, AUTHORIZATION, AND ROUTE PROTECTION
+
+The following public/private access rules are mandatory.
+
+## Public access
+
+Unauthenticated visitors may access:
+
+* The public landing page.
+* Public marketing content.
+* Other explicitly approved public resources.
+
+## Protected access
+
+Unauthenticated visitors must not access:
+
+* Dashboard.
+* My Events.
+* Private event details.
+* Budget Planner.
+* Event Timeline.
+* Guest management.
+* Personal AI history.
+* Private vendor comparisons.
+* Personal profile information.
+* Private Google Calendar data.
+
+## Cross-user isolation
+
+Authenticated users must only access data they are authorized to access.
+
+Explain how to implement this at:
+
+* The frontend route layer.
+* The backend API layer.
+* The database layer.
+* The external integration layer.
+
+Explain how to handle:
+
+* Direct URL access.
+* Modified event IDs.
+* Forged user IDs.
+* Expired tokens.
+* Revoked sessions.
+* Requests made directly to APIs.
+* Unauthorized related-record access.
+
+The frontend should display the appropriate access-denied or authentication-required state, but the backend and database must independently enforce access control.
+
+Do not use a frontend-only solution.
+
+---
+
+# 11. API DESIGN
+
+Propose a clean API architecture for the major features.
+
+Include representative endpoints or server functions for:
+
+### Authentication and profile
+
+* Profile retrieval.
+* Profile updates.
+* Account deletion or deactivation, where supported.
+
+### Events
+
+* Create event.
+* List authorized events.
+* Retrieve event details.
+* Update event.
+* Delete or archive event.
+
+### Budget
+
+* Retrieve budget.
+* Add or update expense.
+* Calculate totals.
+
+### Timeline
+
+* Create task.
+* Update task status.
+* Retrieve authorized tasks.
+
+### AI
+
+* Generate planning suggestions.
+* Generate themes.
+* Request vendor recommendations.
+* Retrieve usage summaries.
+* Enforce quotas.
+
+### Calendar
+
+* Initiate Google OAuth.
+* Handle OAuth callback.
+* Retrieve connection status.
+* Select calendar.
+* Synchronize an event.
+* Disconnect a calendar.
+
+### Vendors
+
+* Search nearby vendors.
+* Retrieve approved vendor details.
+* Save a vendor.
+* Compare vendors.
+* Submit an enquiry.
+
+### Ratings
+
+* Submit rating.
+* Update rating.
+* Retrieve aggregate rating.
+* Retrieve permitted reviews.
+
+For each endpoint, specify:
+
+* Authentication requirement.
+* Authorization rule.
+* Input validation.
+* Expected output.
+* Error cases.
+* Whether the operation needs elevated privileges.
+
+These are architecture proposals; do not implement them until the research phase is complete.
+
+---
+
+# 12. COST ANALYSIS AND FREE-TIER STRATEGY
+
+I am developing this project with a limited budget.
+
+I want to minimize costs without building an insecure or unreliable system.
+
+Research the current free-tier and billing conditions for:
+
+* Firebase Authentication.
+* Supabase.
+* Google Calendar API.
+* Google Maps Platform.
+* AI model APIs.
+* Hosting.
+* Any proposed serverless functions.
+
+Do not rely on outdated free-tier information.
+
+Use current official documentation for pricing and quotas.
+
+Separate:
+
+1. Free features.
+2. Free allowances with limits.
+3. Paid usage.
+4. Features that may require billing activation.
+5. Features whose availability depends on the account or region.
+
+Recommend a low-cost initial architecture.
+
+Estimate possible costs for clearly defined example traffic levels, such as:
+
+* 100 registered users.
+* 1,000 registered users.
+* 10,000 registered users.
+
+State the assumptions, including active-user rates, database usage, AI requests per user, token consumption, map loads, and calendar operations.
+
+Do not invent precise prices where the available information does not support them.
+
+Explain which usage patterns would trigger additional costs and how to establish usage alerts and spending controls.
+
+---
+
+# 13. DATABASE RELATIONSHIPS AND SECURITY POLICIES
+
+Provide:
+
+1. An entity-relationship diagram in Mermaid syntax.
+2. A proposed SQL table structure.
+3. A relationship explanation.
+4. Ownership and authorization rules.
+5. Suggested indexes.
+6. Constraints.
+7. Data retention considerations.
+8. Migration and rollback considerations.
+
+Include example RLS policy designs for:
+
+* User profiles.
+* Events.
+* Event tasks.
+* Budgets.
+* Guest lists.
+* Saved themes.
+* Vendor comparisons.
+* AI usage.
+* Reviews.
+* Google Calendar connections.
+
+Clearly label which examples are conceptual and which can be used after the relevant identity-integration configuration is completed.
+
+Do not present a Firebase UID comparison as a secure authorization mechanism unless the database is actually receiving and verifying the relevant identity claim.
+
+Explain the difference between public vendor records and private user-specific vendor data.
+
+---
+
+# 14. IMPLEMENTATION ROADMAP
+
+After the research, propose an implementation roadmap.
+
+Break it into phases.
+
+### Phase 1 — Foundation
+
+Authentication integration, database schema, authorization model, and secrets management.
+
+### Phase 2 — User and event data
+
+Profiles, events, ownership, tasks, budgets, and guest management.
+
+### Phase 3 — AI infrastructure
+
+Server-side model access, compact system prompt, usage tracking, quotas, and cost reporting.
+
+### Phase 4 — Google Calendar
+
+OAuth, connection storage, calendar selection, event synchronization, and error handling.
+
+### Phase 5 — Vendor discovery
+
+Map integration, genuine vendor records, location search, and pricing-source strategy.
+
+### Phase 6 — Ratings and reviews
+
+Authenticated submissions, moderation, aggregate calculations, and shared display.
+
+### Phase 7 — Security verification
+
+Cross-user access testing, RLS testing, API authorization, and secret exposure checks.
+
+### Phase 8 — Deployment
+
+Environment configuration, production authentication, OAuth configuration, database migrations, monitoring, and cost alerts.
+
+For every phase, specify:
+
+* Required work.
+* Dependencies.
+* Expected output.
+* Security considerations.
+* Acceptance criteria.
+* Estimated complexity.
+* Likely cost drivers.
+
+Do not start implementing these phases yet.
+
+First give me the complete research and architecture document so I can review and approve it.
+
+---
+
+# 15. RESEARCH AND SOURCE REQUIREMENTS
+
+Use current official documentation wherever possible.
+
+Prioritize official sources for:
+
+* Firebase Authentication.
+* Supabase authentication and RLS.
+* Google OAuth.
+* Google Calendar API.
+* Google Maps Platform.
+* OpenStreetMap usage policies.
+* AI provider token usage and pricing.
+* Relevant hosting and database pricing.
+
+Distinguish:
+
+* Verified official documentation.
+* Your architectural recommendation.
+* Assumptions.
+* Unresolved questions.
+* Features requiring account-specific verification.
+
+Cite the documentation supporting important technical claims.
+
+Do not invent API capabilities, OAuth scopes, billing rules, or security guarantees.
+
+If a feature requires additional credentials or a paid plan, state that explicitly.
+
+---
+
+# 16. REQUIRED RESPONSE STRUCTURE
+
+Return the research in this exact order:
+
+1. Executive Summary.
+2. Existing Project Audit.
+3. Recommended Overall Architecture.
+4. Firebase vs Supabase Authentication Decision.
+5. Complete Database Schema.
+6. Entity-Relationship Diagram.
+7. Cross-User Security Model.
+8. Google Calendar Integration Design.
+9. Real Nearby Vendor and Map Integration.
+10. Ratings and Review Architecture.
+11. AI System Prompt.
+12. AI Token and Cost Optimization.
+13. API Endpoint Plan.
+14. Current Free-Tier and Pricing Comparison.
+15. Implementation Roadmap.
+16. Testing and Security Checklist.
+17. Open Questions and Risks.
+18. Final Recommended Architecture.
+
+For the final recommendation, explain precisely which technologies should perform which responsibilities and why.
+
+Conclude with a clear list of:
+
+* Decisions that are ready to implement.
+* Decisions that require my approval.
+* Credentials or configuration I will need.
+* Risks that must be addressed before production.
+
+## FINAL INSTRUCTION
+
+Do not modify the existing code in this first stage.
+
+Inspect the project and research the technical requirements.
+
+Give me a detailed, practical, technically accurate architecture plan tailored to Planora AI.
+
+Do not skip security, data ownership, Google OAuth, AI usage tracking, or cost considerations just to make the answer shorter.
+
+I will review the proposed architecture before authorizing implementation.

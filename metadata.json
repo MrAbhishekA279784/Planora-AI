@@ -1,0 +1,7 @@
+{
+  "name": "Planora AI",
+  "description": "Plan Smarter. Celebrate Better. AI-powered planning for weddings, birthdays, and community events with personalized ideas, budgets, timelines, and trusted vendors.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

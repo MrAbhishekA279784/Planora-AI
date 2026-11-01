@@ -1,0 +1,1554 @@
+# PLANORA AI — ULTIMATE FRONTEND ENGINEERING MASTER PROMPT
+
+## Real Glassmorphism · Premium Profile UI · Scroll-Driven 3D Storytelling · Login & Signup
+
+You are a senior frontend architect, creative developer, UI/UX engineer, 3D web experience designer, accessibility specialist, animation engineer, and frontend QA expert.
+
+Your task is to upgrade the existing Planora AI application into a visually exceptional, fully functional, responsive frontend while preserving all previously implemented screens and established design decisions.
+
+This is an implementation task, not a brainstorming task.
+
+You must inspect the existing project, understand its structure, implement the requested changes directly in the codebase, and test the actual application.
+
+Do not merely provide example components, suggestions, pseudocode, or a proposed architecture.
+
+**Build the actual working frontend.**
+
+---
+
+# 1. PROJECT CONTEXT
+
+Application name: Planora AI
+
+Tagline: Plan Smarter. Celebrate Better.
+
+Product purpose:
+
+Planora AI is an AI-powered event planning platform that helps people plan weddings, birthdays, and community events through event management, personalized themes, budgeting, vendor discovery, task timelines, and an AI planning assistant.
+
+The application already has an established visual identity.
+
+The primary interface uses:
+
+* Warm cream and beige backgrounds.
+* Dark brown and terracotta primary actions.
+* Muted gold highlights.
+* Elegant serif headings.
+* Clean sans-serif interface text.
+* Rounded cards and restrained shadows.
+* High-quality event imagery.
+* Refined, spacious layouts.
+* A floating Planora AI assistant.
+
+Do not discard this identity.
+
+Your objective is to elevate it with carefully implemented glassmorphism and a premium 3D storytelling experience.
+
+## First instruction: Inspect before editing
+
+Before modifying anything:
+
+1. Read the existing `design.md` completely.
+2. Inspect all available UI reference images.
+3. Inspect the existing source code and project structure.
+4. Identify the frontend framework, router, styling solution, animation libraries, installed dependencies, and current authentication implementation.
+5. Identify the currently implemented pages and functional flows.
+6. Identify reusable components and existing design tokens.
+7. Determine which features are already implemented and which are incomplete.
+
+Reuse the existing architecture wherever practical.
+
+Do not rewrite the entire application unnecessarily.
+
+Do not remove working dashboard functionality to implement the new landing page.
+
+If an implementation detail is already defined in `design.md`, follow that specification.
+
+---
+
+# 2. THE FOUR PRIMARY TASKS
+
+You must complete all four tasks.
+
+## TASK 1 — IMPLEMENT AUTHENTIC GLASSMORPHISM IN THE HEADER AND NAVIGATION
+
+Upgrade the existing header and navigation into a premium glassmorphic interface.
+
+This must be actual CSS glassmorphism, not a screenshot, static visual imitation, opaque card, or decorative effect that merely resembles glass.
+
+### 2.1 Header appearance
+
+Preserve the existing Planora AI logo and tagline.
+
+Preserve the current navigation structure and the selected navigation states.
+
+The header should contain the relevant:
+
+* Planora AI branding.
+* Home navigation.
+* My Events navigation.
+* Event Studio navigation.
+* Vendors navigation.
+* Search control.
+* Notification control.
+* User profile capsule.
+
+Respect the existing decision that the global AI assistant is accessible through its floating control; do not reintroduce redundant desktop navigation that conflicts with that decision.
+
+### 2.2 Real CSS glassmorphism
+
+Use an actual translucent background with background blur, subtle highlights, and a thin border.
+
+Suggested starting point:
+
+```css
+.glass-header {
+  background: rgba(251, 247, 239, 0.76);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(22px) saturate(150%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    0 4px 20px rgba(78, 49, 27, 0.045),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+```
+
+Treat these values as a starting point, not an excuse to ignore the references or existing theme tokens.
+
+Adapt opacity, blur, and contrast according to the actual background.
+
+### 2.3 Glass must be visible and believable
+
+Important requirements:
+
+* The background behind the glass must remain visible through the translucent surface.
+* `backdrop-filter` must actually be applied.
+* The glass must have a subtle edge and realistic depth.
+* The surface must not become so opaque that the blur becomes invisible.
+* The background must not become so transparent that text loses readability.
+* Navigation icons and labels must remain sharp.
+* The effect must work over both light surfaces and event imagery.
+* Hover and selected states must feel like part of the same material system.
+* The header must not become visually noisy.
+
+Do not apply excessive neon glow, intense gradients, or distracting glass effects.
+
+The final result should resemble premium, carefully designed software rather than a generic glassmorphism template.
+
+### 2.4 Header behaviour
+
+If the existing design uses a sticky header, preserve that behaviour.
+
+As the user scrolls:
+
+* Maintain legibility.
+* Preserve correct layering.
+* Avoid flickering.
+* Avoid content jumping.
+* Keep menus accessible.
+* Prevent the header from covering navigation targets.
+
+If the existing header is not sticky, do not arbitrarily make it fixed without checking the intended layout.
+
+---
+
+# 3. TASK 2 — TURN THE USER PROFILE INTO A GLASSMORPHIC CAPSULE
+
+The existing profile section currently contains a profile avatar, user name, plan label, and dropdown chevron.
+
+Transform this group into a single refined capsule.
+
+## 3.1 Profile capsule structure
+
+The capsule should include:
+
+1. User avatar.
+2. User name.
+3. Subscription label.
+4. Dropdown chevron.
+
+Maintain the user's existing profile data and integrate with the application's actual account state.
+
+Do not hardcode an account identity into the production logic.
+
+The profile should look like one unified interactive control instead of separate disconnected elements.
+
+### Visual direction
+
+Use:
+
+* A translucent cream surface.
+* Background blur.
+* A subtle border.
+* A soft shadow.
+* A smooth pill-shaped radius.
+* Carefully balanced padding.
+* Consistent avatar alignment.
+* Clear typography.
+* A restrained selected or hover state.
+
+Suggested starting point:
+
+```css
+.profile-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 14px 7px 8px;
+  border-radius: 999px;
+
+  background: rgba(255, 251, 244, 0.64);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
+
+  border: 1px solid rgba(255, 255, 255, 0.82);
+
+  box-shadow:
+    0 4px 16px rgba(91, 58, 34, 0.045),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+```
+
+Adjust dimensions and colours to match the actual application.
+
+### Avatar and text
+
+The avatar must:
+
+* Have a consistent circular shape.
+* Use the application's actual profile image when available.
+* Have a graceful fallback if no image is available.
+* Remain crisp and correctly aligned.
+
+The user name must remain readable.
+
+The plan label should be smaller and visually secondary.
+
+The dropdown chevron should align consistently.
+
+### Interaction
+
+When the user activates the capsule:
+
+* Open the profile menu.
+* Keep it anchored to the capsule.
+* Use a smooth, restrained opening transition.
+* Support keyboard navigation.
+* Close it when the user clicks outside.
+* Close it when Escape is pressed.
+* Maintain correct focus behaviour.
+
+Do not require hover to access the menu.
+
+The profile capsule must remain usable on mobile, where it may open a dedicated profile panel or mobile-friendly dropdown.
+
+---
+
+# 4. TASK 3 — REMOVE THE PAID UPGRADE CARD FROM THE PROFILE MENU AND APPLY REAL GLASSMORPHISM
+
+The existing profile dropdown contains:
+
+* Profile information.
+* My Profile.
+* Budget Planner.
+* Event Timeline.
+* Settings.
+* Help & Support.
+* A promotional upgrade section encouraging the user to upgrade to Pro.
+* Sign Out.
+
+Remove the promotional paid-upgrade section completely from this dropdown.
+
+## 4.1 Elements to remove
+
+Remove the upgrade promotion, including:
+
+* Crown icon used exclusively for the promotion.
+* "Plan Smarter with AI" promotional heading.
+* "Upgrade to Pro" promotional description.
+* Any upgrade call-to-action inside this menu.
+* Any special promotional background reserved for this section.
+
+Do not replace the promotion with a different advertisement.
+
+Do not leave an empty card, excessive blank space, or an awkward divider where the card used to exist.
+
+Do not remove legitimate profile information, account navigation, settings, Help & Support, or Sign Out.
+
+Keep the user's current subscription label in the header capsule if the established design requires it.
+
+**The requested removal applies to the profile dropdown. Do not unnecessarily delete unrelated subscription functionality elsewhere in the application.**
+
+## 4.2 Rebuild the dropdown with authentic glassmorphism
+
+The menu should feel like a premium glass panel floating above the interface.
+
+Suggested starting point:
+
+```css
+.profile-dropdown {
+  background: rgba(255, 251, 244, 0.78);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  backdrop-filter: blur(24px) saturate(150%);
+
+  border: 1px solid rgba(255, 255, 255, 0.84);
+  border-radius: 22px;
+
+  box-shadow:
+    0 18px 48px rgba(54, 37, 25, 0.12),
+    0 4px 14px rgba(54, 37, 25, 0.045),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+```
+
+Treat this as a design direction.
+
+Tune the background opacity and blur based on what is behind the dropdown.
+
+### 4.3 Dropdown layout
+
+Retain the reference's overall information hierarchy.
+
+The menu should contain:
+
+**Profile summary**
+
+* Avatar.
+* User name.
+* Email or account identifier where available.
+
+**Navigation actions**
+
+* My Profile.
+* Budget Planner.
+* Event Timeline.
+* Settings.
+* Help & Support.
+
+**Sign-out section**
+
+* Visually separated from ordinary navigation.
+* Clearly labelled.
+* Accessible.
+* Connected to the application's actual sign-out behaviour when authentication exists.
+
+The menu should remain compact and balanced after the Pro promotion is removed.
+
+Do not unnecessarily increase its width or height.
+
+### 4.4 Correct positioning
+
+The dropdown must:
+
+* Align to the profile capsule.
+* Remain inside the viewport.
+* Avoid being clipped by the header.
+* Avoid appearing underneath other content.
+* Use an appropriate stacking context.
+* Close when the user clicks outside or presses Escape.
+* Work when the page is scrolled.
+
+Use a portal if necessary to avoid clipping from parent containers.
+
+### 4.5 Interaction states
+
+Provide:
+
+* Subtle hover feedback.
+* Clear active states.
+* Visible keyboard focus.
+* Smooth entry and exit.
+* Readable labels.
+* Consistent icon sizing.
+
+Do not use bright backgrounds or intense animation that conflicts with the cream-and-brown design system.
+
+---
+
+# 5. TASK 4 — CREATE A PREMIUM 3D STORYTELLING LANDING PAGE
+
+This is the largest new feature.
+
+Create a dedicated, highly polished, immersive landing page that introduces Planora AI through an interactive, scroll-driven visual story.
+
+It should feel like a premium product experience, not a traditional template landing page with several ordinary sections stacked vertically.
+
+The visitor should understand the entire product by scrolling through a carefully choreographed sequence of scenes.
+
+The landing page should introduce:
+
+* The Planora AI brand.
+* The emotional value of event planning.
+* Weddings, birthdays, and community events.
+* Personalized event themes.
+* AI-assisted planning.
+* Budget optimization.
+* Timeline management.
+* Vendor discovery.
+* Event progress and organization.
+* The floating AI assistant.
+* The ability to sign in or create an account.
+
+The experience must use the existing Planora AI visual identity.
+
+Do not introduce an unrelated visual theme.
+
+## 5.1 Creative direction
+
+The final landing page should combine:
+
+* Warm cream and beige surfaces.
+* Rich event photography.
+* Dark brown typography and buttons.
+* Refined serif headlines.
+* Restrained gold and terracotta accents.
+* Layered event cards.
+* Perspective and spatial depth.
+* Premium transitions.
+* Glassmorphic navigation and account actions.
+* Responsive composition.
+* Scroll-driven storytelling.
+
+The result should be sophisticated, editorial, elegant, immersive, and polished.
+
+Avoid:
+
+* Excessive neon.
+* Generic purple AI graphics.
+* Futuristic dashboards unrelated to event planning.
+* Random 3D objects without purpose.
+* Excessive particles.
+* Unnecessary scroll hijacking.
+* Overloaded sections.
+* Long, repetitive text blocks.
+* Constant motion that makes reading difficult.
+
+Every visual effect must reinforce the story.
+
+---
+
+# 6. LANDING PAGE — REQUIRED STORY SEQUENCE
+
+Build the landing page as a connected narrative.
+
+The following is the expected narrative structure. Implement it using the actual content and capabilities defined in the existing specification.
+
+## SCENE 1 — THE FIRST IMPRESSION
+
+Purpose: Communicate the product's identity and value immediately.
+
+Create an immersive hero section.
+
+### Navigation
+
+Include:
+
+* Planora AI logo and tagline.
+* Relevant product navigation.
+* Log In button.
+* Sign Up button.
+
+For an unauthenticated visitor, show Log In and Sign Up actions.
+
+For an authenticated visitor, follow the actual application's account-state and navigation rules.
+
+Keep navigation compact, elegant, and readable.
+
+The public marketing landing page should not reproduce the logged-in dashboard header incorrectly.
+
+The profile capsule should appear when appropriate for the authenticated state.
+
+### Hero content
+
+Use the established product messaging:
+
+**Eyebrow:** Turn Moments Into Memories
+
+**Headline:** Your next unforgettable event.
+
+**Supporting copy:** Plan weddings, birthdays and community events with the power of AI — personalized ideas, budgets, timelines and trusted vendors.
+
+**Primary action:** Create Your Event
+
+**Secondary action:** Explore the Experience
+
+Use the exact supplied imagery and reference composition where appropriate.
+
+### 3D hero visual
+
+Build a compelling 3D event composition featuring layered, floating event imagery.
+
+Possible visual elements include:
+
+* A central wedding image.
+* Secondary birthday imagery.
+* Community gathering imagery.
+* Cards positioned at distinct depths.
+* Subtle perspective.
+* Restrained rotations.
+* Soft shadows.
+* Layered image planes.
+* Carefully controlled motion.
+
+The cards should feel physically layered in a three-dimensional space.
+
+On scroll, the composition should transform smoothly into the next story scene.
+
+Do not merely place a flat screenshot on the page and call it 3D.
+
+Do not rotate the entire website or force the visitor to scroll horizontally.
+
+Use meaningful depth and motion while keeping the content easy to understand.
+
+The primary call to action must remain accessible.
+
+---
+
+## SCENE 2 — CHOOSE YOUR CELEBRATION
+
+Introduce the three core event types:
+
+### Weddings
+
+Elegant, romantic, personalized celebration planning.
+
+### Birthdays
+
+Fun, creative, memorable experiences.
+
+### Community Events
+
+Organized gatherings that bring people together.
+
+Represent the three categories using distinct event imagery and carefully layered cards.
+
+As the visitor scrolls:
+
+* Cards should enter the composition in a choreographed sequence.
+* The active category may come forward.
+* Other categories may move into the background.
+* Depth should change smoothly.
+* Cards should settle into a readable arrangement.
+
+The visitor should understand that all three event types are supported.
+
+Provide a direct path from each category to the corresponding creation flow when that functionality is available.
+
+Do not make scrolling the only way to reach the controls.
+
+---
+
+## SCENE 3 — THE AI EVENT ARCHITECT
+
+Introduce the AI-powered event creation experience.
+
+Show how a natural-language request becomes a structured event plan.
+
+Use an illustrative example:
+
+"I want a beach wedding in Goa for 300 guests with a budget of ₹8 lakh."
+
+Illustrate the progression from:
+
+1. The user's event request.
+2. Event details being structured.
+3. A personalized plan being organized.
+4. A collection of actionable planning components appearing.
+
+The resulting visual may contain cards for:
+
+* Event details.
+* Budget.
+* Theme.
+* Timeline.
+* Vendors.
+* Guest planning.
+
+Use sophisticated motion and layered transitions.
+
+The section must communicate what the application does rather than presenting meaningless animated text.
+
+If the landing page demonstrates a real AI interaction, connect it to the configured service.
+
+If it is an illustrative animation, do not falsely present it as a completed real-time AI request.
+
+---
+
+## SCENE 4 — SMART BUDGETING
+
+Introduce the budget planning capability.
+
+Show the transformation from a total event budget into a structured set of categories.
+
+The visual story should demonstrate:
+
+* Venue allocation.
+* Catering.
+* Decoration.
+* Photography.
+* Entertainment.
+* Other expenses.
+* Remaining budget.
+* Cost-saving opportunities.
+
+An animated allocation chart or expanding category cards may be used.
+
+Keep values internally consistent.
+
+For a demonstration using an ₹8 lakh budget, ensure that the displayed allocations add up correctly.
+
+Avoid presenting illustrative prices as independently verified market prices.
+
+The visual design should match the existing Budget Planner interface.
+
+The visitor must understand how the application helps people manage event costs.
+
+---
+
+## SCENE 5 — EVENT STUDIO AND PERSONALIZED THEMES
+
+Show the Event Studio experience.
+
+Use the supplied theme images to create a layered gallery or spatial scene featuring:
+
+* Beachside Elegant.
+* Royal Traditional.
+* Minimal & Modern.
+* Boho Garden.
+* Vintage Romance.
+
+Use the names and visual content specified in the reference images.
+
+As scrolling progresses, theme cards may move from a three-dimensional gallery into a focused detail view.
+
+Show:
+
+* Theme imagery.
+* Colour palettes.
+* Decorations.
+* Stage designs.
+* Floral arrangements.
+* Lighting.
+* Table settings.
+* Similar themes.
+
+The scene should make the personalization capability visually clear.
+
+Do not introduce themes that are inconsistent with the supplied design.
+
+The section should link to Event Studio when that page is available.
+
+---
+
+## SCENE 6 — VENDOR DISCOVERY
+
+Introduce the Vendors Marketplace.
+
+Show the event owner moving from a theme or requirement to relevant vendor options.
+
+Use the actual vendor-marketplace visual language.
+
+Show representative cards for:
+
+* Venue.
+* Catering.
+* Decoration.
+* Photography.
+* Entertainment.
+* Makeup & Styling.
+
+Include the concepts of:
+
+* Search and filtering.
+* Vendor comparisons.
+* Ratings.
+* Price ranges.
+* Location.
+* Enquiries.
+
+The visual sequence should show how a collection of possible vendors becomes a shortlist.
+
+Do not claim that demonstration vendors are verified real businesses unless the actual application has verified data.
+
+This section should link to Vendors.
+
+---
+
+## SCENE 7 — TIMELINE AND EXECUTION
+
+Show that Planora AI helps users manage the execution of the event, not only generate ideas.
+
+Introduce:
+
+* Task checklists.
+* Event timelines.
+* Milestones.
+* Upcoming deadlines.
+* Task statuses.
+* Completion tracking.
+
+The visual story can transition from loosely arranged task cards into an organized timeline.
+
+Use realistic task relationships.
+
+Keep the scene readable.
+
+The purpose is to demonstrate how an idea becomes an organized, actionable plan.
+
+---
+
+## SCENE 8 — THE CONNECTED EVENT EXPERIENCE
+
+Create a concluding product overview that brings together:
+
+* Events.
+* Budgets.
+* Themes.
+* Vendors.
+* Guests.
+* Tasks.
+* Timeline.
+* AI assistance.
+
+The composition should communicate that the separate features work together as one planning system.
+
+Avoid displaying an overcrowded dashboard without explanation.
+
+Use one coherent composition with clear visual hierarchy.
+
+---
+
+## SCENE 9 — FINAL CALL TO ACTION
+
+End the narrative with a strong, elegant CTA section.
+
+Suggested heading:
+
+**Your next unforgettable event starts here.**
+
+Supporting copy:
+
+Bring your ideas together with personalized planning, smart budgets, beautiful themes, and trusted vendor discovery.
+
+Primary action:
+**Start Planning**
+
+Secondary action:
+**Create an Account**
+
+Make both actions work.
+
+The primary CTA should open the event creation workflow for authenticated users.
+
+For unauthenticated users, route them through the appropriate account or onboarding flow before allowing access to protected features.
+
+The account CTA should open the sign-up flow.
+
+---
+
+# 7. REAL 3D AND SCROLL-DRIVEN ANIMATION REQUIREMENTS
+
+The 3D experience must be technically real, not an imitation built from a static image.
+
+First, inspect the existing project and select the most appropriate implementation approach.
+
+For a React project, consider a combination of:
+
+* Three.js.
+* React Three Fiber.
+* Drei, if useful.
+* GSAP ScrollTrigger.
+* Framer Motion or Motion for appropriate interface transitions.
+
+Do not install every library automatically.
+
+Use the smallest reliable set of tools that supports the requested experience.
+
+If the project already includes a suitable animation or 3D framework, prefer reusing it.
+
+### 7.1 Actual spatial depth
+
+Use genuine visual depth, which may include:
+
+* Perspective cameras.
+* Three-dimensional card placement.
+* Image textures.
+* Controlled rotations.
+* Layered geometry.
+* Lighting and shadows.
+* Z-axis motion.
+* Scroll-linked position changes.
+* Spatial transitions between story scenes.
+
+A carefully implemented CSS 3D composition is acceptable for smaller components, but the overall experience must have convincing depth and controlled motion.
+
+Do not claim to have implemented a Three.js scene if the implementation is only a flat CSS layout.
+
+### 7.2 Scroll-driven storytelling
+
+The animation must respond to the user's actual scroll position.
+
+Examples:
+
+* Cards move forward as the visitor approaches a section.
+* Secondary cards shift backward.
+* Event imagery transitions between story scenes.
+* The active scene gains visual prominence.
+* Budget components assemble into a readable chart.
+* Theme cards reorganize into a gallery.
+* The vendor section transforms into a comparison composition.
+* The final CTA appears after the product story.
+
+Use smooth progress-based transitions rather than excessive animation triggers.
+
+### 7.3 Scrolling behaviour
+
+Native vertical scrolling must continue to work naturally.
+
+Do not:
+
+* Lock the user into a section unnecessarily.
+* Intercept the mouse wheel without a compelling reason.
+* Force horizontal scrolling.
+* Break the browser's scroll position.
+* Make navigation impossible when animations are active.
+
+Sticky storytelling sections can be used where appropriate, but they must release naturally at the end of the section.
+
+### 7.4 Animation quality
+
+Use:
+
+* Smooth easing.
+* Appropriate stagger.
+* Controlled motion.
+* Subtle perspective changes.
+* Consistent durations.
+* Meaningful transitions.
+* Smooth entry and exit.
+* Stable layouts.
+
+Avoid:
+
+* Unnecessary bouncing.
+* Flashing.
+* Excessive zoom.
+* Constant random rotation.
+* Animation that interferes with text.
+* Large, uncontrolled particle effects.
+
+### 7.5 Performance
+
+The landing page must remain usable on ordinary laptops and mobile phones.
+
+Use:
+
+* Appropriately sized images.
+* Lazy loading for lower-page imagery.
+* Efficient 3D scene rendering.
+* Reusable geometry and materials where suitable.
+* GPU-friendly transformations.
+* Cleanup of event listeners and animation instances.
+* Proper disposal of graphics resources.
+* Reasonable limits on continuous animation.
+* Reduced complexity on lower-powered devices.
+
+Respect `prefers-reduced-motion`.
+
+If WebGL is unavailable or unsuitable, provide a visually strong layered fallback rather than a blank screen.
+
+The site must remain readable and usable when motion is reduced or disabled.
+
+### 7.6 Mobile-specific 3D
+
+Do not simply reuse the heaviest desktop 3D scene on mobile.
+
+Provide a simplified, responsive composition with:
+
+* Fewer active layers.
+* Reduced rendering complexity.
+* Readable content.
+* Functional CTAs.
+* Native vertical scrolling.
+* Appropriate touch interactions.
+
+Preserve the storytelling concept without sacrificing performance.
+
+---
+
+# 8. TASK 5 — PREMIUM GLASSMORPHIC LOGIN AND SIGN-UP EXPERIENCE
+
+This section is essential.
+
+Clicking Log In must open a dedicated login page.
+
+Clicking Sign Up must open the sign-up page or the sign-up state of the authentication experience.
+
+The pages should use the same premium visual identity.
+
+Do not leave these buttons as decorative controls.
+
+## 8.1 Routes and navigation
+
+Use the existing router if available.
+
+Otherwise, establish suitable public routes, such as:
+
+* `/` — Public landing page.
+* `/login` — Login page.
+* `/signup` — Sign-up page.
+
+Preserve the application's existing dashboard routes.
+
+Do not break access to the Home Dashboard, My Events, Event Studio, Vendors, AI assistant, Budget Planner, or Event Timeline.
+
+If an authenticated application's root currently serves a dashboard, introduce the landing page without destroying the existing dashboard flow.
+
+Choose the most coherent route structure for the current project.
+
+### Required navigation flows
+
+Landing Page → Log In → Login Page.
+
+Landing Page → Sign Up → Sign-up Page.
+
+Login Page → Create an Account → Sign-up Page.
+
+Sign-up Page → Already have an account → Login Page.
+
+Authentication Success → Appropriate application destination.
+
+Back to Landing Page → Landing Page.
+
+If the application already has authentication, integrate with the existing provider and protected-route logic.
+
+Do not replace an existing real authentication system with a fake frontend-only mechanism.
+
+---
+
+# 9. LOGIN PAGE DESIGN
+
+Create a refined glassmorphic login page that feels like a premium extension of the landing page.
+
+### Composition
+
+Use the cream theme with subtle depth.
+
+Possible layout:
+
+* A branded area with an elegant event-planning visual.
+* A glassmorphic authentication card.
+* A clear headline.
+* Concise supporting text.
+* Email input.
+* Password input.
+* Password visibility toggle.
+* Remember Me, where applicable.
+* Forgot Password.
+* Primary Sign In button.
+* Sign-up link.
+* Back-to-home link.
+
+Use the supplied visual references and existing design system.
+
+Keep the composition balanced.
+
+On desktop, a two-column layout may be used if it suits the reference and current app.
+
+On mobile, reflow into a compact single-column layout.
+
+Do not make the login page feel like an unrelated third-party template.
+
+### 9.1 Glassmorphism
+
+The authentication card must use genuine translucent surfaces.
+
+Suggested starting point:
+
+```css
+.auth-glass-card {
+  background: rgba(255, 252, 246, 0.76);
+
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  backdrop-filter: blur(28px) saturate(150%);
+
+  border: 1px solid rgba(255, 255, 255, 0.86);
+  border-radius: 28px;
+
+  box-shadow:
+    0 24px 70px rgba(73, 46, 28, 0.12),
+    0 5px 20px rgba(73, 46, 28, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+```
+
+The exact values should be tuned to achieve a believable material effect.
+
+Use an attractive background behind the card so that the backdrop blur has something meaningful to blur.
+
+Do not simply use an opaque white form with a heavy shadow and call it glassmorphism.
+
+The card should have:
+
+* Visible translucency.
+* Actual backdrop blur.
+* Restrained reflections.
+* A subtle border.
+* Clean input fields.
+* Strong contrast.
+* Comfortable spacing.
+
+Use transparent input surfaces where they improve the composition, while preserving readability.
+
+### 9.2 Login interactions
+
+Implement:
+
+* Email input validation.
+* Required field validation.
+* Password visibility.
+* Submit loading state.
+* Disabled state during submission.
+* Accessible error messages.
+* Clear authentication failure handling.
+* Success routing.
+* Keyboard navigation.
+
+If a password-reset feature is supported, provide a working flow.
+
+If it requires an unconfigured backend, show a truthful configuration message rather than pretending that an email was sent.
+
+---
+
+# 10. SIGN-UP PAGE DESIGN
+
+The sign-up experience must use the same glassmorphism system and design language.
+
+Include:
+
+* Planora AI branding.
+* A welcoming headline.
+* Concise supporting text.
+* Name field, if required.
+* Email field.
+* Password field.
+* Confirm Password, if appropriate.
+* Password visibility.
+* Password requirements or strength feedback.
+* Terms acknowledgement where required.
+* Create Account action.
+* Link to Log In.
+* Back-to-home navigation.
+
+Use clear labels.
+
+Show validation errors beside the relevant fields.
+
+Do not rely only on placeholder text to describe fields.
+
+### Sign-up interaction
+
+Implement:
+
+* Input validation.
+* Password matching checks where applicable.
+* A suitable loading state.
+* A truthful success state.
+* An appropriate error state.
+* Navigation to the correct destination.
+* Mobile responsiveness.
+
+Use the existing authentication provider where one exists.
+
+If no authentication backend is configured, implement the frontend interactions and clearly identify the limitations.
+
+Do not represent a local mock login as secure, real account authentication.
+
+Do not store passwords in local storage or session storage.
+
+Do not build fake Google or social login buttons that imply a working OAuth integration when no such integration exists.
+
+---
+
+# 11. GLASSMORPHISM DESIGN SYSTEM
+
+Establish reusable glass styles rather than independently styling every glass component.
+
+Create appropriate design tokens for:
+
+* Glass background opacity.
+* Blur intensity.
+* Border transparency.
+* Surface highlights.
+* Shadow strength.
+* Surface contrast.
+* Hover transitions.
+* Active state.
+* Focus state.
+
+Apply them consistently to:
+
+1. Global navigation, where appropriate.
+2. Profile capsule.
+3. Profile dropdown.
+4. Login card.
+5. Sign-up card.
+6. Suitable landing-page controls.
+7. The floating AI panel when it aligns with the design.
+
+Do not turn every card, every button, and every background into a glass surface.
+
+The effect should have a visual hierarchy.
+
+Use solid or lightly tinted surfaces for components that require maximum readability.
+
+### No fake glassmorphism
+
+The final code must use actual CSS transparency and `backdrop-filter`.
+
+Do not simulate all glass surfaces with:
+
+* Flat opaque backgrounds.
+* Static images of glass.
+* Screenshot overlays.
+* Excessive outer shadows.
+* Neon outlines.
+* Blur applied only to text.
+* A transparent background with no visible depth.
+* Pseudo-elements that cover the entire component with an opaque surface.
+
+Use a graceful fallback where `backdrop-filter` is unsupported.
+
+In such cases, increase the surface opacity enough to maintain readability while keeping the intended aesthetic.
+
+The interface must remain usable regardless of browser support.
+
+---
+
+# 12. FLOATING PLANORA AI ASSISTANT
+
+Preserve the established floating AI assistant.
+
+Do not duplicate it unnecessarily.
+
+The assistant should remain available throughout appropriate areas of the application.
+
+### Visual behaviour
+
+Use the established floating gold/brown Planora AI icon.
+
+The closed button should:
+
+* Be compact.
+* Have a circular silhouette.
+* Have a recognisable icon.
+* Have a suitable label or tooltip.
+* Remain keyboard accessible.
+* Avoid covering important controls.
+
+The open panel should:
+
+* Open through an actual button interaction.
+* Display the AI conversation.
+* Provide an input area and send action.
+* Close through a visible close action.
+* Support keyboard interaction.
+* Respect viewport boundaries.
+* Remain responsive.
+
+On the landing page, the floating assistant should complement the narrative and not obstruct the 3D hero or important CTAs.
+
+On login and sign-up pages, decide whether the assistant should appear based on whether it would interfere with completing authentication.
+
+Do not force it onto every screen when that would degrade usability.
+
+### Layout and collision prevention
+
+The floating assistant must not cover:
+
+* The profile dropdown.
+* Primary CTAs.
+* Form submit buttons.
+* Important event actions.
+* Vendor card buttons.
+* Important content or navigation.
+
+Test the positioning at several screen sizes.
+
+---
+
+# 13. RESPONSIVE DESIGN
+
+The application must be designed for desktop, tablet, and mobile.
+
+Minimum test widths:
+
+* 320px.
+* 375px.
+* 390px.
+* 430px.
+* 768px.
+* 1024px.
+* 1280px.
+* 1440px.
+* 1920px.
+
+### Desktop
+
+Preserve the elegant horizontal navigation and premium visual density.
+
+Keep the 3D landing-page scenes spacious and layered.
+
+The profile capsule must fit in the header without pushing navigation off-screen.
+
+### Tablet
+
+Reduce unnecessary columns and visual layers.
+
+Keep the primary story content and CTAs visible.
+
+Reposition the navigation sensibly.
+
+### Mobile
+
+Use:
+
+* A compact header.
+* Proper touch targets.
+* A mobile-friendly navigation.
+* Single-column authentication.
+* Reduced 3D complexity.
+* Readable text.
+* Responsive imagery.
+* Native vertical scrolling.
+* An appropriately positioned floating assistant.
+
+Respect device safe areas.
+
+Do not allow the page to create unintended horizontal scrolling.
+
+Do not shrink all desktop content to fit a phone.
+
+Create deliberate mobile compositions.
+
+---
+
+# 14. ACCESSIBILITY REQUIREMENTS
+
+Implement accessible behaviour throughout the experience.
+
+Include:
+
+* Semantic landmarks.
+* Accessible navigation.
+* Proper form labels.
+* Keyboard navigation.
+* Visible focus indicators.
+* Appropriate button names.
+* Accessible dropdowns.
+* Correct modal semantics.
+* Focus management.
+* Escape-to-close where appropriate.
+* Sufficient contrast.
+* Screen-reader-friendly validation.
+* Reduced-motion support.
+* Meaningful image alternatives.
+
+Respect `prefers-reduced-motion` for:
+
+* 3D transitions.
+* Scroll-linked animations.
+* Animated gradients.
+* Entrance effects.
+* Decorative motion.
+
+The landing page must remain understandable and navigable without animation.
+
+Do not make an essential control accessible only through hover or a 3D interaction.
+
+---
+
+# 15. CODE QUALITY AND TECHNICAL STANDARDS
+
+First, follow the existing project's framework, architecture, and dependencies where practical.
+
+If the project uses React and TypeScript, maintain strict typing and clean component boundaries.
+
+Potential reusable components include:
+
+```text
+Application
+├── PublicLandingPage
+│   ├── GlassHeader
+│   ├── LandingHero
+│   ├── EventCarousel3D
+│   ├── EventTypeStory
+│   ├── AIPlanningStory
+│   ├── BudgetStory
+│   ├── ThemeStory
+│   ├── VendorStory
+│   ├── TimelineStory
+│   └── LandingCTA
+│
+├── Authentication
+│   ├── LoginPage
+│   ├── SignupPage
+│   ├── GlassAuthCard
+│   ├── AuthInput
+│   └── PasswordField
+│
+├── ApplicationHeader
+│   ├── Navigation
+│   ├── ProfileCapsule
+│   └── ProfileDropdown
+│
+├── ExistingApplicationScreens
+│
+└── FloatingPlanoraAssistant
+```
+
+This is a suggested logical architecture, not a requirement to recreate the project from scratch.
+
+Keep existing working screens and components.
+
+Do not create duplicate global navigation or duplicate profile dropdown implementations for every page.
+
+Use a shared component where the interaction and appearance should remain consistent.
+
+### CSS
+
+Avoid:
+
+* Broad uncontrolled selectors.
+* Conflicting stylesheets.
+* Unnecessary `!important`.
+* Hardcoded positional hacks that break on mobile.
+* Overlapping absolute elements without a layout strategy.
+* Repeated arbitrary design values.
+* Excessive DOM nesting.
+
+Ensure correct stacking contexts for:
+
+* Header.
+* Dropdown.
+* 3D scene.
+* Landing sections.
+* Authentication card.
+* Floating assistant.
+* Dialogs.
+
+### State
+
+Keep the profile menu, authentication forms, and floating assistant controlled by explicit state.
+
+Clean up scroll listeners, animation timelines, observers, and event handlers appropriately.
+
+Avoid event-listener duplication after route changes.
+
+---
+
+# 16. PERFORMANCE REQUIREMENTS
+
+The 3D landing page must not make the rest of the application sluggish.
+
+Use:
+
+* Lazy loading of heavy features where appropriate.
+* Optimized image sizes.
+* Appropriate image formats.
+* Dynamic imports for heavy 3D components where useful.
+* Limited and intentional continuous animation.
+* Efficient scroll-linked animation.
+* Clean animation lifecycle management.
+* Responsive rendering complexity.
+* Reduced-motion fallbacks.
+
+Do not load a complex 3D environment on every authenticated dashboard page if that environment is needed only on the public landing page.
+
+Do not cause the landing page to freeze while loading the 3D scene.
+
+Provide a useful first render while heavier visuals initialize.
+
+Prioritize the core content and CTA.
+
+---
+
+# 17. TESTING AND VISUAL VERIFICATION
+
+Do not declare the work complete until it has been tested.
+
+## Task 1 test cases
+
+* Header glassmorphism is visible over an actual background.
+* Navigation remains readable.
+* Header does not flicker on scroll.
+* Layout remains correct at desktop and mobile widths.
+
+## Task 2 test cases
+
+* Profile capsule renders as one unified component.
+* Avatar and text are correctly aligned.
+* Dropdown opens when activated.
+* Dropdown closes on outside click.
+* Escape closes the dropdown.
+* Menu works through keyboard interaction.
+
+## Task 3 test cases
+
+* The paid-upgrade promotional card is completely removed from the profile dropdown.
+* No empty placeholder remains.
+* All intended navigation actions remain available.
+* Sign Out still works according to the existing authentication implementation.
+* Dropdown glassmorphism looks correct over the actual page background.
+
+## Task 4 test cases
+
+* Landing page loads at the intended public route.
+* All story sections are present.
+* Scroll-linked 3D transitions work.
+* Native scrolling remains usable.
+* All CTAs work.
+* Login navigates to the login page.
+* Sign Up navigates to the registration flow.
+* Reduced-motion mode works.
+* Mobile layout remains readable.
+* The experience remains usable when 3D initialization fails.
+
+## Authentication test cases
+
+* Invalid email is rejected.
+* Missing required values produce appropriate errors.
+* Password visibility can be toggled.
+* Loading states are shown when required.
+* Errors are displayed correctly.
+* Existing authentication is preserved.
+* No false success occurs when the actual authentication operation fails.
+
+## Final visual comparison
+
+Capture real screenshots of the implementation and compare them to the supplied references.
+
+Correct:
+
+* Spacing.
+* Alignment.
+* Typography.
+* Glass transparency.
+* Blur strength.
+* Profile capsule dimensions.
+* Dropdown placement.
+* Animation quality.
+* Responsive wrapping.
+* Floating assistant placement.
+* Landing-page composition.
+
+Do not rely on visual memory alone.
+
+Run the available lint, build, and test commands.
+
+Report only verified results.
+
+---
+
+# 18. FINAL ACCEPTANCE CRITERIA
+
+The task is complete only when the following requirements are satisfied.
+
+### Glassmorphic header
+
+* A genuinely translucent CSS surface.
+* Actual backdrop blur.
+* Readable navigation.
+* Appropriate borders and shadows.
+* Consistent visual hierarchy.
+
+### Glassmorphic profile capsule
+
+* Avatar, name, plan label, and chevron unified into one pill-shaped control.
+* Correct alignment.
+* Consistent hover and focus states.
+* Functional dropdown trigger.
+
+### Glassmorphic dropdown
+
+* Actual backdrop blur and translucent surface.
+* Correct profile information.
+* My Profile, Budget Planner, Event Timeline, Settings, and Help & Support remain available as specified.
+* Paid-upgrade promotion removed.
+* Sign Out preserved.
+* No awkward spacing or empty card.
+
+### 3D storytelling landing page
+
+* Distinct public landing route.
+* Rich visual hero.
+* Multiple connected story scenes.
+* Genuine spatial depth.
+* Scroll-responsive movement.
+* Overview of the product's features.
+* Event planning CTA.
+* Login and Sign Up actions.
+* Responsive and accessible implementation.
+
+### Authentication experience
+
+* Dedicated login page.
+* Dedicated sign-up experience.
+* Real form validation.
+* Glassmorphic form cards.
+* Functional navigation.
+* Truthful handling of authentication success and failure.
+* Integration with existing authentication where available.
+
+### Quality
+
+* Existing dashboard remains functional.
+* No unnecessary redesign.
+* No dead primary controls.
+* No obvious layout collisions.
+* No unacceptable mobile overflow.
+* No exposed secrets.
+* No false claims about implemented integrations.
+* Relevant tests executed.
+* Build verified.
+
+---
+
+# 19. EXECUTION INSTRUCTIONS
+
+Now execute this task against the existing repository.
+
+Do not answer by merely repeating this specification.
+
+Do not produce only mockups.
+
+Do not replace the application with screenshots.
+
+Do not remove previously completed product functionality.
+
+Read the project and the available design references, then make the actual code changes.
+
+Work through all four primary tasks systematically.
+
+After implementation:
+
+1. Run the application.
+2. Test the real interactions.
+3. Capture screenshots.
+4. Compare the output with the supplied design.
+5. Fix the problems you discover.
+6. Run available automated checks.
+7. Provide an honest completion report.
+
+If the current project has missing credentials or backend services, implement the frontend carefully and describe exactly which integration remains dependent on configuration.
+
+Do not stop merely because one page looks attractive.
+
+**The final objective is a complete Planora AI frontend combining authentic glassmorphism, a refined profile interaction, a functional public 3D storytelling experience, and a premium glassmorphic login/sign-up flow—all integrated into the existing application without breaking its current features.**
+
+Begin by inspecting the project and reading the existing `design.md` before changing any code.

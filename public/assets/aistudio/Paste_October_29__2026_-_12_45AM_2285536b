@@ -1,0 +1,1080 @@
+# PROJECT: PLANORA AI
+
+## MASTER IMPLEMENTATION — COMPLETE ALL REMAINING FEATURES TO 100%
+
+Act as a senior full-stack engineer, backend architect, database engineer, security specialist, AI integration engineer, and QA engineer.
+
+Your mission is to take my existing Planora AI project from its current implementation state to a fully functional, secure, tested, and deployment-ready application.
+
+I have already provided an architecture research report, a Phase 1 implementation prompt, and an implementation audit.
+
+The latest audit reports that the initial authentication and database foundation has been implemented, but several features remain incomplete, partially implemented, unverified, or not started.
+
+Do not assume the previous audit is perfectly accurate. Inspect the actual repository and verify every claim before proceeding.
+
+Your objective is to bring every applicable requirement from the existing architecture and audit to 100% functional completion.
+
+**Do not merely generate a plan, write documentation, or report that work is complete. Implement the actual functionality in the existing repository, execute the available tests, fix failures, and verify the results.**
+
+---
+
+# SECTION 1 — NON-NEGOTIABLE RULES
+
+## 1.1 Preserve the Existing Frontend Design
+
+The existing Planora AI frontend must remain visually unchanged.
+
+Preserve:
+
+* Existing page layouts and component hierarchy wherever practical.
+* Glassmorphism and current styling.
+* Colors, typography, spacing, and visual effects.
+* Framer Motion animations and transitions.
+* The landing page and 3D storytelling experience.
+* Existing navigation and responsive behavior.
+* Login and signup page designs.
+* Dashboard and event-management interfaces.
+* My Events, Event Studio, Event Timeline, Budget Planner, Profile, and AI Copilot interfaces.
+* Existing icons, illustrations, and visual assets.
+
+Do not redesign the application, replace its UI with generic components, or remove existing functionality.
+
+You may make the minimum changes necessary to connect existing components to real backend functionality.
+
+If a UI change is necessary to support a feature, preserve the existing design language and explain the change.
+
+## 1.2 Inspect Before Implementing
+
+Inspect the actual repository, including:
+
+* Frontend source files.
+* Backend source files.
+* package.json and dependency configuration.
+* Authentication context and protected routes.
+* API clients and existing API endpoints.
+* Database schema and migrations.
+* Existing tests.
+* Environment variable templates.
+* README and setup instructions.
+* Existing integrations and mock-data implementations.
+
+Create an internal implementation checklist based on the actual codebase and previous architecture report.
+
+Identify every incomplete feature, broken connection, missing API, placeholder implementation, and untested security boundary.
+
+Do not recreate the project from scratch.
+
+## 1.3 Work Incrementally
+
+Implement features in dependency order.
+
+After each major phase:
+
+1. Run relevant tests.
+2. Run type checks and linting where configured.
+3. Run the production build.
+4. Fix regressions.
+5. Verify that existing functionality still works.
+6. Update the implementation checklist.
+
+Do not continue blindly when a foundational dependency is broken.
+
+## 1.4 Real Functionality Only
+
+Do not count any of the following as complete:
+
+* Mock API responses presented as real data.
+* Buttons that do not perform their intended actions.
+* API routes that exist but do not work.
+* Database tables that are never used.
+* Integrations that are documented but not implemented.
+* Tests that were written but never executed.
+* Tests that pass only because external services are mocked when live integration is being claimed.
+* Features that silently fall back to localStorage while claiming cloud persistence.
+
+Mocks may be used in isolated automated tests, but must never be confused with production functionality.
+
+If external credentials are unavailable, implement the integration as far as possible, test everything that can be tested, and clearly identify the remaining live-verification requirement.
+
+Never fabricate successful test results.
+
+---
+
+# SECTION 2 — PHASE 1: VERIFY AND HARDEN THE FOUNDATION
+
+The previous audit reports that authentication, the database foundation, and the initial security layer are implemented.
+
+Verify these components and fix any defects.
+
+## 2.1 Firebase Authentication
+
+Verify:
+
+* User registration.
+* Email/password login.
+* Google sign-in if already supported.
+* Logout.
+* Authentication-state persistence.
+* Loading and error states.
+* Expired sessions.
+* Protected routes.
+* Login/signup redirects.
+* Backend token verification.
+
+Make sure the frontend and backend agree on the authentication model.
+
+Never trust user identity supplied by the client without server-side verification.
+
+## 2.2 Firebase Admin SDK
+
+Verify:
+
+* Firebase Admin initialization.
+* Service-account configuration.
+* ID token verification.
+* Invalid-token rejection.
+* Expired-token rejection.
+* Correct extraction of the authenticated user's UID.
+
+Support secure environment-based configuration.
+
+Never expose service-account credentials or private keys in frontend bundles, browser storage, source control, or client-visible API responses.
+
+Do not log private keys or sensitive authentication tokens.
+
+## 2.3 Supabase PostgreSQL
+
+Verify:
+
+* Connection initialization.
+* Database connectivity.
+* Schema consistency.
+* Migration reproducibility.
+* Foreign-key integrity.
+* Required indexes.
+* Appropriate timestamps.
+* Correct handling of missing configuration.
+
+Review the existing in-memory LocalDatabase fallback.
+
+It may be retained for local testing if useful, but:
+
+* It must be clearly identified as development-only.
+* Production mode must not silently switch to in-memory persistence.
+* Production startup must fail safely when required database configuration is missing.
+* The application must never claim that local-memory writes have been saved to Supabase.
+
+## 2.4 Row Level Security
+
+Review every table that contains private user information.
+
+Verify:
+
+* Appropriate RLS enablement.
+* Correct policies for SELECT, INSERT, UPDATE, and DELETE.
+* Consistent user ownership.
+* Correct handling of foreign-key relationships.
+* Protection against cross-user data access.
+* Secure handling of backend service-role credentials.
+
+Do not assume that setting a user ID in application code automatically enforces database security.
+
+Document the exact authentication-to-database authorization strategy.
+
+If a privileged backend database client bypasses RLS, enforce server-side ownership checks for every relevant operation and test them independently.
+
+## 2.5 Authentication and Security Tests
+
+Test at least:
+
+* Unauthenticated requests.
+* Invalid tokens.
+* Expired tokens.
+* User A accessing User B's profile.
+* User A accessing User B's events.
+* Unauthorized modifications and deletions.
+* Invalid request bodies.
+* Attempts to override protected identifiers.
+* Missing environment variables.
+* Safe error responses.
+
+Fix any security defects discovered during the audit.
+
+---
+
+# SECTION 3 — PHASE 2: COMPLETE EVENT, TASK, GUEST, AND BUDGET PERSISTENCE
+
+This phase is a top priority.
+
+The previous audit reported that several frontend views still use localStorage or React state instead of persistent backend APIs.
+
+Connect the existing frontend to the real backend.
+
+## 3.1 Event Management
+
+Implement complete event CRUD functionality.
+
+Required operations:
+
+* Create event.
+* Fetch all events belonging to the authenticated user.
+* Fetch one event by ID.
+* Update event details.
+* Delete an event.
+* Support appropriate pagination or filtering if needed.
+
+Persist relevant fields supported by the existing product design, such as:
+
+* Event name.
+* Event type.
+* Description.
+* Start and end dates.
+* Location.
+* Status.
+* Budget.
+* Associated user.
+* Creation and update timestamps.
+
+Do not invent incompatible fields if an existing schema already defines the appropriate structure.
+
+Requirements:
+
+* Validate incoming data.
+* Validate dates and supported event statuses.
+* Enforce ownership.
+* Return appropriate HTTP status codes.
+* Keep frontend data synchronized with server responses.
+* Provide loading, success, empty, and error states.
+
+Connect:
+
+* CreateEventView.
+* MyEventsView.
+* Event Studio.
+* Relevant dashboard components.
+
+Newly created events must survive a page refresh and a fresh login.
+
+## 3.2 Event Timeline and Tasks
+
+Implement persistent task management.
+
+Required operations:
+
+* Create task.
+* List tasks for the authorized event.
+* Update task.
+* Delete task.
+* Mark task complete or incomplete.
+* Update task deadlines and status.
+* Support assignments or priorities only where consistent with the existing application.
+
+Every task must belong to a valid event.
+
+Verify that the authenticated user owns that event before allowing access to its tasks.
+
+Connect EventTimelineView to the real API.
+
+Ensure task changes persist across reloads and sessions.
+
+## 3.3 Guest Management and RSVP
+
+Inspect the existing guest-related UI and database schema.
+
+If guest management is part of the existing product scope, implement:
+
+* Add guest.
+* Edit guest details.
+* Remove guest.
+* List guests for an authorized event.
+* Track invitation and RSVP status.
+* Track attendance where supported.
+* Validate guest information.
+* Enforce event ownership.
+
+Protect guest personal information.
+
+Do not expose guest lists from another user's event.
+
+If invitations or emails are part of the existing interface, do not claim that invitations are sent until a real email delivery service has been configured and tested.
+
+## 3.4 Budget and Expense Management
+
+Implement complete persistent budget functionality.
+
+Required operations:
+
+* Create or update an event budget.
+* Retrieve budget details.
+* Add expenses.
+* Edit expenses.
+* Delete expenses.
+* Retrieve expenses for an event.
+* Calculate total allocated budget.
+* Calculate total expenses.
+* Calculate remaining balance.
+* Calculate spending percentage.
+
+Validate:
+
+* Numeric values.
+* Non-negative amounts where appropriate.
+* Currency handling.
+* Expense categories.
+* Event ownership.
+* Foreign-key relationships.
+
+Ensure that totals are calculated from authoritative database records rather than trusting totals submitted by the frontend.
+
+Connect BudgetPlannerView to real API endpoints.
+
+Make sure the displayed budget and expense information remains correct after refreshing the application.
+
+## 3.5 Remove False Persistence
+
+Search the codebase for all event, task, guest, and budget uses of:
+
+* localStorage.
+* sessionStorage.
+* Hardcoded arrays.
+* Mock API data.
+* Temporary in-memory frontend state used as the source of truth.
+
+Replace these implementations with real API calls where persistence is required.
+
+Keep local state for immediate UI interactions and caching where appropriate.
+
+Do not remove legitimate UI preferences or unrelated local settings.
+
+---
+
+# SECTION 4 — PHASE 3: COMPLETE AI COPILOT, TOKEN TRACKING, AND USAGE LIMITS
+
+The previous audit reports that server-side Gemini endpoints exist, but AI usage accounting and quotas are incomplete.
+
+Inspect the current Gemini integration and preserve the existing AI experience.
+
+## 4.1 Server-Side AI Proxy
+
+Verify and complete the existing AI endpoints, including:
+
+* AI Copilot.
+* AI theme suggestions.
+* AI vendor-related assistance, if supported by the existing application.
+
+All external AI API calls must be made securely from the backend.
+
+Never expose Gemini API keys to the browser.
+
+Validate requests and limit excessively large inputs.
+
+Return useful errors when the provider is unavailable, rate-limited, or returns an error.
+
+Do not pretend that AI-generated vendor suggestions are verified real vendors.
+
+## 4.2 AI Usage Accounting
+
+Complete the ai_usage_logs functionality.
+
+Where supported by the provider's response or reliable provider metadata, record:
+
+* Authenticated user ID.
+* Feature or endpoint.
+* Model identifier.
+* Input token count.
+* Output token count.
+* Total token count.
+* Request status.
+* Request latency.
+* Estimated cost.
+* Timestamp.
+
+Requirements:
+
+* Never invent token counts.
+* Distinguish actual provider usage from estimates.
+* Clearly label estimated costs.
+* Handle provider failures.
+* Avoid recording sensitive prompt content unless explicitly required and appropriately protected.
+* Prevent one user from viewing another user's usage records.
+
+Ensure logging failures do not cause sensitive information to leak.
+
+## 4.3 Per-User Usage Quotas
+
+Implement configurable daily request or token limits.
+
+Requirements:
+
+* Associate usage with the authenticated user.
+* Enforce quotas server-side.
+* Prevent concurrent requests from bypassing limits.
+* Use an appropriate database transaction or atomic reservation mechanism when necessary.
+* Return a clear quota-exceeded response.
+* Reset limits using a clearly documented timezone policy.
+* Avoid counting failed requests incorrectly.
+* Provide safe behavior when the quota database is unavailable.
+
+Do not invent pricing or model limits.
+
+Make quotas configurable and document their defaults.
+
+## 4.4 AI Tests
+
+Test:
+
+* Valid AI requests.
+* Invalid inputs.
+* Provider errors.
+* Rate limiting.
+* Daily quota enforcement.
+* Usage record creation.
+* User data isolation.
+* Missing API credentials.
+
+Where live AI credentials are unavailable, use deterministic provider mocks for unit tests and clearly distinguish those tests from live integration tests.
+
+---
+
+# SECTION 5 — PHASE 4: GOOGLE CALENDAR OAUTH AND EVENT SYNCHRONIZATION
+
+Implement real Google Calendar integration.
+
+First inspect the current event model and determine the correct synchronization behavior.
+
+## 5.1 OAuth Connection
+
+Implement the required backend routes, such as:
+
+* GET /api/calendar/connect
+* GET /api/calendar/callback
+* POST /api/calendar/disconnect
+* Appropriate status and synchronization endpoints.
+
+Use Google's supported OAuth flow.
+
+Requirements:
+
+* Validate OAuth state.
+* Use PKCE when appropriate for the selected OAuth client flow.
+* Request only the necessary Calendar scopes.
+* Handle consent denial.
+* Handle callback errors.
+* Handle expired and revoked refresh tokens.
+* Never expose refresh tokens to the browser.
+
+Use the existing authentication system to associate the Google account with the correct Planora user.
+
+## 5.2 Secure Token Storage
+
+Store OAuth credentials securely.
+
+Requirements:
+
+* Encrypt refresh tokens at rest using an appropriate authenticated encryption scheme.
+* Keep encryption keys in server-side secret configuration.
+* Never commit encryption keys.
+* Avoid logging tokens.
+* Provide a safe disconnect process.
+* Handle encryption-key rotation considerations.
+
+If the required encryption configuration is missing, fail safely rather than storing plaintext tokens.
+
+## 5.3 Calendar Synchronization
+
+Implement synchronization between Planora events and Google Calendar according to a clearly documented source-of-truth and conflict-resolution strategy.
+
+Where appropriate, support:
+
+* Creating Google Calendar events from Planora.
+* Updating synchronized events.
+* Deleting or cancelling synchronized events.
+* Importing permitted Google Calendar changes.
+* Tracking external calendar event IDs.
+* Handling retries and duplicate events.
+* Tracking synchronization status.
+* Handling time zones correctly.
+
+Use idempotency and synchronization markers to prevent duplicate events and infinite update loops.
+
+Do not claim full two-way sync if only one-way sync has been implemented.
+
+## 5.4 Calendar Tests
+
+Test OAuth state validation, token-storage logic, ownership, duplicate prevention, error handling, and synchronization behavior.
+
+Use mocked Google API responses for unit tests and real OAuth integration tests only when valid credentials are configured.
+
+---
+
+# SECTION 6 — PHASE 5: REAL VENDOR SEARCH AND GOOGLE PLACES
+
+Implement real vendor discovery using Google Places API (New), subject to valid API credentials and service availability.
+
+## 6.1 Vendor Search
+
+Create a secure server-side vendor search API, such as:
+
+GET /api/vendors/search
+
+Support appropriate filters based on the existing UI, such as:
+
+* Location.
+* Search radius.
+* Vendor category.
+* Keyword.
+* Result limits.
+
+Use supported Places API (New) endpoints and the required field masks.
+
+Never expose server-side Google Maps API keys.
+
+Validate all location parameters and limit abusive requests.
+
+## 6.2 Vendor Results
+
+Return available and supported information, such as:
+
+* Place ID.
+* Business name.
+* Address.
+* Geographic coordinates.
+* Business category.
+* Rating.
+* Review count.
+* Website or contact information when provided and permitted.
+* Open/closed or opening-hours information when available.
+
+Only include fields returned by the provider and permitted by its current policies.
+
+Handle missing fields gracefully.
+
+Never fabricate vendor names, ratings, addresses, or availability.
+
+## 6.3 Caching and Storage Compliance
+
+Follow the current Google Maps Platform terms and Places policies.
+
+Before storing provider data:
+
+* Verify which fields can be stored.
+* Apply required caching and retention restrictions.
+* Prefer storing permitted identifiers such as Place IDs where appropriate.
+* Avoid retaining restricted data indefinitely.
+* Do not assume that all Places response fields can be permanently cached.
+
+Document the storage policy implemented.
+
+## 6.4 Frontend Integration
+
+Connect the existing vendor discovery UI to the real API.
+
+Preserve the existing design.
+
+Implement loading, empty, error, pagination, and rate-limit states as appropriate.
+
+Clearly distinguish actual Google Places results from AI-generated suggestions.
+
+## 6.5 Vendor Tests
+
+Test input validation, field masking, response normalization, provider failures, rate limiting, and secret isolation.
+
+Do not claim live vendor search works without valid API credentials and a successful integration test.
+
+---
+
+# SECTION 7 — PHASE 6: PLATFORM REVIEWS AND VENDOR RATINGS
+
+Inspect the existing rating and review schema and implement the functionality supported by the product requirements.
+
+## 7.1 Reviews
+
+Implement appropriate endpoints for:
+
+* Submitting a review.
+* Editing or deleting an eligible user's review.
+* Listing reviews.
+* Retrieving aggregate rating information.
+
+If reviews are tied to an event, vendor, or completed booking, validate the relationship before accepting the review.
+
+Prevent:
+
+* Unauthorized edits.
+* Duplicate reviews where prohibited.
+* Invalid rating values.
+* Self-review or other prohibited scenarios if applicable to the product rules.
+* Fake aggregate values supplied by clients.
+
+## 7.2 Bayesian Shrinkage Rating
+
+If Bayesian shrinkage is part of the architecture specification, implement it using a documented formula and tests.
+
+Use a reasonable prior mean and prior sample size that are configurable and justified.
+
+For example:
+
+Adjusted Rating = (v / (v + m)) × R + (m / (v + m)) × C
+
+Where:
+
+* R = vendor's average rating.
+* v = number of eligible reviews.
+* m = prior sample size.
+* C = prior mean rating.
+
+Validate the input data and prevent incorrect ratings from being displayed when review counts are low.
+
+Document the formula, parameters, and behavior when no reviews exist.
+
+Do not present the adjusted rating as an official Google rating.
+
+## 7.3 Review Tests
+
+Test rating validation, duplicate prevention, review ownership, aggregate calculations, Bayesian shrinkage, and unauthorized access.
+
+---
+
+# SECTION 8 — PHASES 7 AND 8: COMPLETE REMAINING ARCHITECTURE REQUIREMENTS
+
+Inspect the original research report and current codebase to identify every remaining requirement assigned to Phases 7 and 8.
+
+Do not invent features solely to increase project scope.
+
+For each requirement:
+
+1. Identify its original specification.
+2. Inspect existing code.
+3. Implement missing functionality.
+4. Integrate it with the existing application.
+5. Add tests.
+6. Document configuration and limitations.
+
+If Phases 7 and 8 include deployment, monitoring, observability, performance, notifications, data export, or operational tooling, implement only the features actually required by the original architecture.
+
+Verify that all previously requested requirements are represented in the final checklist.
+
+Do not silently omit any applicable requirement.
+
+---
+
+# SECTION 9 — DATABASE QUALITY AND DATA INTEGRITY
+
+Review the entire database schema and ensure consistent relationships.
+
+Check:
+
+* Foreign keys.
+* Cascading delete behavior.
+* User ownership.
+* Event-to-task relationships.
+* Event-to-guest relationships.
+* Event-to-budget and expense relationships.
+* AI usage records.
+* OAuth account relationships.
+* Vendor references.
+* Reviews and ratings.
+
+Add missing migrations without destroying existing data.
+
+Do not reset or drop production tables simply to make migrations easier.
+
+Where appropriate:
+
+* Add uniqueness constraints.
+* Add indexes for frequently queried columns.
+* Use transactions for multi-step operations.
+* Enforce data integrity at the database layer.
+* Ensure timestamps and status fields are consistent.
+
+Document how migrations are applied and rolled back where safely possible.
+
+---
+
+# SECTION 10 — BACKEND API QUALITY
+
+Audit every existing API route.
+
+For each route, verify:
+
+* Correct HTTP method.
+* Authentication requirements.
+* Authorization and ownership.
+* Request validation.
+* Response schema.
+* Error handling.
+* Database behavior.
+* Rate limiting where appropriate.
+* Logging without secret leakage.
+* Test coverage.
+
+Use consistent error responses.
+
+Avoid exposing internal stack traces, credentials, database internals, or sensitive information to clients.
+
+Do not create duplicate endpoints if existing endpoints can be extended safely.
+
+Document the complete API surface in the README or an API specification.
+
+---
+
+# SECTION 11 — FRONTEND INTEGRATION AND USER EXPERIENCE
+
+Verify that every relevant existing page is connected to its intended backend feature.
+
+At minimum, inspect:
+
+* Authentication pages.
+* Dashboard.
+* My Events.
+* Create Event.
+* Event Studio.
+* Event Timeline.
+* Budget Planner.
+* Profile.
+* AI Copilot.
+* Vendor discovery.
+* Ratings and reviews.
+* Calendar integration.
+
+Check that:
+
+* Buttons perform their intended operations.
+* Form submissions reach the correct API.
+* Server responses update the UI.
+* Loading states are shown appropriately.
+* Empty states are handled.
+* Errors are visible and understandable.
+* Expired authentication sessions are handled.
+* Data remains consistent after page reloads.
+* Private data is not displayed to unauthenticated visitors.
+
+Preserve existing layouts, styling, and animations.
+
+Do not mark a page complete simply because it renders without errors.
+
+---
+
+# SECTION 12 — ENVIRONMENT CONFIGURATION AND DEPLOYMENT
+
+Review the project's existing deployment configuration and document the actual requirements.
+
+Create or update `.env.example` with variable names and placeholder values only.
+
+Document variables required for:
+
+* Firebase client initialization.
+* Firebase Admin SDK.
+* Supabase URL and keys.
+* Backend port and frontend API base URL.
+* Gemini API.
+* Google OAuth.
+* Google Places.
+* OAuth token encryption.
+* Any other required service.
+
+Use separate configuration for development, testing, and production where appropriate.
+
+Requirements:
+
+* Never commit real secrets.
+* Never expose backend secrets through frontend build variables.
+* Never log credentials.
+* Never assume local configuration exists in production.
+* Fail safely when required production configuration is missing.
+* Provide clear startup diagnostics without revealing secret values.
+
+Verify that the selected hosting platform supports the application's backend runtime, persistent data model, callback routes, and background synchronization requirements.
+
+Do not claim that deployment is complete until the application has actually been deployed and verified in the target environment.
+
+If a hosting environment cannot support a required background worker or long-running process, implement a compatible architecture or document the exact infrastructure requirement.
+
+---
+
+# SECTION 13 — PERFORMANCE, RELIABILITY, AND OBSERVABILITY
+
+Inspect the application for major performance and reliability risks.
+
+Implement where appropriate:
+
+* Pagination.
+* Database query optimization.
+* Appropriate indexes.
+* Request timeouts.
+* Safe retry behavior.
+* Rate limiting.
+* External API error handling.
+* Structured operational logs.
+* Health checks.
+* Graceful shutdown.
+* Monitoring hooks.
+* Safe handling of transient provider failures.
+
+Avoid retry loops that can create duplicate writes or excessive API costs.
+
+Do not add unnecessary infrastructure if the current project does not require it.
+
+Do not log sensitive user data, tokens, or private keys.
+
+---
+
+# SECTION 14 — AUTOMATED TESTING AND FINAL VERIFICATION
+
+Testing is mandatory.
+
+Do not stop after implementing the code.
+
+## 14.1 Unit Tests
+
+Test:
+
+* Validation functions.
+* Authentication middleware.
+* Authorization rules.
+* Event and task business logic.
+* Budget calculations.
+* AI quota calculations.
+* Token usage accounting.
+* Calendar synchronization helpers.
+* Vendor response normalization.
+* Review calculations.
+
+## 14.2 Integration Tests
+
+Test the actual API behavior for:
+
+* Authentication.
+* Event CRUD.
+* Task CRUD.
+* Guest management.
+* Budget and expense CRUD.
+* AI usage logging and quota enforcement.
+* Calendar endpoints.
+* Vendor search endpoints.
+* Review endpoints.
+
+Use controlled mocks where external services are unavailable, and label them correctly.
+
+## 14.3 Security Tests
+
+Use separate test users to verify that no user can access or modify another user's private records.
+
+Test IDOR vulnerabilities and unauthorized nested-resource access.
+
+Verify secret isolation and database access policies.
+
+## 14.4 Build and Static Checks
+
+Run the relevant commands actually defined by the project, such as:
+
+* npm test.
+* npm run build.
+* npm run lint.
+* TypeScript type checking.
+* Database migration validation.
+
+Do not assume these commands exist. Inspect package.json first.
+
+Fix failures introduced by your changes.
+
+Report unrelated pre-existing failures separately.
+
+## 14.5 End-to-End Verification
+
+Where the project has suitable tooling, test complete workflows:
+
+1. Register a user.
+2. Log in.
+3. Create an event.
+4. Refresh the application.
+5. Verify the event remains available.
+6. Create and complete tasks.
+7. Add expenses and verify budget calculations.
+8. Log out and log back in.
+9. Confirm the user's data remains correct.
+10. Attempt unauthorized access with a different user.
+11. Test AI functionality and usage tracking.
+12. Test vendor and calendar functionality where real credentials are configured.
+
+Do not mark a live external integration as fully verified when only mocks have been used.
+
+---
+
+# SECTION 15 — REQUIREMENT-BY-REQUIREMENT COMPLETION TRACKER
+
+Maintain a single checklist covering every applicable requirement in the original architecture report, the initial Phase 1 prompt, the latest audit, and this master prompt.
+
+Use these statuses:
+
+* NOT STARTED
+* IN PROGRESS
+* IMPLEMENTED — NOT VERIFIED
+* VERIFIED IN TESTS
+* LIVE INTEGRATION VERIFIED
+* BLOCKED BY CONFIGURATION
+
+A feature can be marked 100% complete only when:
+
+* The required code is implemented.
+* The relevant frontend and backend integration works.
+* Persistence and authorization behave correctly.
+* Applicable automated tests pass.
+* Required configuration is documented.
+* There are no known critical defects affecting that feature.
+
+Distinguish between:
+
+* Code implementation completion.
+* Automated test verification.
+* Live external-service verification.
+* Production deployment readiness.
+
+Calculate completion percentages based on individual functional requirements and their importance, not the number of files created.
+
+Do not inflate scores by splitting completed tasks into many tiny requirements.
+
+Do not claim 100% overall completion while required features remain blocked, unimplemented, or unverified.
+
+---
+
+# SECTION 16 — REQUIRED EXECUTION STRATEGY
+
+Follow this execution order:
+
+STEP 1: Inspect the complete codebase and previous audit.
+
+STEP 2: Create a requirement-by-requirement checklist.
+
+STEP 3: Verify Phase 1 and fix any foundational defects.
+
+STEP 4: Complete Phase 2 event, task, guest, and budget persistence.
+
+STEP 5: Complete Phase 3 AI usage accounting and quotas.
+
+STEP 6: Complete Phase 4 Google Calendar integration.
+
+STEP 7: Complete Phase 5 real vendor search.
+
+STEP 8: Complete Phase 6 ratings and reviews.
+
+STEP 9: Inspect and implement all applicable Phase 7 and Phase 8 requirements from the original architecture.
+
+STEP 10: Complete frontend integration, security hardening, database integrity, documentation, and deployment preparation.
+
+STEP 11: Run all available tests and build checks.
+
+STEP 12: Fix failures and regressions.
+
+STEP 13: Re-audit every requirement.
+
+STEP 14: Produce the final implementation report.
+
+Do not stop after completing Phase 2.
+
+Continue through all applicable phases, working incrementally and fixing defects as you discover them.
+
+If a real external integration is blocked by missing credentials, finish its code and automated tests as far as possible, document the exact setup steps, and continue working on other unblocked requirements.
+
+Ask me for credentials or manual configuration only when genuinely necessary. Never ask me to paste private keys or secrets directly into chat.
+
+---
+
+# SECTION 17 — DEFINITION OF DONE
+
+The project should be considered implementation-complete only when:
+
+* Every applicable requirement from the original architecture has been addressed.
+* All core backend CRUD operations work.
+* Persistent data uses the intended database.
+* Authentication and ownership checks are enforced.
+* Cross-user isolation has been tested.
+* AI usage accounting and quotas work.
+* Google Calendar integration is implemented and tested to the documented scope.
+* Real vendor search is implemented and tested to the documented scope.
+* Ratings and reviews work where required.
+* Existing frontend pages are connected to their intended features.
+* Existing UI design has been preserved.
+* Database migrations are documented and reproducible.
+* Automated tests pass, with exceptions clearly documented.
+* Build and type checks pass, or unrelated existing failures are explicitly identified.
+* Environment configuration is documented.
+* No known critical security issue remains unresolved.
+* Deployment requirements and remaining external dependencies are clearly documented.
+
+If credentials or infrastructure prevent live verification, report that limitation honestly instead of claiming complete production readiness.
+
+---
+
+# FINAL REPORT FORMAT
+
+After implementation, provide:
+
+## A. Executive Summary
+
+* What was implemented.
+* What was repaired.
+* What remains blocked.
+
+## B. Completion Dashboard
+
+* Phase 1 completion percentage.
+* Phase 2 completion percentage.
+* Phase 3 completion percentage.
+* Phase 4 completion percentage.
+* Phase 5 completion percentage.
+* Phase 6 completion percentage.
+* Phase 7 completion percentage.
+* Phase 8 completion percentage.
+* Overall weighted implementation percentage.
+
+## C. Feature Verification Table
+
+| Feature | Code Status | Test Status | Live Integration Status | Remaining Work |
+| ------- | ----------- | ----------- | ----------------------- | -------------- |
+
+## D. Changed Files
+
+List important files created, modified, or removed, and explain why.
+
+## E. Database Changes
+
+List migrations, schema changes, indexes, constraints, and security policies.
+
+## F. API Inventory
+
+List endpoints implemented, HTTP methods, authentication requirements, and supported operations.
+
+## G. Testing Results
+
+Report the exact commands executed, pass/fail counts, and any tests not executed.
+
+## H. Security Findings
+
+List vulnerabilities found, fixes applied, and any unresolved risks.
+
+## I. Manual Configuration
+
+Provide exact setup steps for services that require my own credentials or account configuration.
+
+Never include actual secrets in the report.
+
+## J. Production Readiness
+
+Choose one:
+
+* NOT READY
+* READY FOR STAGING
+* READY FOR PRODUCTION, subject to the listed deployment and operational checks
+
+Explain the evidence supporting the decision.
+
+## K. Remaining Work
+
+List every unfinished requirement and the precise reason it remains incomplete.
+
+## L. Final Completion Percentage
+
+Provide a transparent calculation based on the requirement checklist.
+
+**FINAL INSTRUCTION: Start inspecting the existing repository now. Then implement, test, repair, and verify the remaining work directly in the project. Do not stop at a plan or a status report. Preserve the existing frontend design throughout the process.**

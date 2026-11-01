@@ -1,0 +1,813 @@
+# PLANORA AI — MASTER IMPLEMENTATION PROMPT
+
+## Open-Source UI Cleanup + User Onboarding + Profile Management + Real Reviews + Supabase Database Integration
+
+Act as a senior full-stack engineer, backend architect, database engineer, and application security auditor.
+
+Your task is to inspect, implement, and verify the remaining functionality in the existing Planora AI project.
+
+This is an implementation task, not merely an audit or a planning exercise.
+
+**You must modify the actual project files, implement the required functionality, generate the complete Supabase SQL, connect the frontend and backend properly, run the available tests, and report the actual results.**
+
+Do not claim completion for features that have only been designed, mocked, or documented.
+
+---
+
+# PART 1 — NON-NEGOTIABLE RULES
+
+### Preserve the Existing UI
+
+Do not redesign Planora AI.
+
+Preserve:
+
+* Existing cream-and-brown color palette.
+* Typography and visual hierarchy.
+* Glassmorphism.
+* Existing layouts and components.
+* Animations and transitions.
+* Responsive behavior.
+* Navigation and branding.
+* Existing working event-planning features.
+
+Only make the requested changes and the minimum necessary adjustments to integrate them.
+
+### Inspect Before Implementing
+
+Before editing anything, inspect:
+
+* The complete repository structure.
+* Frontend routes and components.
+* Firebase Authentication integration.
+* Express backend and middleware.
+* Supabase configuration.
+* Existing database migrations and SQL files.
+* All existing tables and columns.
+* Existing profile and review endpoints.
+* Google Maps and Google Places integration.
+* AI Copilot and Gemini integration.
+* Existing tests and environment variables.
+
+Reuse existing implementations where appropriate.
+
+Do not create duplicate tables, endpoints, authentication flows, or storage buckets.
+
+Do not delete existing user data or destructive database objects.
+
+Do not replace working integrations with mock implementations.
+
+---
+
+# PART 2 — REMOVE THE FREE PLAN BADGE
+
+Planora AI is intended to be an open-source application, not a subscription-based product.
+
+Remove all visible subscription-plan labels from the UI, including:
+
+* FREE Plan.
+* Free Plan.
+* Premium or Pro badges, if they represent the same unnecessary subscription-tier UI.
+
+Requirements:
+
+* Remove the badge from the header and profile dropdown.
+* Preserve the user's avatar, actual display name, email, and profile menu.
+* Preserve sign-in, sign-up, and sign-out functionality.
+* Remove unnecessary plan-label rendering logic if it is no longer used.
+* Do not unnecessarily modify unrelated backend logic.
+
+Search the entire project to ensure that the old plan badge is not displayed elsewhere.
+
+---
+
+# PART 3 — REMOVE THE 3D STORY EXPERIENCE BUTTON
+
+Remove the "3D Story Experience" button and its unnecessary entry points from the landing page.
+
+Requirements:
+
+* Remove duplicate buttons or navigation links leading to this feature.
+* Clean up unused UI state and imports.
+* Adjust spacing without changing the existing design.
+* Preserve the hero section, headline, description, and primary event-creation CTA.
+* Preserve unrelated animations and components.
+
+Do not rebuild the landing page.
+
+---
+
+# PART 4 — IMPLEMENT USER ONBOARDING
+
+Every new user should have the option to create a personalized profile immediately after signing up.
+
+## 4.1 New User Flow
+
+Implement this flow:
+
+1. The user signs up using the existing Firebase Authentication system.
+2. The backend securely verifies the authenticated identity.
+3. A profile record is created or initialized in Supabase.
+4. The user sees the profile setup screen.
+5. The user enters their details or skips onboarding.
+6. The profile is saved if the user submits it.
+7. The user enters their own empty Planora workspace.
+8. The user can complete or edit their profile later.
+
+Do not force existing users through onboarding again.
+
+## 4.2 Profile Fields
+
+Required onboarding field:
+
+* Full name.
+
+Optional fields:
+
+* Profile picture.
+* Phone number.
+* Preferred language: English or Hindi/Hinglish, where supported.
+* City or preferred event location.
+* Short personal description, only if useful.
+
+Do not collect unnecessary sensitive personal information.
+
+Do not make the profile picture mandatory.
+
+## 4.3 Skip Option
+
+Add a visible "Skip for now" button.
+
+When the user skips:
+
+* Do not insert fabricated profile information.
+* Do not create sample events or other application records.
+* Use a neutral default avatar.
+* Use a sensible display-name fallback derived from the authenticated account where possible.
+* Save the onboarding completion or dismissal state using the appropriate existing architecture.
+* Allow the user to finish profile setup later.
+
+Do not repeatedly force the same user through onboarding after they have deliberately skipped it.
+
+Handle missing profile fields gracefully.
+
+## 4.4 Existing User Flow
+
+When an existing user signs in:
+
+* Fetch their existing profile.
+* Display their previously saved information.
+* Preserve their existing events, tasks, expenses, budgets, guests, and vendors.
+* Do not create a duplicate profile.
+* Do not reset or overwrite their data.
+* Do not display another account's cached profile.
+
+---
+
+# PART 5 — COMPLETE PROFILE MANAGEMENT
+
+Make the existing My Profile page functional.
+
+Users should be able to:
+
+* View their profile.
+* Edit their full name.
+* Upload and change their profile picture.
+* Remove their uploaded picture.
+* Update their phone number.
+* Change their preferred language.
+* Update their city or preferred event location.
+* Edit any other genuinely useful existing profile fields.
+
+Include:
+
+* Edit Profile.
+* Save Changes.
+* Cancel.
+* Form validation.
+* Loading states.
+* Success and error messages.
+* Unsaved-change handling where appropriate.
+
+The header and profile dropdown must reflect profile changes immediately without requiring a full page reload.
+
+## Email Changes
+
+Use the correct Firebase Authentication flow if the user wants to change their email.
+
+Where verification or reauthentication is required:
+
+* Require the appropriate Firebase process.
+* Do not merely change the email field in Supabase.
+* Keep authentication and stored profile information consistent.
+
+## Profile Picture Upload
+
+Inspect the project's existing file-storage implementation.
+
+Reuse it if appropriate. Otherwise, use Supabase Storage.
+
+If using Supabase Storage:
+
+* Create or reuse an appropriate bucket.
+* Store files under a user-specific path.
+* Restrict users to uploading and managing their own files.
+* Validate file type and file size.
+* Provide image preview before saving.
+* Handle upload failures.
+* Never expose service-role credentials in the frontend.
+
+Use a neutral default avatar when no picture is available.
+
+Never assign a random person's image as the user's real profile picture.
+
+---
+
+# PART 6 — REMOVE ALL FAKE APPLICATION DATA
+
+Search the entire repository for:
+
+* Hardcoded events.
+* Sample tasks.
+* Dummy budgets and expenses.
+* Fake guests and RSVP statuses.
+* Fake vendors and business details.
+* Fake map markers.
+* Fake reviews and ratings.
+* Mock activity feeds.
+* Fake notifications.
+* Random dashboard statistics.
+* Hardcoded chart data.
+* Placeholder user identities.
+* Sample profile information.
+* Mock API responses used as production data.
+* Fake AI responses presented as successful live responses.
+* Hardcoded form values.
+* Demo seed records that are inserted into real user accounts.
+* Fallback arrays used to populate production components.
+
+Remove fake data from the actual production experience.
+
+Do not simply hide fake data in the UI.
+
+Fix the underlying data flow so that production application records originate from:
+
+1. The authenticated user's real database records.
+2. A legitimate external API response.
+3. An AI-generated suggestion clearly identified as a suggestion.
+
+Mock fixtures may remain in isolated automated tests.
+
+Do not delete legitimate application logic or test fixtures unnecessarily.
+
+If a database or API request fails, display an honest error state rather than fabricated records.
+
+---
+
+# PART 7 — EVERY USER MUST HAVE AN ISOLATED WORKSPACE
+
+This is a critical security requirement.
+
+**User A must never see User B's events, budgets, tasks, expenses, guests, profile, saved vendors, or private AI conversations.**
+
+Implement and verify:
+
+* New users begin with their own empty workspace.
+* Existing users see only their previously saved records.
+* Every private record is associated with the correct authenticated user.
+* User-specific caches are keyed by authenticated identity.
+* Account switching clears previous user data from memory.
+* Logout clears private in-memory state.
+* Login fetches the new user's data before rendering private records.
+* Failed requests never fall back to another account's cached data.
+* Backend routes verify ownership before returning or modifying records.
+
+Never trust a frontend-supplied user ID as proof of ownership.
+
+Derive the authenticated identity from a verified Firebase ID token on the server.
+
+Every protected operation must verify both authentication and resource ownership.
+
+Test direct API requests that attempt to read, update, or delete another user's records.
+
+---
+
+# PART 8 — REBUILD AND VERIFY THE SUPABASE DATABASE
+
+This section is mandatory.
+
+**I need the complete SQL code for the actual Planora AI database, not just a list of tables or a database architecture explanation.**
+
+First inspect the existing schema, migrations, and all database queries in the repository.
+
+Determine the complete set of tables actually required by the implemented application.
+
+Potential tables include:
+
+* `users` or `profiles`.
+* `events`.
+* `tasks`, if tasks are stored separately.
+* `budgets`, if budgets are stored separately.
+* `expenses`, if expenses are stored separately.
+* `guests`, if guests are stored separately.
+* `vendors`.
+* `reviews`.
+* `ai_usage_logs`.
+* AI conversation or message tables, if conversation persistence is implemented.
+* Calendar integration records, if required.
+
+These are examples, not instructions to create every table separately.
+
+If existing event records use JSONB for related data, determine whether that structure is intentional and correctly implemented before changing it.
+
+Do not create duplicate tables just to satisfy this list.
+
+## 8.1 Generate Complete SQL
+
+Create:
+
+`supabase/planora_complete_setup.sql`
+
+If the existing database requires incremental changes, also create appropriately named migration files under the project's existing migrations directory.
+
+The complete SQL must match the actual application code.
+
+Include all required:
+
+* Tables.
+* Columns.
+* Data types.
+* Primary keys.
+* Foreign keys.
+* Unique constraints.
+* Check constraints.
+* Default values.
+* Indexes.
+* `updated_at` triggers.
+* Required database functions.
+* Required triggers.
+* RLS enablement.
+* RLS policies.
+* Storage policies, if required.
+* Relationships and ownership constraints.
+
+Use safe, non-destructive SQL wherever possible.
+
+Do not drop existing tables or delete user data.
+
+Inspect existing migrations before generating new ones.
+
+If a schema change requires a potentially destructive operation, stop and document the required decision rather than silently executing it.
+
+## 8.2 Firebase Authentication and Supabase Authorization
+
+The project uses Firebase Authentication.
+
+Inspect the actual identity-mapping and database-access strategy.
+
+Determine:
+
+* How Firebase user IDs map to Supabase profile records.
+* Whether requests use Firebase Admin token verification.
+* Whether the backend uses a Supabase service-role client or user-scoped client.
+* Whether RLS policies are actually enforced for each database access path.
+
+Do not assume that Firebase authentication automatically satisfies Supabase RLS.
+
+If the backend uses the Supabase service-role key, recognize that it bypasses RLS and therefore requires explicit server-side ownership enforcement on every applicable query and mutation.
+
+Never expose the service-role key to the frontend.
+
+Never disable RLS just to make requests work.
+
+Implement a secure, consistent authorization strategy appropriate to the existing architecture.
+
+## 8.3 Required SQL Deliverables
+
+Provide the complete contents of:
+
+* `supabase/planora_complete_setup.sql`.
+* Any additional migration files.
+* Any required Supabase Storage bucket and policy SQL, if applicable.
+
+The SQL must be executable in the intended setup state.
+
+Explain the correct execution order and identify any prerequisites.
+
+If the project has an existing populated database, explain how to apply migrations safely without losing data.
+
+Do not claim that SQL was executed unless it was actually executed against a database.
+
+---
+
+# PART 9 — CONNECT THE ENTIRE FRONTEND AND BACKEND PIPELINE
+
+Do not stop after generating SQL.
+
+Inspect every relevant frontend component, backend route, database query, and authentication flow.
+
+Implement and verify the complete pipeline:
+
+**Frontend → Firebase Authentication → Verified Backend Request → Authorization → Supabase Query/Mutation → Database Result → Frontend State Update**
+
+All applicable modules must use this pipeline consistently.
+
+Requirements:
+
+* Verify the Firebase ID token on protected backend routes.
+* Derive the user ID from the verified token.
+* Validate request payloads on the server.
+* Validate resource ownership.
+* Execute the correct database query.
+* Return consistent success and error responses.
+* Update frontend state only after the operation succeeds.
+* Refetch or reconcile data after create, update, and delete operations.
+* Ensure data remains available after refresh and a new session.
+* Handle loading, empty, success, and error states correctly.
+* Never report a successful save before database confirmation.
+* Never silently substitute fake data when the database is unavailable.
+
+If any module currently relies on `localStorage`, determine whether it is merely a cache or the actual source of truth.
+
+Do not let local storage override newer database records or leak data across accounts.
+
+---
+
+# PART 10 — IMPLEMENT REAL USER-DRIVEN CRUD
+
+Implement and verify the required create, read, update, and delete operations.
+
+## Events
+
+Users can:
+
+* Create events with their actual details.
+* Edit event information.
+* Delete events with appropriate confirmation.
+* View only their own events.
+
+## Tasks
+
+Users can:
+
+* Create tasks.
+* Set titles, descriptions, priorities, deadlines, and statuses where supported.
+* Edit, complete, and delete tasks.
+* Associate tasks with the correct user and event.
+
+## Budgets and Expenses
+
+Users can:
+
+* Set their own event budget.
+* Add expenses.
+* Edit and delete expenses.
+* See totals calculated from actual saved records.
+* See zero values when no records exist.
+
+Do not fabricate budget figures or chart values.
+
+## Guests
+
+Users can:
+
+* Add guests manually.
+* Edit and delete guest records.
+* Update RSVP status for real guests.
+* See actual guest and RSVP counts.
+
+## Vendors
+
+Users can:
+
+* Add vendors manually without needing Google Places.
+* Save actual vendor details.
+* Edit and delete their saved vendors.
+* View saved vendors after refreshing the page.
+
+Clearly distinguish manually saved vendors from external search results.
+
+---
+
+# PART 11 — ADD A REAL GOOGLE MAP TO THE VENDOR SECTION
+
+Inspect the existing vendor implementation.
+
+The vendor map must use the real Google Maps JavaScript API, not a decorative placeholder or fake map.
+
+Requirements:
+
+* Display an actual interactive Google Map.
+* Use real coordinates from legitimate Google Places results or verified user-entered vendor coordinates.
+* Display markers only for real results or saved vendor records with valid coordinates.
+* Allow map interaction and zooming.
+* Handle missing or invalid coordinates.
+* Handle missing API keys gracefully.
+* Display a clear setup message when Google Maps is not configured.
+* Never show fake vendor markers or invented coordinates.
+* Keep the existing Planora visual design.
+
+Use the Google Maps JavaScript API and Places API according to the project's current integration and the enabled API versions.
+
+Clearly distinguish:
+
+* Saved vendors from the user's database.
+* External Google Places search results.
+* Vendors that have no verified map coordinates.
+
+Do not label an external business as a saved vendor unless the user explicitly saves it.
+
+If Google Maps credentials or APIs are not configured, report the missing setup instead of simulating a working map.
+
+---
+
+# PART 12 — ADD A GENUINE LANDING-PAGE RATING FEATURE
+
+Implement a real rating and feedback section that fits the existing landing page.
+
+Do not redesign the page.
+
+## Rating Interface
+
+Provide:
+
+* Five selectable stars.
+* Optional feedback text.
+* A Submit Review button.
+* Loading, success, error, and empty states.
+* Responsive styling consistent with Planora.
+
+## Database and API
+
+Inspect the existing reviews table and endpoints before changing them.
+
+Reuse existing functionality wherever possible.
+
+Support:
+
+* Saving actual ratings.
+* Saving optional feedback.
+* Loading reviews according to privacy rules.
+* Calculating the average rating from actual saved reviews.
+* Counting actual reviews.
+* Validating ratings between 1 and 5.
+* Associating reviews with authenticated users.
+* Preventing users from modifying or deleting another user's review.
+
+Do not insert sample ratings or fake testimonials.
+
+Do not hardcode average ratings or review counts.
+
+If no reviews exist, show a truthful empty state.
+
+If reviews require authentication, ask the user to sign in before submitting.
+
+Do not expose private reviewer information publicly.
+
+---
+
+# PART 13 — AI COPILOT MUST BE GENUINELY INTERACTIVE
+
+The existing AI Copilot previously returned nearly identical responses to different user messages.
+
+Fix the actual AI pipeline instead of merely changing the response text.
+
+Inspect:
+
+* Gemini client initialization.
+* Model selection.
+* System instructions.
+* Conversation history.
+* Context retrieval.
+* Token usage accounting.
+* API error handling.
+* Frontend message submission and response rendering.
+* Action chips and any tool/action execution.
+
+## Required Behavior
+
+The AI must:
+
+* Respond according to the actual user's latest message.
+* Handle greetings naturally.
+* Ask relevant follow-up questions when necessary.
+* Understand event type, location, date, and budget when provided.
+* Use the authenticated user's actual event data when relevant.
+* Remember conversation context when the implementation supports it.
+* Avoid inventing saved events, expenses, guests, or vendors.
+* Clearly identify recommendations as AI-generated suggestions.
+* Never claim that an event, task, or expense was saved unless the database confirms it.
+* Never mix private data between users.
+
+If the user asks to create or modify an application record, validate the proposed action and execute it through a secure backend function only after the appropriate confirmation or authorization.
+
+For example:
+
+* "Create an event" should gather the required information.
+* "Add a task" should create a real task only when the necessary details are available.
+* "What is my budget?" should use actual saved budget data.
+* If the user has no budget record, explain that no budget has been saved yet.
+
+Do not return a generic success message for every prompt.
+
+If Gemini is unavailable or the API key is missing, display an honest error or configuration message. Do not pretend a live Gemini response was generated.
+
+Preserve the existing Copilot UI.
+
+---
+
+# PART 14 — REMOVE THE 3D BUTTON AND IMPLEMENT PROFILE ONBOARDING WITHOUT BREAKING THE APPLICATION
+
+Ensure that all requested changes work together.
+
+The correct new-user experience should be:
+
+1. Sign up.
+2. Create a profile or skip profile setup.
+3. Enter a clean, empty workspace.
+4. Create an event.
+5. Add tasks, expenses, guests, and vendors as needed.
+6. Use the AI Copilot with real data.
+7. Edit profile details later.
+
+The correct existing-user experience should be:
+
+1. Sign in.
+2. Load the user's existing profile.
+3. Load only that user's saved records.
+4. Preserve all existing data.
+5. Allow profile and application data to be edited normally.
+
+Do not force existing users to create new profiles again.
+
+Do not reset the database.
+
+---
+
+# PART 15 — SECURITY REQUIREMENTS
+
+Inspect and verify:
+
+* Firebase token verification.
+* Backend authorization middleware.
+* User ownership checks.
+* Supabase RLS policies.
+* Storage access policies.
+* Input validation.
+* API key handling.
+* Secret management.
+* IDOR protections.
+* User-scoped cache handling.
+* AI context isolation.
+* Review authorization.
+* Vendor and calendar authorization.
+
+Never expose:
+
+* Supabase service-role keys.
+* Firebase Admin private credentials.
+* Google OAuth client secrets.
+* Gemini secret API keys.
+* Private refresh tokens.
+
+Use environment variables and server-side secret storage appropriately.
+
+Do not print secret values in the final report.
+
+---
+
+# PART 16 — AUTOMATED AND MANUAL TESTING
+
+Run the tests and checks supported by the actual repository.
+
+Test these scenarios:
+
+1. A new user signs up.
+2. The new user sees profile onboarding.
+3. The user can save a profile or skip setup.
+4. Profile changes persist after refresh.
+5. A new user sees zero events, tasks, expenses, guests, and saved vendors.
+6. User A creates records and sees them after refresh.
+7. User B sees none of User A's private records.
+8. User B cannot read, modify, or delete User A's records through direct API requests.
+9. Event CRUD operations persist.
+10. Task CRUD operations persist.
+11. Budget and expense calculations use real records.
+12. Guest and RSVP counts use actual records.
+13. Manual vendor creation works without Google Places.
+14. Real Google Maps loads when configured.
+15. Missing Google Maps credentials produce a clear setup message.
+16. Reviews persist and ratings are calculated from real records.
+17. Gemini responds appropriately to different prompts.
+18. AI uses only the current user's authorized data.
+19. AI action failures are reported honestly.
+20. Database failures do not trigger fake data.
+21. Account switching does not expose cached information.
+22. The application builds successfully.
+23. Existing UI styling and responsiveness remain intact.
+
+Use isolated test accounts and test records. Do not seed fake records into real user accounts.
+
+Clearly distinguish:
+
+* Unit tests.
+* Mocked integration tests.
+* Tests against a real local/test database.
+* Tests against live external APIs.
+
+Do not claim live integration tests passed if they were mocked or could not run.
+
+---
+
+# PART 17 — FINAL DELIVERABLES
+
+After completing the work, provide a detailed implementation report containing:
+
+### A. UI Changes
+
+* Free Plan badge removal.
+* 3D Story Experience removal.
+* Landing-page rating feature.
+* Profile onboarding and editing.
+
+### B. Fake Data Audit
+
+* Fake data sources found.
+* Fake production data removed.
+* Remaining test fixtures, if any.
+* Any remaining mock implementations.
+
+### C. Database
+
+* Complete `supabase/planora_complete_setup.sql`.
+* All additional migration SQL files.
+* Table and column descriptions.
+* Foreign key relationships.
+* RLS policies.
+* Storage configuration.
+* Firebase-to-Supabase identity mapping.
+
+### D. Backend Pipeline
+
+Explain the actual data flow for:
+
+* User profiles.
+* Events.
+* Tasks.
+* Budgets and expenses.
+* Guests.
+* Vendors.
+* Reviews.
+* AI conversations and actions.
+* Google Calendar, if implemented.
+
+For each pipeline, identify the frontend entry point, backend endpoint, authentication middleware, database operation, and response handling.
+
+### E. Files Changed
+
+List the actual files created, modified, or removed.
+
+### F. Verification
+
+Provide actual:
+
+* Build output.
+* TypeScript results.
+* Test results.
+* Database migration validation.
+* Security test results.
+* External API integration results.
+
+### G. Manual Configuration
+
+List missing credentials, required Google APIs, OAuth setup, Supabase configuration, and other manual steps.
+
+### H. Remaining Work
+
+Explicitly identify every feature that is incomplete, mocked, unverified, or blocked by missing configuration.
+
+Do not claim a feature is complete merely because code was written.
+
+---
+
+# FINAL ACCEPTANCE CRITERIA
+
+The implementation is complete only when:
+
+1. The Free Plan badge is gone.
+2. The 3D Story Experience entry point is removed.
+3. Users can create and edit their profiles.
+4. Onboarding can be skipped and resumed later.
+5. The landing-page rating feature uses genuine saved reviews.
+6. New users start with clean, empty workspaces.
+7. Existing users retain their own records.
+8. All private records are properly isolated between users.
+9. The complete Supabase SQL and required migrations are provided.
+10. Frontend, backend, authentication, and database pipelines work together.
+11. Google Maps displays real map data when correctly configured.
+12. The AI Copilot produces context-aware responses and uses actual user data securely.
+13. No fake application records are presented as real information.
+14. Build and test results are reported honestly.
+15. The existing UI design remains intact.
+
+**Inspect the actual repository, implement the changes, generate the SQL, run the available tests, and report the evidence. Do not stop after producing a plan or a prompt.**
