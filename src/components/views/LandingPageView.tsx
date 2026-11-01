@@ -64,13 +64,13 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           fetch('/api/reviews/summary'),
           fetch('/api/reviews/recent'),
         ]);
-        if (sumRes.ok) {
+        if (sumRes.ok && sumRes.headers.get('content-type')?.includes('application/json')) {
           const sumData = await sumRes.json();
           if (sumData.success && sumData.summary) {
             setRatingSummary(sumData.summary);
           }
         }
-        if (recRes.ok) {
+        if (recRes.ok && recRes.headers.get('content-type')?.includes('application/json')) {
           const recData = await recRes.json();
           if (recData.success && Array.isArray(recData.reviews)) {
             setRecentReviews(recData.reviews);
@@ -108,8 +108,12 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
         }),
       });
 
-      const data = await res.json();
-      if (res.ok && data.success) {
+      let data: any = null;
+      if (res.headers.get('content-type')?.includes('application/json')) {
+        data = await res.json();
+      }
+
+      if (res.ok && data?.success) {
         setReviewSuccess('Thank you for rating Planora AI! Your review has been saved.');
         if (data.summary) {
           setRatingSummary(data.summary);
@@ -117,12 +121,12 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
         setUserReviewText('');
         // Refetch latest reviews
         const recRes = await fetch('/api/reviews/recent');
-        if (recRes.ok) {
+        if (recRes.ok && recRes.headers.get('content-type')?.includes('application/json')) {
           const recData = await recRes.json();
           if (recData.reviews) setRecentReviews(recData.reviews);
         }
       } else {
-        setReviewError(data.error || 'Failed to submit review.');
+        setReviewError(data?.error || 'Failed to submit review.');
       }
     } catch (err: any) {
       setReviewError(err.message || 'Error submitting review.');

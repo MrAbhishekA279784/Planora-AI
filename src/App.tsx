@@ -141,7 +141,7 @@ export function App() {
         const res = await fetch('/api/events', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        if (res.ok) {
+        if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
           const data = await res.json();
           if (isMounted && data.success && Array.isArray(data.events)) {
             const mappedEvents: EventItem[] = data.events.map((dbEv: any) => ({

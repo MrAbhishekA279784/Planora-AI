@@ -34,6 +34,13 @@ async function startServer() {
   app.use('/api/vendors', vendorRoutes);
   app.use('/api/reviews', reviewRoutes);
 
+  app.all('/api/*', (req, res) => {
+    res.status(404).json({
+      error: 'Not Found',
+      message: `API endpoint ${req.method} ${req.originalUrl || req.url} does not exist.`,
+    });
+  });
+
   // Centralized Error Handling Middleware
   app.use(errorHandler);
 
@@ -46,7 +53,7 @@ async function startServer() {
   } else {
     const { createServer } = await import('vite');
     const vite = await createServer({
-      server: { middlewareMode: true },
+      server: { middlewareMode: true, hmr: false },
       appType: 'spa',
     });
     app.use(vite.middlewares);

@@ -17,8 +17,18 @@ registerSW({ immediate: true });
 
 const origConsoleError = console.error;
 console.error = (...args: unknown[]) => {
-  origConsoleError.apply(console, args);
   const msg = args.map((a) => String(a)).join(' ');
+  // Suppress cloud container WebSocket HMR warning as HMR is disabled in this environment
+  if (
+    msg.includes('WebSocket') ||
+    msg.includes('closed without opened') ||
+    (msg.includes('vite') && msg.includes('WebSocket'))
+  ) {
+    return;
+  }
+
+  origConsoleError.apply(console, args);
+
   if (
     msg.includes('OverQuotaMapError') ||
     msg.includes('QuotaExceededError') ||
@@ -35,13 +45,35 @@ console.error = (...args: unknown[]) => {
   }
 };
 
-// Prevent uncaught Maps SDK errors from crashing the page
+// Prevent uncaught Maps SDK or Vite WebSocket errors from crashing the page
 window.addEventListener('error', (event) => {
+  const msg = (event.message || event.error?.message || '').toLowerCase();
   if (
-    event.message &&
-    (event.message.includes('reading \'get\'') || event.message.includes('google.maps'))
+    msg.includes('websocket') ||
+    msg.includes('closed without opened') ||
+    msg.includes('reading \'get\'') ||
+    msg.includes('google.maps') ||
+    msg.includes('invalidkeymaperror')
   ) {
-    window.dispatchEvent(new CustomEvent('gmp-auth-failure'));
+    if (msg.includes('reading \'get\'') || msg.includes('google') || msg.includes('map')) {
+      window.dispatchEvent(new CustomEvent('gmp-auth-failure'));
+    }
+    event.preventDefault();
+  }
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  const msg = (event.reason?.message || String(event.reason) || '').toLowerCase();
+  if (
+    msg.includes('websocket') ||
+    msg.includes('closed without opened') ||
+    msg.includes('reading \'get\'') ||
+    msg.includes('google.maps') ||
+    msg.includes('invalidkeymaperror')
+  ) {
+    if (msg.includes('reading \'get\'') || msg.includes('google') || msg.includes('map')) {
+      window.dispatchEvent(new CustomEvent('gmp-auth-failure'));
+    }
     event.preventDefault();
   }
 });

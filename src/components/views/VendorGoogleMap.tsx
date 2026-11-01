@@ -55,9 +55,15 @@ const MapCameraController: React.FC<{
 
   useEffect(() => {
     if (map && targetLocation) {
-      map.panTo(targetLocation);
-      if (zoomLevel) {
-        map.setZoom(zoomLevel);
+      try {
+        if (typeof map.panTo === 'function') {
+          map.panTo(targetLocation);
+        }
+        if (zoomLevel !== undefined && typeof map.setZoom === 'function') {
+          map.setZoom(zoomLevel);
+        }
+      } catch (err) {
+        console.warn('Map camera controller notice (using spatial fallback):', err);
       }
     }
   }, [map, targetLocation, zoomLevel]);
@@ -334,13 +340,20 @@ export const VendorGoogleMap: React.FC<VendorGoogleMapProps> = ({
         {canUseLiveGoogleMaps ? (
           <ErrorBoundary
             name="GoogleMapsCanvas"
+            onError={() => setMapAuthError(true)}
             fallback={
               <div className="p-4 text-center">
                 <p className="text-xs text-[#7A3D19]">Loading Planora interactive vendor view...</p>
               </div>
             }
           >
-            <APIProvider apiKey={rawApiKey}>
+            <APIProvider
+              apiKey={rawApiKey}
+              onError={(err) => {
+                console.warn('Google Maps API failed to load:', err);
+                setMapAuthError(true);
+              }}
+            >
               <Map
                 id="vendor-google-map"
                 defaultCenter={eventLocation}

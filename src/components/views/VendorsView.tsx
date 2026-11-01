@@ -135,14 +135,16 @@ export const VendorsView: React.FC<VendorsViewProps> = ({
         if (searchQuery) queryParams.set('query', searchQuery);
 
         const res = await fetch(`/api/vendors/search?${queryParams.toString()}`);
-        if (res.ok) {
+        if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
           const data = await res.json();
-          if (data.vendors && Array.isArray(data.vendors) && !isCancelled) {
+          if (data && data.vendors && Array.isArray(data.vendors) && !isCancelled) {
             const transformed: VendorItem[] = data.vendors.map((v: any) => ({
-              id: v.id,
-              name: v.name,
-              category: (v.category.charAt(0).toUpperCase() + v.category.slice(1)) as any,
-              location: v.locationName || v.address || locationInput,
+              id: v.id || `vendor_${Math.random().toString(36).substring(2, 8)}`,
+              name: v.name || 'Vendor Partner',
+              category: v.category
+                ? ((v.category.charAt(0).toUpperCase() + v.category.slice(1)) as any)
+                : 'Venue',
+              location: v.locationName || v.address || locationInput || 'Goa',
               distance: 'Nearby',
               rating: v.rawRating || 4.8,
               reviewCount: v.reviewCount || 110,
@@ -156,8 +158,8 @@ export const VendorsView: React.FC<VendorsViewProps> = ({
               features: ['Verified', 'Event Service', 'Direct Booking'],
               description: v.description,
               gallery: v.images || [],
-              latitude: v.latitude,
-              longitude: v.longitude,
+              latitude: typeof v.latitude === 'number' ? v.latitude : undefined,
+              longitude: typeof v.longitude === 'number' ? v.longitude : undefined,
               address: v.address,
               phone: v.phone,
               website: v.website,
@@ -166,9 +168,11 @@ export const VendorsView: React.FC<VendorsViewProps> = ({
             }));
 
             setAllVendors((prev) => {
-              const prevMap = new Map(prev.map((item) => [item.id, item]));
+              const safePrev = Array.isArray(prev) ? prev : [];
+              const prevMap = new Map(safePrev.map((item) => [item.id, item]));
               transformed.forEach((item) => {
-                prevMap.set(item.id, { ...prevMap.get(item.id), ...item });
+                const existing = prevMap.get(item.id) || {};
+                prevMap.set(item.id, { ...existing, ...item });
               });
               return Array.from(prevMap.values());
             });
