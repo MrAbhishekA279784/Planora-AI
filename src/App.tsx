@@ -11,6 +11,7 @@ import { ProfileMenuView } from './components/views/ProfileMenuView';
 import { VendorCompareModal } from './components/modals/VendorCompareModal';
 import { InquiryModal } from './components/modals/InquiryModal';
 import { LoadingSpinner } from './components/LoadingSpinner';
+import { OfflineIndicator } from './components/pwa/OfflineIndicator';
 
 // React.lazy Code-Splitting for Heavy Route Components
 const LandingPageView = lazy(() => import('./components/views/LandingPageView').then((m) => ({ default: m.LandingPageView })));
@@ -599,6 +600,9 @@ export function App() {
           <span>Syncing workspace...</span>
         </div>
       )}
+
+      {/* PWA Offline Mode Indicator */}
+      <OfflineIndicator />
 
       {/* Full-Screen Navigation Loading Feedback Overlay */}
       {isNavigating && (

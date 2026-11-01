@@ -17,6 +17,7 @@ import {
   Compass,
 } from 'lucide-react';
 import { AppRoute, EventItem, UserProfile } from '../types';
+import { PWAInstallButton } from './pwa/PWAInstallButton';
 
 interface HeaderProps {
   currentRoute: AppRoute;
@@ -210,6 +211,9 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Right Header Actions */}
           <div className="flex items-center gap-2 sm:gap-3.5">
+            {/* PWA In-App Install Prompt */}
+            <PWAInstallButton />
+
             {/* Search Button (Available in Dashboard and Public) */}
             <button
               onClick={() => setShowSearchModal(true)}

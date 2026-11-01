@@ -29,6 +29,7 @@ import {
 import { AppRoute, VendorItem, EventItem } from '../../types';
 import { filterVendors, sortVendors } from '../../utils/calculations';
 import { VendorGoogleMap } from './VendorGoogleMap';
+import { ErrorBoundary } from '../ErrorBoundary';
 import { useAuth } from '../../context/AuthContext';
 import { AddCustomVendorModal } from '../modals/AddCustomVendorModal';
 
@@ -402,21 +403,23 @@ export const VendorsView: React.FC<VendorsViewProps> = ({
       {/* FULL MAP EXPLORER VIEW (If Selected) */}
       {viewMode === 'full-map' && (
         <div className="space-y-4">
-          <VendorGoogleMap
-            vendors={displayedVendors}
-            selectedVendor={selectedVendorForMap}
-            onSelectVendor={(v) => setSelectedVendorForMap(v)}
-            activeEvent={activeEvent}
-            onSaveVendor={handleSaveVendor}
-            onOpenInquiryModal={onOpenInquiryModal}
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            isLoadingPlaces={isLoadingPlaces}
-            placesAttribution={placesAttribution}
-            isExpanded={true}
-          />
+          <ErrorBoundary name="FullVendorMap">
+            <VendorGoogleMap
+              vendors={displayedVendors}
+              selectedVendor={selectedVendorForMap}
+              onSelectVendor={(v) => setSelectedVendorForMap(v)}
+              activeEvent={activeEvent}
+              onSaveVendor={handleSaveVendor}
+              onOpenInquiryModal={onOpenInquiryModal}
+              selectedCategory={selectedCategory}
+              onSelectCategory={setSelectedCategory}
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              isLoadingPlaces={isLoadingPlaces}
+              placesAttribution={placesAttribution}
+              isExpanded={true}
+            />
+          </ErrorBoundary>
 
           {/* Horizontal scroll cards underneath full map */}
           <div className="space-y-2 text-left">
@@ -788,22 +791,24 @@ export const VendorsView: React.FC<VendorsViewProps> = ({
           <div className="lg:col-span-4 space-y-5 text-left">
             {/* Panel 2: REAL GOOGLE MAPS PANEL */}
             <div className="space-y-2">
-              <VendorGoogleMap
-                vendors={displayedVendors}
-                selectedVendor={selectedVendorForMap}
-                onSelectVendor={(v) => setSelectedVendorForMap(v)}
-                activeEvent={activeEvent}
-                onSaveVendor={handleSaveVendor}
-                onOpenInquiryModal={onOpenInquiryModal}
-                selectedCategory={selectedCategory}
-                onSelectCategory={setSelectedCategory}
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
-                isLoadingPlaces={isLoadingPlaces}
-                placesAttribution={placesAttribution}
-                isExpanded={isMapExpanded}
-                onToggleExpand={() => setIsMapExpanded((prev) => !prev)}
-              />
+              <ErrorBoundary name="SidebarVendorMap">
+                <VendorGoogleMap
+                  vendors={displayedVendors}
+                  selectedVendor={selectedVendorForMap}
+                  onSelectVendor={(v) => setSelectedVendorForMap(v)}
+                  activeEvent={activeEvent}
+                  onSaveVendor={handleSaveVendor}
+                  onOpenInquiryModal={onOpenInquiryModal}
+                  selectedCategory={selectedCategory}
+                  onSelectCategory={setSelectedCategory}
+                  searchQuery={searchQuery}
+                  onSearchChange={setSearchQuery}
+                  isLoadingPlaces={isLoadingPlaces}
+                  placesAttribution={placesAttribution}
+                  isExpanded={isMapExpanded}
+                  onToggleExpand={() => setIsMapExpanded((prev) => !prev)}
+                />
+              </ErrorBoundary>
             </div>
 
             {/* Panel 1: Vendor Comparison */}

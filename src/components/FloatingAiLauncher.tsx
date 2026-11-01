@@ -14,8 +14,8 @@ import {
   Minimize2,
 } from 'lucide-react';
 import { EventItem } from '../types';
-
 import { useAuth } from '../context/AuthContext';
+import { generateLocalCopilotResponse } from '../utils/localCopilotEngine';
 
 interface Message {
   id: string;
@@ -102,51 +102,68 @@ export const FloatingAiLauncher: React.FC<FloatingAiLauncherProps> = ({
         text: m.text,
       }));
 
-      const res = await fetch('/api/ai/copilot', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify({
-          message: textToSend,
-          history: historyPayload,
-          eventContext: activeEvent
-            ? {
-                name: activeEvent.name,
-                type: activeEvent.eventType,
-                date: activeEvent.date,
-                location: activeEvent.location,
-                guests: activeEvent.guestCount,
-                budget: activeEvent.totalBudget,
-              }
-            : null,
-        }),
-      });
+      let replyText = '';
+      let isLiveAi = false;
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message || data.error || 'Failed to connect to Planora AI Copilot');
+      try {
+        const res = await fetch('/api/ai/copilot', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify({
+            message: textToSend,
+            history: historyPayload,
+            eventContext: activeEvent
+              ? {
+                  name: activeEvent.name,
+                  type: activeEvent.eventType,
+                  date: activeEvent.date,
+                  location: activeEvent.location,
+                  guests: activeEvent.guestCount,
+                  budget: activeEvent.totalBudget,
+                }
+              : null,
+          }),
+        });
+
+        const contentType = res.headers.get('content-type') || '';
+        if (res.ok && contentType.includes('application/json')) {
+          const data = await res.json();
+          replyText = data.reply;
+          isLiveAi = !!data.isLiveAi;
+        }
+      } catch {
+        // Backend offline or unreachable — handled seamlessly below
+      }
+
+      // If backend is unconfigured, 404 on Vercel, or offline, use local copilot engine
+      if (!replyText) {
+        const localResponse = generateLocalCopilotResponse(textToSend, activeEvent);
+        replyText = localResponse.reply;
+        isLiveAi = false;
       }
 
       const assistantMsg: Message = {
         id: `assistant-${Date.now()}`,
         sender: 'assistant',
-        text: data.reply || 'How can I assist you with your event planning today?',
+        text: replyText || 'How can I assist you with your event planning today?',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        isLiveAi: data.isLiveAi,
+        isLiveAi,
       };
 
       setMessages((prev) => [...prev, assistantMsg]);
-    } catch (err: any) {
-      const errorMsg: Message = {
-        id: `assistant-error-${Date.now()}`,
+    } catch {
+      const localResponse = generateLocalCopilotResponse(textToSend, activeEvent);
+      const fallbackMsg: Message = {
+        id: `assistant-fallback-${Date.now()}`,
         sender: 'assistant',
-        text: `⚠️ ${err?.message || 'Unable to reach Planora AI right now. Please check your connection or try again.'}`,
+        text: localResponse.reply,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         isLiveAi: false,
       };
-      setMessages((prev) => [...prev, errorMsg]);
+      setMessages((prev) => [...prev, fallbackMsg]);
     } finally {
       setIsLoading(false);
     }

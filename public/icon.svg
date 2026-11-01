@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4A2C1B"/>
+      <stop offset="50%" stop-color="#7A3D19"/>
+      <stop offset="100%" stop-color="#B86B2A"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE4B5"/>
+      <stop offset="50%" stop-color="#FBE8D3"/>
+      <stop offset="100%" stop-color="#D7A34B"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)"/>
+  <!-- Sparkle / Star 4-point icon -->
+  <path d="M256 64 C256 160 288 224 448 256 C288 288 256 352 256 448 C256 352 224 288 64 256 C224 224 256 160 256 64 Z" fill="url(#goldGrad)" />
+  <circle cx="256" cy="256" r="28" fill="#FFFFFF" opacity="0.9"/>
+  <!-- Little ambient stars -->
+  <path d="M380 110 C380 130 388 142 416 150 C388 158 380 170 380 190 C380 170 372 158 344 150 C372 142 380 130 380 110 Z" fill="#FFE4B5" opacity="0.8"/>
+  <path d="M130 330 C130 345 136 354 158 360 C136 366 130 375 130 390 C130 375 124 366 102 360 C124 354 130 345 130 330 Z" fill="#FFE4B5" opacity="0.8"/>
+</svg>
