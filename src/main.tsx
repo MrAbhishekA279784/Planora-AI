@@ -23,6 +23,11 @@ console.error = (...args: unknown[]) => {
     msg.includes('OverQuotaMapError') ||
     msg.includes('QuotaExceededError') ||
     msg.includes('InvalidKeyMapError') ||
+    msg.includes('BillingNotEnabledMapError') ||
+    msg.includes('ApiNotActivatedMapError') ||
+    msg.includes('DeletedKeyMapError') ||
+    msg.includes('ExpiredKeyMapError') ||
+    msg.includes('RefererNotAllowedMapError') ||
     msg.includes('reading \'get\'')
   ) {
     window.dispatchEvent(new CustomEvent('gmp-auth-failure'));

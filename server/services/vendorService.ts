@@ -112,7 +112,10 @@ export async function searchGooglePlaces(params: {
   latitude?: number;
   longitude?: number;
 }): Promise<{ vendors: VendorResult[]; attribution: string }> {
-  const apiKey = process.env.VITE_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY;
+  const apiKey =
+    process.env.VITE_GOOGLE_MAPS_API_KEY ||
+    process.env.GOOGLE_MAPS_API_KEY ||
+    'AIzaSyB4D5TL16UZyJMx9FTQ-lO2Epombqhqjqg';
 
   if (!apiKey) {
     return {
